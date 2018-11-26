@@ -11,7 +11,7 @@
 if(isset($_POST['save_card'])){
 	if(addslashes($_POST['card_customer_name'])!= NULL && addslashes($_POST['card_customer_phone']) != NULL ){
 		$card_key=md5(addslashes($_POST['card_customer_name']).addslashes($_POST['card_code']).time("now"));
-		$getdata->my_sql_insert("card_info","card_key='".$card_key."',card_code='".addslashes($_POST['card_code'])."',card_customer_name='".addslashes($_POST['card_customer_name'])."',card_customer_lastname='".addslashes($_POST['card_customer_lastname'])."',card_customer_address='".addslashes($_POST['card_customer_address'])."',card_customer_phone='".addslashes($_POST['card_customer_phone'])."',card_customer_email='".addslashes($_POST['card_customer_email'])."',card_note='".addslashes($_POST['card_note'])."',card_done_aprox='0000-00-00',user_key='".$user_data->user_key."',card_status=''");
+		$getdata->my_sql_insert("card_info","card_key='".$card_key."',card_code='".addslashes($_POST['card_code'])."',card_customer_name='".addslashes($_POST['card_customer_name'])."',card_customer_lastname='".addslashes($_POST['card_customer_lastname'])."',card_customer_address='".addslashes($_POST['card_customer_address'])."',card_customer_phone='".addslashes($_POST['card_customer_phone'])."',card_customer_work_group=".$_POST['card_customer_work_group'].",card_note='".addslashes($_POST['card_note'])."',card_done_aprox='0000-00-00',user_key='".$user_data->user_key."',card_status=''");
 		echo '<script>window.location="?p=card_create_detail&key='.$card_key.'";</script>';
 	}else{
 		$alert = '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>ข้อมูลไม่ถูกต้อง กรุณาระบุอีกครั้ง !</div>';
@@ -43,15 +43,15 @@ if(isset($_POST['save_card'])){
                                           </div>
                                           <div class="form-group">
                                             <label for="card_customer_address">ที่อยู่</label>
-                                            <textarea name="card_customer_address" id="card_customer_address" class="form-control"></textarea>
+                                            <textarea name="card_customer_address" id="card_customer_address" class="form-control">โรงพยาบาลโนนสะอาด อ.โนนสะอาด จ.อุดรธานี 41240</textarea>
                                           </div>
                                           <div class="form-group row">
                                           <div class="col-md-6">
-                                            <label for="card_customer_phone">หมายเลขโทรศัพท์</label>
+                                            <label for="card_customer_phone">หมายเลขโทรศัพท์(ภายใน)</label>
                                             <input type="text" name="card_customer_phone" id="card_customer_phone" class="form-control"  autocomplete="off">
                                             </div>
-                                            <div class="col-md-6"> <label for="card_customer_email">อีเมล</label>
-                                            <input type="text" name="card_customer_email" id="card_customer_email" class="form-control"  autocomplete="off"></div>
+                                            <div class="col-md-6"> <label for="card_customer_work_group">กลุ่มงาน</label>
+                                            <input type="text" name="card_customer_work_group" id="card_customer_work_group" class="form-control" value="<?php echo $_SESSION['uwork_id']; ?>"  autocomplete="off"></div>
                                           </div>
                                           <div class="form-group">
                                             <label for="card_note">หมายเหตุ</label>
