@@ -16,12 +16,14 @@
 </ol>
 <?php
 if(isset($_POST['save_user'])){
+  echo $_POST['save_user'];
 	if(addslashes($_POST['username']) != NULL && addslashes($_POST['password']) != NULL && addslashes($_POST['repassword']) != NULL){
 		$getuser =$getdata->my_sql_show_rows("user","username='".addslashes($_POST['username'])."' OR email='".addslashes($_POST['email'])."'");
 		if($getuser == 0){
 			if(addslashes($_POST['password']) == addslashes($_POST['repassword'])){
 				$user_key=md5(addslashes($_POST['username']).time("now"));
-				$getdata->my_sql_insert("user","user_key='".$user_key."',name='".addslashes($_POST['name'])."',lastname='".addslashes($_POST['lastname'])."',username='".addslashes($_POST['username'])."',password='".md5(addslashes($_POST['password']))."',email='".addslashes($_POST['email'])."',user_class='2',user_status='".addslashes($_REQUEST['user_status'])."'");
+        $result_data = $getdata->my_sql_insert("user","user_key='".$user_key."', name='".addslashes($_POST['name'])."', lastname='".addslashes($_POST['lastname'])."', username='".addslashes($_POST['username'])."', password='".md5(addslashes($_POST['password']))."', user_class='2', email='".addslashes($_POST['email'])."', user_status='".addslashes($_REQUEST['user_status'])."',groups=".$_REQUEST['group'].", work_id=".$_REQUEST['working']." ");
+      
 				$alert = '  <div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>'.LA_ALERT_INSERT_USER_DONE.'</div>';
 			}else{
 				$alert = ' <div class="alert alert-warning alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>'.LA_ALERT_PASSWORD_MISMATCH.'</div>';
@@ -33,6 +35,7 @@ if(isset($_POST['save_user'])){
 		$alert = ' <div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>'.LA_ALERT_DATA_MISMATCH.'</div>'; 
 	}
 }
+
 ?>
 <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -124,7 +127,7 @@ if(isset($_POST['save_user'])){
         <div class="modal-footer">
           <button type="button" class="btn btn-default btn-sm" data-dismiss="modal"><i class="fa fa-times fa-fw"></i>
             <?php echo @LA_BTN_CLOSE;?></button>
-          <button type="submit" name="save_user" class="btn btn-primary btn-sm"><i class="fa fa-save fa-fw"></i>
+          <button type="submit" name="save_user" value="save_user" class="btn btn-primary btn-sm"><i class="fa fa-save fa-fw"></i>
             <?php echo @LA_BTN_SAVE;?></button>
         </div>
       </div>
@@ -408,13 +411,14 @@ if(isset($_POST['save_user'])){
       data:{ id:strData },
       url: "providers/get_works.php",
       success: function (data) {
-        console.log(data);
+        var obj = JSON.parse(data);
+        
         $('#working').empty();
-        for (var i = 0; i < data.length; i++) {
-
-          $('#working').append('<option value="' + data[i]['name'] + '">' + data[i]['name'] + '</option>');
+        for (var i = 0; i < obj.length; i++) {
+          console.log(obj[i].department_id)
+          $('#working').append('<option value="' + obj[i].department_id + '">' + obj[i].name + '</option>');
         }
-        console.log(data);
+      
       },
       error: function (XMLHttpRequest, textStatus, errorThrown) {
         alert(textStatus);
