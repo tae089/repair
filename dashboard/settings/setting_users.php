@@ -403,7 +403,7 @@ if(isset($_POST['save_user'])){
     var e = document.getElementById("group");
     var strData = e.options[e.selectedIndex].value;
     $.ajax({
-      type: 'POST',
+      type: 'POST', 
       dataType: 'html',
       data:{ id:strData },
       url: "providers/get_works.php",
