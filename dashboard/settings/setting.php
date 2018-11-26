@@ -18,6 +18,9 @@ if($system_info->system_need_update == 1){
 	$software_update_icon = '';
 }
 ?>
+<?php
+      if(@$_SESSION['uclass'] == 3){
+?> 
 <div class="panel panel-primary">
      <div class="panel-heading">การตั้งค่าการใช้งาน</div>
          <div class="panel-body">
@@ -25,9 +28,12 @@ if($system_info->system_need_update == 1){
           <!-- <a href="?p=setting_categories" class="btn btn-primary btn_main_wd"><i class="fa flaticon-stack4 fa-fw fa-6x"></i><br/><br/>หมวดหมู่ค่าใช้จ่าย</a>
           <a href="?p=setting_products" class="btn btn-primary btn_main_wd"><i class="fa flaticon-bullet1 fa-fw fa-6x"></i><br/><br/>รายการค่าใช้จ่าย</a>-->
                 
-         </div>
-                       
-</div>   
+         </div>                   
+</div>  
+<?php } ?> 
+<?php
+      if(@$_SESSION['uclass'] == 3){
+?> 
 <div class="panel panel-primary">
      <div class="panel-heading"><?php echo @LA_LB_ABOUT_SYSTEM;?></div>
          <div class="panel-body">
@@ -38,7 +44,8 @@ if($system_info->system_need_update == 1){
                 
          </div>
                        
-</div>      
+</div> 
+<?php } ?>     
 <div class="panel panel-primary">
      <div class="panel-heading"><?php echo @LA_LB_USER_DATA;?></div>
          <div class="panel-body">

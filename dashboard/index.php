@@ -15,7 +15,6 @@ $getdata = new clear_db();
 $connect = $getdata->my_sql_connect(DB_HOST,DB_USERNAME,DB_PASSWORD,DB_NAME);
 $getdata->my_sql_set_utf8();
 $userdata = $getdata->my_sql_query(NULL,"user","user_key='".$_SESSION['ukey']."'");
-var_dump($userdata);
 $system_info = $getdata->my_sql_query(NULL,"system_info",NULL);
 date_default_timezone_set('Asia/Bangkok');
 require("../core/online.core.php");
