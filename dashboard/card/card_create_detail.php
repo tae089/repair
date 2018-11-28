@@ -183,7 +183,7 @@ if(isset($_POST['save_confirm_card'])){
                             ?>
                         </select>
                     </td>
-                    <td width="10%"><label for="item_price_aprox">ราคาโดยประมาณ</label>
+                    <td width="10%"><label for="item_price_aprox">ราคา</label>
                         <input type="text" name="item_price_aprox" id="item_price_aprox" class="form-control"></td>
                     <td width="8%"><button type="submit" name="save_item" id="save_item" class="btn btn-sm btn-success"><i
                                 class="fa fa-plus"></i> เพิ่มรายการ</button></td>
@@ -192,12 +192,14 @@ if(isset($_POST['save_confirm_card'])){
                     <td width="10%" bgcolor="#888888">หมายเลข</td>
                     <td width="23%" bgcolor="#888888">ชื่อรายการ</td>
                     <td bgcolor="#888888">สาเหตุที่ส่งซ่อม/เคลม</td>
-                    <td bgcolor="#888888">ราคาโดยประมาณ</td>
+                    <td bgcolor="#888888">ประเภท</td>
+                    <td bgcolor="#888888">ราคา</td>
                     <td bgcolor="#888888">จัดการ</td>
                 </tr>
                 <?php 
 	$getitem = $getdata->my_sql_select(NULL,"card_item","card_key='".$card_detail->card_key."' ORDER BY item_insert");
 	while($showitem = mysql_fetch_object($getitem)){
+        $get_type = $getdata->my_sql_query($field,"category","category_id=".$showitem->item_category_type."");
 	?>
                 <tr id="<?php echo @$showitem->item_key;?>">
                     <td align="center" bgcolor="#EFEFEF"><strong>
@@ -206,6 +208,7 @@ if(isset($_POST['save_confirm_card'])){
                             <?php echo @$showitem->item_name;?></strong></td>
                     <td style="color:#970002;"><strong>
                             <?php echo @$showitem->item_note;?></strong></td>
+                    <td><strong><?php echo @$get_type->category_name_th;?></strong></td>
                     <td align="right"><strong>
                             <?php echo @($showitem->item_price_aprox == 0)?'ไม่ระบุ':convertPoint2($showitem->item_price_aprox,2);?></strong></td>
                     <td align="center"><a data-toggle="modal" data-target="#edit_item" data-whatever="<?php echo @$showitem->item_key;?>"
@@ -214,8 +217,8 @@ if(isset($_POST['save_confirm_card'])){
                             style="color:#FFF;" title="ลบ"><i class="fa fa-times"></i></a></td>
                 </tr>
                 <?php
-	}
-	?>
+	                }
+	            ?>
             </table>
         </div>
     </form>
