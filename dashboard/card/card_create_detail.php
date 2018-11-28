@@ -30,7 +30,7 @@ if(isset($_POST['save_item'])){
 		}
 		
 		
-		$getdata->my_sql_insert("card_item","item_key='".$item_key."',card_key='".$card_detail->card_key."',item_number='".INumber()."',item_name='".addslashes(addslashes($_POST['item_name']))."',item_note='".addslashes(addslashes($_POST['item_note']))."',item_price_aprox='".@$price_aprox."'");
+		$getdata->my_sql_insert("card_item","item_key='".$item_key."',card_key='".$card_detail->card_key."',item_number='".INumber()."',item_name='".addslashes(addslashes($_POST['item_name']))."',item_note='".addslashes(addslashes($_POST['item_note']))."',item_category_type=".$_POST['item_category_id'].",item_price_aprox='".@$price_aprox."'");
 		updateItem();
 		$alert = '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>บันทึกข้อมูล สำเร็จ !</div>';
 	}else{
@@ -39,7 +39,7 @@ if(isset($_POST['save_item'])){
 }
 if(isset($_POST['save_edit_item'])){
 	if(addslashes($_POST['edit_item_name']) != NULL && addslashes($_POST['edit_item_note']) != NULL){
-		$getdata->my_sql_update("card_item","item_name='".addslashes($_POST['edit_item_name'])."',item_note='".addslashes($_POST['edit_item_note'])."',item_price_aprox='".@addslashes($_POST['edit_item_price_aprox'])."'","item_key='".addslashes($_POST['item_key'])."'");
+		$getdata->my_sql_update("card_item","item_name='".addslashes($_POST['edit_item_name'])."',item_note='".addslashes($_POST['edit_item_note'])."',item_category_type=".$_POST['item_category_id'].",item_price_aprox='".@addslashes($_POST['edit_item_price_aprox'])."'","item_key='".addslashes($_POST['item_key'])."'");
 		$alert = '<div class="alert alert-info alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>อัพเดทข้อมูล สำเร็จ !</div>';
 	}else{
 		$alert = '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>ข้อมูลไม่ถูกต้อง กรุณาระบุอีกครั้ง !</div>';
@@ -94,9 +94,10 @@ if(isset($_POST['save_confirm_card'])){
                     </div>
                 <?php } ?>
                 <?php if($_SESSION['uclass'] ==3){ $display =""; }else{ $display ="disabled"; } ?>
+                <fieldset <?php echo $display; ?>>
                     <div class="form-group">
                         <label for="card_status">สถานะปัจจุบัน</label>
-                        <select name="card_status" id="card_status" class="form-control" <?php echo $display; ?>>
+                        <select name="card_status" id="card_status" class="form-control">
                             <?php
                                 $getcard_type = $getdata->my_sql_select(NULL,"card_type","ctype_status='1' ORDER BY ctype_insert");
                                 while($showcard_type = mysql_fetch_object($getcard_type)){
@@ -109,6 +110,7 @@ if(isset($_POST['save_confirm_card'])){
                             ?>
                         </select>
                     </div>
+                    </fieldset>
 
                     <div class="form-group">
                         <label for="card_status_note">หมายเหตุสถานะ</label>

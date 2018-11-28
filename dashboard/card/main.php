@@ -62,7 +62,7 @@ if(isset($_POST['save_card'])){
               <input type="text" class="form-control" value="<?php echo  $department_data->name; ?>" readonly>
               <input type="hidden" name="card_customer_work_group" id="card_customer_work_group" class="form-control"
                 value="<?php echo $_SESSION['uwork_id']; ?>" autocomplete="off">
-                </div>
+            </div>
           </div>
           <div class="form-group">
             <label for="card_note">หมายเหตุ</label>
@@ -136,7 +136,12 @@ if(isset($_POST['save_card'])){
     </thead>
     <tbody>
       <?php
-  $getcard = $getdata->my_sql_select(NULL,"card_info"," card_status = ''  ORDER BY card_insert");
+  if($_SESSION['uclass'] !=3){ 
+    $getcard = $getdata->my_sql_select(NULL,"card_info"," card_customer_work_group=".$_SESSION['uwork_id']." AND card_status = ''  ORDER BY card_insert");
+  }else{
+    $getcard = $getdata->my_sql_select(NULL,"card_info"," card_status = ''  ORDER BY card_insert");
+  }
+  
   while($showcard = mysql_fetch_object($getcard)){
   ?>
       <tr style="font-weight:bold;" id="<?php echo @$showcard->card_key;?>">
