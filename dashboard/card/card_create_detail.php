@@ -50,7 +50,8 @@ if(isset($_POST['save_confirm_card'])){
 		$card_done_aprox = addslashes($_POST['card_done_aprox']);
 	}else{
 		$card_done_aprox = '0000-00-00';
-	}
+    }
+
 	$getdata->my_sql_update("card_info","card_done_aprox='".@$card_done_aprox."',card_status='".addslashes($_REQUEST['card_status'])."',user_key='".$userdata->user_key."'","card_key='".$card_detail->card_key."'");
 	$cstatus_key=md5(addslashes($_REQUEST['card_status']).rand().time("now"));
 	$getdata->my_sql_insert("card_status","cstatus_key='".$cstatus_key."',card_key='".$card_detail->card_key."',card_status='".addslashes($_REQUEST['card_status'])."',card_status_note='".addslashes($_POST['card_status_note'])."',user_key='".$userdata->user_key."'");
@@ -86,15 +87,14 @@ if(isset($_POST['save_confirm_card'])){
                     <h4 class="modal-title" id="myModalLabel">ยืนยันข้อมูล</h4>
                 </div>
                 <div class="modal-body">
-                <?php if ($_SESSION['uclass'] ==3) { ?>
+                    <?php if ($_SESSION['uclass'] ==3) { ?>
                     <div class="form-group">
                         <label for="card_done_aprox">วันที่คาดว่าจะแล้วเสร็จ</label>
                         <input type="text" name="card_done_aprox" id="card_done_aprox" class="form-control dpk"
                             autocomplete="off">
                     </div>
-                <?php } ?>
-                <?php if($_SESSION['uclass'] ==3){ $display =""; }else{ $display ="disabled"; } ?>
-                <fieldset <?php echo $display; ?>>
+                    <?php } ?>
+                    <?php if($_SESSION['uclass'] == 3){ ?>
                     <div class="form-group">
                         <label for="card_status">สถานะปัจจุบัน</label>
                         <select name="card_status" id="card_status" class="form-control">
@@ -110,8 +110,9 @@ if(isset($_POST['save_confirm_card'])){
                             ?>
                         </select>
                     </div>
-                    </fieldset>
-
+                    <?php } elseif ($_SESSION['uclass'] == 2) {
+                        echo '<input type="text" name="card_status" id="card_status" class="form-control" value="89da7d193f3c67e4310f50cbb5b36b90" autocomplete="off">';
+                    } ?>
                     <div class="form-group">
                         <label for="card_status_note">หมายเหตุสถานะ</label>
                         <textarea name="card_status_note" id="card_status_note" class="form-control"></textarea>
@@ -153,9 +154,19 @@ if(isset($_POST['save_confirm_card'])){
             <div class="col-md-3">
                 <?php echo @$card_detail->card_customer_phone;?>
             </div>
-
         </div>
-
+        <div class="row form-group">
+            <div class="col-md-3"><strong>ที่อยู่</strong></div>
+            <div class="col-md-3">
+                <?php echo @$card_detail->card_customer_address;?>
+            </div>
+        </div>
+        <div class="row form-group">
+            <div class="col-md-3"><strong>หมายเหตุ</strong></div>
+            <div class="col-md-3">
+                <?php echo @$card_detail->card_note;?>
+            </div>
+        </div>
     </div>
 
 </div>
@@ -210,7 +221,8 @@ if(isset($_POST['save_confirm_card'])){
                             <?php echo @$showitem->item_name;?></strong></td>
                     <td style="color:#970002;"><strong>
                             <?php echo @$showitem->item_note;?></strong></td>
-                    <td><strong><?php echo @$get_type->category_name_th;?></strong></td>
+                    <td><strong>
+                            <?php echo @$get_type->category_name_th;?></strong></td>
                     <td align="right"><strong>
                             <?php echo @($showitem->item_price_aprox == 0)?'ไม่ระบุ':convertPoint2($showitem->item_price_aprox,2);?></strong></td>
                     <td align="center"><a data-toggle="modal" data-target="#edit_item" data-whatever="<?php echo @$showitem->item_key;?>"
@@ -226,7 +238,8 @@ if(isset($_POST['save_confirm_card'])){
     </form>
 
     <div class="panel-footer" align="center">
-        <a class="btn btn-sm btn-success" style="color:#FFF;" data-toggle="modal" data-target="#create_card"><i class="fa fa-check-square-o"></i> บันทึกข้อมูล</a>
+        <a class="btn btn-sm btn-success" style="color:#FFF;" data-toggle="modal" data-target="#create_card"><i class="fa fa-check-square-o"></i>
+            บันทึกข้อมูล</a>
     </div>
 </div>
 

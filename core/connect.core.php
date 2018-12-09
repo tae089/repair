@@ -57,6 +57,7 @@ class clear_db{
 		return $objShow;
 	}
 	function my_sql_update($table,$set,$event){
+		
 		if($event != NULL){
 			return mysql_query("UPDATE ".$table." SET ".$set." WHERE ".$event);
 		}else{
@@ -64,6 +65,7 @@ class clear_db{
 		}
 	}
 	function my_sql_insert($table,$set){
+		 	//echo $set;
 			return mysql_query("INSERT INTO ".$table." SET ".$set);
 	}
 	function my_sql_delete($table,$event){
