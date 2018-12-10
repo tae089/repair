@@ -150,15 +150,22 @@ if(isset($_POST['save_confirm_card'])){
             <div class="col-md-3">
                 <?php echo @$card_detail->card_customer_name.'&nbsp;&nbsp;&nbsp;'.$card_detail->card_customer_lastname;?>
             </div>
-            <div class="col-md-3"><strong>หมายเลขโทรศัพท์</strong></div>
+            <div class="col-md-3"><strong>กลุ่มงาน</strong></div>
             <div class="col-md-3">
-                <?php echo @$card_detail->card_customer_phone;?>
+                <?php  
+                    $department_data = $getdata->my_sql_query($field,"department","department_id=".$card_detail->card_customer_work_group.""); 
+                    echo @$department_data->name;
+                ?>
             </div>
         </div>
         <div class="row form-group">
             <div class="col-md-3"><strong>ที่อยู่</strong></div>
             <div class="col-md-3">
                 <?php echo @$card_detail->card_customer_address;?>
+            </div>
+            <div class="col-md-3"><strong>หมายเลขโทรศัพท์</strong></div>
+            <div class="col-md-3">
+                <?php echo @$card_detail->card_customer_phone;?>
             </div>
         </div>
         <div class="row form-group">

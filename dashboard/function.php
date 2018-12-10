@@ -241,7 +241,13 @@ $getdata->my_sql_set_utf8();
 								unlink("../resource/link/slide/thumbs/".$slide->slide_file);
 								$getdata->my_sql_delete("link_slideshow","slide_key='".addslashes($_GET['key'])."'");
 		break;
-	case "show_card_count" : $card_count = $getdata->my_sql_show_rows("card_info","card_status <> '' AND card_status <> 'hidden'");
+	case "show_card_count" :
+		if(addslashes($_GET['uclass'])==3){
+			$card_count = $getdata->my_sql_show_rows("card_info","card_status <> '' AND card_status <> 'hidden'");
+		}else{
+			$card_count = $getdata->my_sql_show_rows("card_info","card_status <> '' AND card_status <> 'hidden' AND card_customer_work_group=".$_GET['uwork_id']." ");
+		}
+	
 		if($card_count != 0){
 			echo @number_format($card_count);
 		}

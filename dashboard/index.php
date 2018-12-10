@@ -152,7 +152,7 @@ if(@addslashes($_GET['p']) == "cashier_nomember" || addslashes($_GET['p']) == "i
 					  ?>
                         
                     </ul> 
-                    <div style="color:#CCC; text-align:center; padding-top:10px;">&copy;&nbsp;<?php echo @date("Y");?>&nbsp;Repair By <a href="http://clear.co.th" style="color:#CCC;">Clear</a></div>
+                    <div style="color:#CCC; text-align:center; padding-top:10px;">&copy;&nbsp;<?php echo @date("Y");?>&nbsp; By <a href="#" style="color:#CCC;">ศูนย์คอม โรงพยาบาลโนนสะอาด</a></div>
                 </div>
                 <!-- /.sidebar-collapse -->
             </div>
@@ -277,13 +277,15 @@ var checkout = $('#dpd2').datepicker({
     $(function() {
         $('.cp1').colorpicker();
     });
+
 	function checkCardCount(){
 	 $.ajax({
 			async:false, 
             url: 'function.php?type=show_card_count',
+            data: {uclass:<?php echo $_SESSION['uclass'];?>,uwork_id:<?php echo $_SESSION['uwork_id'];?>},
             success: function(data) {   
                 $('#card_count').html(data);
              }
             });
-}
+    }
 </script>
