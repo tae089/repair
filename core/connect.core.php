@@ -117,5 +117,6 @@ class clear_db{
 	function my_sql_close(){
 		return mysql_close();
 	}
+
 }
 ?>

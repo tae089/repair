@@ -473,4 +473,31 @@ if(isset($_POST['save_user'])){
     xmlhttp.open("GET", "function.php?type=delete_user&key=" + userkey, true);
     xmlhttp.send();
   }
+
+  var options = {
+
+    url: function(phrase) {
+      return "providers/get_search.php";
+    },
+
+    getValue: function(element) {
+      return element.name;
+    },
+
+    ajaxSettings: {
+      dataType: "json",
+      method: "POST",
+      data: {
+        dataType: "json"
+      }
+    },
+
+    preparePostData: function(data) {
+      data.phrase = $("#example-ajax-post").val();
+      return data;
+    },
+
+    requestDelay: 400
+};
+$("#name").easyAutocomplete(options);
 </script>
