@@ -400,7 +400,9 @@ if(isset($_POST['save_user'])){
   </div>
 
 </div>
-
+<link rel="stylesheet" href="../node_modules/easy-autocomplete/dist/easy-autocomplete.min.css"> 
+<link rel="stylesheet" href="../node_modules/easy-autocomplete/dist/easy-autocomplete.themes.min.css"> 
+<script src="../node_modules/easy-autocomplete/dist/jquery.easy-autocomplete.min.js"></script>
 <script language="javascript">
   function changWorking(params) {
     var e = document.getElementById("group");
