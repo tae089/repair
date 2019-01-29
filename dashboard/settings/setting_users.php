@@ -22,7 +22,7 @@ if(isset($_POST['save_user'])){
 		if($getuser == 0){
 			if(addslashes($_POST['password']) == addslashes($_POST['repassword'])){
 				$user_key=md5(addslashes($_POST['username']).time("now"));
-        $result_data = $getdata->my_sql_insert("user","user_key='".$user_key."', name='".addslashes($_POST['name'])."', lastname='".addslashes($_POST['lastname'])."', username='".addslashes($_POST['username'])."', password='".md5(addslashes($_POST['password']))."', user_class='2', email='".addslashes($_POST['email'])."', user_status='".addslashes($_REQUEST['user_status'])."',groups=".$_REQUEST['group'].", work_id=".$_REQUEST['working']." ");
+        $result_data = $getdata->my_sql_insert("user","user_key='".$user_key."', name='".addslashes($_POST['name'])."', lastname='".addslashes($_POST['lastname'])."', username='".addslashes($_POST['username'])."', password='".addslashes($_POST['password'])."', user_class='2', email='".addslashes($_POST['email'])."', user_status='".addslashes($_REQUEST['user_status'])."',groups=".$_REQUEST['group'].", work_id=".$_REQUEST['working']." ");
       
 				$alert = '  <div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>'.LA_ALERT_INSERT_USER_DONE.'</div>';
 			}else{
@@ -477,11 +477,11 @@ if(isset($_POST['save_user'])){
   var options = {
 
     url: function(phrase) {
-      return "providers/get_search.php";
+      return "providers/get_search.php?phrase="+phrase;
     },
 
     getValue: function(element) {
-      return element.name;
+      return element.fname;
     },
 
     ajaxSettings: {

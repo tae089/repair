@@ -8,10 +8,7 @@ $getdata = new clear_db();
 $connect = $getdata->my_sql_connect(DB_HOST,DB_USERNAME,DB_PASSWORD,DB_NAME);
 $getdata->my_sql_set_utf8();
 date_default_timezone_set('Asia/Bangkok');
-$input = "SmackFactory";
 
-echo $encrypted = encryptIt( $input );
-echo $decrypted = decryptIt( $encrypted );
 $get_group = $getdata->my_sql_select(NULL,"opduser",$event=NULL);
 if($get_group){
     while ($get_resutl = mysql_fetch_object($get_group)) {
@@ -27,6 +24,6 @@ if($get_group){
 }else{
      $data = NULL;
 }
-var_dump($data);
+//var_dump($data);
 echo json_encode($data, true);
 ?>
