@@ -9,19 +9,19 @@
   <li class="active">ส่งซ่อมสินค้า/เคลม</li>
 </ol>
 <?php
-if(isset($_POST['save_card'])){
-	if(addslashes($_POST['card_customer_name'])!= NULL && addslashes($_POST['card_customer_phone']) != NULL ){
-		$card_key=md5(addslashes($_POST['card_customer_name']).addslashes($_POST['card_code']).time("now"));
-		$getdata->my_sql_insert("card_info","card_key='".$card_key."',card_code='".addslashes($_POST['card_code'])."',card_customer_name='".addslashes($_POST['card_customer_name'])."',card_customer_lastname='".addslashes($_POST['card_customer_lastname'])."',card_customer_address='".addslashes($_POST['card_customer_address'])."',card_customer_phone='".addslashes($_POST['card_customer_phone'])."',card_customer_work_group=".$_POST['card_customer_work_group'].",card_note='".addslashes($_POST['card_note'])."',card_done_aprox='0000-00-00',user_key='".$user_data->user_key."',card_status=''");
-		echo '<script>window.location="?p=card_create_detail&key='.$card_key.'";</script>';
-	}else{
-		$alert = '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>ข้อมูลไม่ถูกต้อง กรุณาระบุอีกครั้ง !</div>';
-	}
-}
+// if(isset($_POST['save_card'])){
+// 	if(addslashes($_POST['card_customer_name'])!= NULL && addslashes($_POST['card_customer_phone']) != NULL ){
+// 		$card_key=md5(addslashes($_POST['card_customer_name']).addslashes($_POST['card_code']).time("now"));
+// 		$getdata->my_sql_insert("card_info","card_key='".$card_key."',card_code='".addslashes($_POST['card_code'])."',card_customer_name='".addslashes($_POST['card_customer_name'])."',card_customer_lastname='".addslashes($_POST['card_customer_lastname'])."',card_customer_address='".addslashes($_POST['card_customer_address'])."',card_customer_phone='".addslashes($_POST['card_customer_phone'])."',card_customer_work_group=".$_POST['card_customer_work_group'].",card_note='".addslashes($_POST['card_note'])."',card_done_aprox='0000-00-00',user_key='".$user_data->user_key."',card_status=''");
+// 		echo '<script>window.location="?p=card_create_detail&key='.$card_key.'";</script>';
+// 	}else{
+// 		$alert = '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>ข้อมูลไม่ถูกต้อง กรุณาระบุอีกครั้ง !</div>';
+// 	}
+// }
 ?>
 <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <form method="post" enctype="multipart/form-data" name="form1" id="form1">
+  <form method="post" enctype="multipart/form-data" name="form1" id="form_add">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -75,10 +75,13 @@ if(isset($_POST['save_card'])){
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default btn-sm" data-dismiss="modal"><i class="fa fa-times fa-fw"></i>
+          <div id="btn-footer">
+            <button type="button" class="btn btn-default btn-sm" data-dismiss="modal"><i class="fa fa-times fa-fw"></i>
             <?php echo @LA_BTN_CLOSE;?></button>
-          <button type="submit" name="save_card" class="btn btn-primary btn-sm" id="save_card"><i class="fa fa-save fa-fw"></i>
+            <button type="submit" name="save_card" class="btn btn-primary btn-sm" id="save_card"><i class="fa fa-save fa-fw"></i>
             <?php echo @LA_BTN_SAVE;?></button>
+          </div>
+          <div id="processes"></div>
         </div>
       </div>
       <!-- /.modal-content -->
@@ -180,6 +183,7 @@ if(isset($_POST['save_card'])){
 ?>
 <div id="show_card">Data:</div>
 <script src='//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js'></script>
+<script src="http://malsup.github.com/jquery.form.js"></script>
 <script language="javascript">
  var socket = io('//127.0.0.1:8080');
 
@@ -207,7 +211,25 @@ if(isset($_POST['save_card'])){
        xmlhttp.send();
     }
   }
-
+  $(document).ready(function() { 
+            // bind 'myForm' and provide a simple callback function 
+            $('#form_add').ajaxForm(() => { 
+              var queryString = $('#form_add').formSerialize();
+              $.post('card/save_card_info.php', queryString, (response) => {
+                var obj = JSON.parse(response);
+                console.log(obj.message);   
+                if(obj.satuts===true){
+                  $('#btn-footer').hide();
+                  $('#processes').empty();
+                  $('#processes').append(obj.message);
+                }else{
+                  $('#processes').empty();
+                  $('#processes').append(obj.message);
+                }
+                
+              });          
+            }); 
+        }); 
  
   socket.on('connect', (data) => {
   
