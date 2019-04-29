@@ -111,7 +111,7 @@ if(isset($_POST['save_confirm_card'])){
                         </select>
                     </div>
                     <?php } elseif ($_SESSION['uclass'] == 2) {
-                        echo '<input type="text" name="card_status" id="card_status" class="form-control" value="89da7d193f3c67e4310f50cbb5b36b90" autocomplete="off">';
+                        echo '<input type="hidden" name="card_status" id="card_status" class="form-control" value="89da7d193f3c67e4310f50cbb5b36b90" autocomplete="off">';
                     } ?>
                     <div class="form-group">
                         <label for="card_status_note">หมายเหตุสถานะ</label>
@@ -251,6 +251,7 @@ if(isset($_POST['save_confirm_card'])){
 </div>
 
 </div>
+
 <script language="javascript">
     function deleteItem(item_key) {
         if (confirm("คุณต้องการจะลบรายการนี้ใช่หรือไม่ ?")) {
@@ -289,4 +290,6 @@ if(isset($_POST['save_confirm_card'])){
             }
         });
     })
+
+
 </script>

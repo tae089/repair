@@ -77,7 +77,7 @@ if(isset($_POST['save_card'])){
         <div class="modal-footer">
           <button type="button" class="btn btn-default btn-sm" data-dismiss="modal"><i class="fa fa-times fa-fw"></i>
             <?php echo @LA_BTN_CLOSE;?></button>
-          <button type="submit" name="save_card" class="btn btn-primary btn-sm"><i class="fa fa-save fa-fw"></i>
+          <button type="submit" name="save_card" class="btn btn-primary btn-sm" id="save_card"><i class="fa fa-save fa-fw"></i>
             <?php echo @LA_BTN_SAVE;?></button>
         </div>
       </div>
@@ -123,7 +123,7 @@ if(isset($_POST['save_card'])){
    if($getcard_count != 0){
   ?>
 <div class="table-responsive">
-  <table width="100%" border="0" class="table table-bordered">
+  <table width="100%" border="0" class="table table-bordered" id="show_card">
     <thead>
       <tr style="font-weight:bold; color:#FFF; text-align:center; background:#ff7709;">
         <td width="12%">รหัสส่งซ่อม/เคลม</td>
@@ -135,49 +135,54 @@ if(isset($_POST['save_card'])){
       </tr>
     </thead>
     <tbody>
-      <?php
-  if($_SESSION['uclass'] !=3){ 
-    $getcard = $getdata->my_sql_select(NULL,"card_info"," card_customer_work_group=".$_SESSION['uwork_id']." AND card_status = ''  ORDER BY card_insert");
-  }else{
-    $getcard = $getdata->my_sql_select(NULL,"card_info"," card_status = ''  ORDER BY card_insert");
-  }
-  
-  while($showcard = mysql_fetch_object($getcard)){
-  ?>
-      <tr style="font-weight:bold;" id="<?php echo @$showcard->card_key;?>">
-        <td align="center">
-          <?php echo @$showcard->card_code;?>
-        </td>
-        <td align="center">
-          <?php echo @dateTimeConvertor($showcard->card_insert);?>
-        </td>
-        <td>&nbsp;
-          <?php echo @$showcard->card_customer_name.'&nbsp;&nbsp;&nbsp;'.$showcard->card_customer_lastname;?>
-        </td>
-        <td align="center">
-          <?php echo @$showcard->card_customer_phone;?>
-        </td>
-        <td align="center">
-          <?php echo @cardStatus($showcard->card_status);?>
-        </td>
-        <td align="right"><a href="?p=card_create_detail&key=<?php echo @$showcard->card_key;?>" title="แก้ไข" class="btn btn-xs btn-info"><i
-              class="fa fa-edit"></i></a><a onClick="javascript:deleteCard('<?php echo @$showcard->card_key;?>');"
-            title="ลบข้อมูล" class="btn btn-xs btn-danger"><i class="fa fa-times"></i></a></td>
-      </tr>
-      <?php
-  }
-  ?>
+    <?php
+      if($_SESSION['uclass'] !=3){ 
+        $getcard = $getdata->my_sql_select(NULL,"card_info"," card_customer_work_group=".$_SESSION['uwork_id']." AND card_status = ''  ORDER BY card_insert");
+      }else{
+        $getcard = $getdata->my_sql_select(NULL,"card_info"," card_status = ''  ORDER BY card_insert");
+      }
+      
+      while($showcard = mysql_fetch_object($getcard)){
+      ?>
+          <tr style="font-weight:bold;" id="<?php echo @$showcard->card_key;?>">
+            <td align="center">
+              <?php echo @$showcard->card_code;?>
+            </td>
+            <td align="center">
+              <?php echo @dateTimeConvertor($showcard->card_insert);?>
+            </td>
+            <td>&nbsp;
+              <?php echo @$showcard->card_customer_name.'&nbsp;&nbsp;&nbsp;'.$showcard->card_customer_lastname;?>
+            </td>
+            <td align="center">
+              <?php echo @$showcard->card_customer_phone;?>
+            </td>
+            <td align="center">
+              <?php echo @cardStatus($showcard->card_status);?>
+            </td>
+            <td align="right"><a href="?p=card_create_detail&key=<?php echo @$showcard->card_key;?>" title="แก้ไข" class="btn btn-xs btn-info"><i
+                  class="fa fa-edit"></i></a><a onClick="javascript:deleteCard('<?php echo @$showcard->card_key;?>');"
+                title="ลบข้อมูล" class="btn btn-xs btn-danger"><i class="fa fa-times"></i></a></td>
+          </tr>
+          <?php
+      }
+      ?>
     </tbody>
 
   </table>
 
 </div>
+
 <?php
    }else{
 	   echo '<div class="alert alert-info alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>ไม่พบข้อมูลใบสั่งซ่อม/เคลมที่ไม่สมบูรณ์</div>';
    }
 ?>
+<div id="show_card">Data:</div>
+<script src='//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js'></script>
 <script language="javascript">
+ var socket = io('//127.0.0.1:8080');
+
   function deleteCard(cardkey) {
     if (confirm('คุณต้องการลบใบสั่งซ่อม/เคลมนี้ใช่หรือไม่ ?')) {
       if (window.XMLHttpRequest) { // code for IE7+, Firefox, Chrome, Opera, Safari
@@ -185,13 +190,38 @@ if(isset($_POST['save_card'])){
       } else { // code for IE6, IE5
         xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
       }
+      socket.emit('delect_card','Delect Card');
       xmlhttp.onreadystatechange = function () {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-          document.getElementById(cardkey).innerHTML = '';
+          //document.getElementById(cardkey).innerHTML = '';
+          //socket.on('connect', (data) => {
+            socket.on('show_card', fun(message)  {
+              console.log(message);
+              document.getElementById(cardkey).innerHTML = '';
+            });
+
+          //});
         }
       }
-      xmlhttp.open("GET", "function.php?type=delete_card&key=" + cardkey, true);
-      xmlhttp.send();
+       xmlhttp.open("GET", "function.php?type=delete_card&key=" + cardkey, true);
+       xmlhttp.send();
     }
   }
+
+ 
+  socket.on('connect', (data) => {
+  
+    $('#save_card').submit(function(event) {
+      socket.emit('new_card','On Add Card.');
+    });
+
+    socket.on('show', (message) => {
+      console.log(message);
+      $.post( "get_data_main.php", (data) => {
+        console.log(data);
+        $('#show_card table > tbody').html(data);
+      });
+    });
+
+  });
 </script>
