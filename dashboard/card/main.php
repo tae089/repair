@@ -195,7 +195,7 @@ if(isset($_POST['save_card'])){
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
           //document.getElementById(cardkey).innerHTML = '';
           //socket.on('connect', (data) => {
-            socket.on('show_card', fun(message)  {
+            socket.on('show_card', function(message)  {
               console.log(message);
               document.getElementById(cardkey).innerHTML = '';
             });
