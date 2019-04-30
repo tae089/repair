@@ -15,6 +15,7 @@ if(isset($_POST)){
         if ($getdata) {
             $data = array(
                 'satuts' => true,
+                'card_key' => $card_key,
                 'message' => '<h4 class="text-success"><img src="./../img/loading.gif" width="30px;" height="30px;"> <b>กำลังบันทึกกรุณารอสักครู่...</b></h4>'
              );
         }else {

@@ -251,8 +251,11 @@ if(isset($_POST['save_confirm_card'])){
 </div>
 
 </div>
-
+<script src='//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js'></script>
 <script language="javascript">
+    var socket = io('//127.0.0.1:8080');
+    socket.emit('show_card', 'Show Card');
+    
     function deleteItem(item_key) {
         if (confirm("คุณต้องการจะลบรายการนี้ใช่หรือไม่ ?")) {
             if (window.XMLHttpRequest) { // code for IE7+, Firefox, Chrome, Opera, Safari
