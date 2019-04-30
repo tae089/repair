@@ -1,5 +1,4 @@
 <?php 
-//var_dump($_POST);
 require("../../core/config.core.php");
 require("../../core/connect.core.php");
 require("../../core/functions.core.php");

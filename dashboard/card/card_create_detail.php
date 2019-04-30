@@ -45,18 +45,18 @@ if(isset($_POST['save_edit_item'])){
 		$alert = '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>ข้อมูลไม่ถูกต้อง กรุณาระบุอีกครั้ง !</div>';
 	}
 }
-if(isset($_POST['save_confirm_card'])){
-	if(addslashes($_POST['card_done_aprox']) != NULL){
-		$card_done_aprox = addslashes($_POST['card_done_aprox']);
-	}else{
-		$card_done_aprox = '0000-00-00';
-    }
+// if(isset($_POST['save_confirm_card'])){
+// 	if(addslashes($_POST['card_done_aprox']) != NULL){
+// 		$card_done_aprox = addslashes($_POST['card_done_aprox']);
+// 	}else{
+// 		$card_done_aprox = '0000-00-00';
+//     }
 
-	$getdata->my_sql_update("card_info","card_done_aprox='".@$card_done_aprox."',card_status='".addslashes($_REQUEST['card_status'])."',user_key='".$userdata->user_key."'","card_key='".$card_detail->card_key."'");
-	$cstatus_key=md5(addslashes($_REQUEST['card_status']).rand().time("now"));
-	$getdata->my_sql_insert("card_status","cstatus_key='".$cstatus_key."',card_key='".$card_detail->card_key."',card_status='".addslashes($_REQUEST['card_status'])."',card_status_note='".addslashes($_POST['card_status_note'])."',user_key='".$userdata->user_key."'");
-	echo '<script>alert("บันทึกข้อมูล สำเร็จ !");window.open("card/print_card.php?key='.$card_detail->card_key.'", "_blank");window.location="?p=card";</script>';
-}
+// 	$getdata->my_sql_update("card_info","card_done_aprox='".@$card_done_aprox."',card_status='".addslashes($_REQUEST['card_status'])."',user_key='".$userdata->user_key."'","card_key='".$card_detail->card_key."'");
+// 	$cstatus_key=md5(addslashes($_REQUEST['card_status']).rand().time("now"));
+// 	$getdata->my_sql_insert("card_status","cstatus_key='".$cstatus_key."',card_key='".$card_detail->card_key."',card_status='".addslashes($_REQUEST['card_status'])."',card_status_note='".addslashes($_POST['card_status_note'])."',user_key='".$userdata->user_key."'");
+// 	echo '<script>alert("บันทึกข้อมูล สำเร็จ !");window.open("card/print_card.php?key='.$card_detail->card_key.'", "_blank");window.location="?p=card";</script>';
+// }
 ?>
 <!-- Modal Edit -->
 <div class="modal fade" id="edit_item" tabindex="-1" role="dialog" aria-labelledby="memberModalLabel" aria-hidden="true">
@@ -79,7 +79,7 @@ if(isset($_POST['save_confirm_card'])){
 </div>
 <!-- Modal -->
 <div class="modal fade" id="create_card" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <form method="post" enctype="multipart/form-data" name="form1" id="form1">
+    <form method="post" enctype="multipart/form-data" name="form1" id="form_confirm">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -116,13 +116,17 @@ if(isset($_POST['save_confirm_card'])){
                     <div class="form-group">
                         <label for="card_status_note">หมายเหตุสถานะ</label>
                         <textarea name="card_status_note" id="card_status_note" class="form-control"></textarea>
+                        <input type="hidden" name="card_key" id="card_key" class="form-control" value="<?php echo $card_detail->card_key; ?>">
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default btn-sm" data-dismiss="modal"><i class="fa fa-times fa-fw"></i>
-                        <?php echo @LA_BTN_CLOSE;?></button>
-                    <button type="submit" name="save_confirm_card" class="btn btn-primary btn-sm"><i class="fa fa-save fa-fw"></i>
-                        <?php echo @LA_BTN_SAVE;?></button>
+                    <div id="btn-footer">
+                        <button type="button" class="btn btn-default btn-sm" data-dismiss="modal"><i class="fa fa-times fa-fw"></i>
+                            <?php echo @LA_BTN_CLOSE;?></button>
+                        <button type="submit" name="save_confirm_card" class="btn btn-primary btn-sm"><i class="fa fa-save fa-fw"></i>
+                            <?php echo @LA_BTN_SAVE;?></button>
+                    </div>
+                    <div id="processes"></div>
                 </div>
             </div>
             <!-- /.modal-content -->
@@ -252,9 +256,10 @@ if(isset($_POST['save_confirm_card'])){
 
 </div>
 <script src='//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js'></script>
+<script src="http://malsup.github.com/jquery.form.js"></script>
 <script language="javascript">
     var socket = io('//127.0.0.1:8080');
-    socket.emit('show_card', 'Show Card');
+    //socket.emit('show_card', 'Show Card');
     
     function deleteItem(item_key) {
         if (confirm("คุณต้องการจะลบรายการนี้ใช่หรือไม่ ?")) {
@@ -292,7 +297,44 @@ if(isset($_POST['save_confirm_card'])){
                 console.log(err);
             }
         });
-    })
+    });
+
+    $(document).ready(() => { 
+      //Show data 
+      socket.emit('show_card', 'Show Card');
+      // bind 'myForm' and provide a simple callback function 
+      $('#form_confirm').ajaxForm(() => { 
+        var queryString = $('#form_confirm').formSerialize();
+        $.post('card/save_confirm_card.php', queryString, (response) => {
+          var obj = JSON.parse(response);
+          console.log(obj.message);   
+          if(obj.satuts===true){
+            $('#btn-footer').hide();
+            $('#processes').empty();
+            $('#processes').append(obj.message);
+            setTimeout(() => { 
+              $('#myModal').modal('hide');
+              $('#btn-footer').show();
+              $('#processes').empty();
+              $('#form_confirm').resetForm();
+              alert("บันทึกข้อมูล สำเร็จ !");
+              socket.emit('show_card','Show Card.');
+             // socket.emit('count_card','Count Card.');
+              window.location="?p=card";
+              
+            }, 3000);
+              
+          }else{
+            setTimeout(() => { 
+              $('#processes').empty();
+              $('#processes').append(obj.message);
+            }, 3000);
+          }
+          
+        });          
+      }); 
+
+    }); 
 
 
 </script>
