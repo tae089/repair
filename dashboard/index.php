@@ -32,7 +32,7 @@ require("../core/online.core.php");
     <!-- Bootstrap Core CSS -->
     <link href="../css/bootstrap.min.css" rel="stylesheet">
     <link href="../css/datepicker.css" rel="stylesheet">
-
+    <link href="../css/Hover-master/hover-min.css" rel="stylesheet">
     <!-- MetisMenu CSS -->
     <link href="../css/plugins/metisMenu/metisMenu.min.css" rel="stylesheet">
 
@@ -185,11 +185,11 @@ if(@addslashes($_GET['p']) == "cashier_nomember" || addslashes($_GET['p']) == "i
 <script src='//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js'></script>
  <script>
   var socket = io('//127.0.0.1:8080');
- $(window).load(function(){
+  $(document).ready(function(){
    
         checkCardCount();
 		
-});
+  });
     // tooltip demo
     $('.tooltipx').tooltip({
         selector: "[data-toggle=tooltip]",
@@ -274,9 +274,10 @@ var checkout = $('#dpd2').datepicker({
 		 format : "yyyy-mm-dd"
    });
    
-   socket.on('num_card', (message) => {
+   socket.on('show_card', (message) => {
       console.log(message);
       checkCardCount();
+     
     });
   });
  
@@ -291,8 +292,8 @@ var checkout = $('#dpd2').datepicker({
 			async:false, 
             url: 'function.php?type=show_card_count',
             data: {uclass:<?php echo $_SESSION['uclass'];?>,uwork_id:<?php echo $_SESSION['uwork_id'];?>},
-            success: function(data) {   
-                $('#card_count').html(data);
+            success: function(data) {
+              $('#card_count').html(data);
              }
             });
     }
