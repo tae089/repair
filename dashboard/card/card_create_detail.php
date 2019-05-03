@@ -317,11 +317,8 @@ if(isset($_POST['save_edit_item'])){
               $('#btn-footer').show();
               $('#processes').empty();
               $('#form_confirm').resetForm();
-              alert("บันทึกข้อมูล สำเร็จ !");
               socket.emit('show_card','Show Card.');
-             // socket.emit('count_card','Count Card.');
               window.location="?p=card";
-              
             }, 3000);
               
           }else{

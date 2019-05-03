@@ -32,7 +32,7 @@ require("../core/online.core.php");
     <!-- Bootstrap Core CSS -->
     <link href="../css/bootstrap.min.css" rel="stylesheet">
     <link href="../css/datepicker.css" rel="stylesheet">
-    <link href="../css/Hover-master/hover-min.css" rel="stylesheet">
+    <!-- <link href="../css/Hover-master/hover-min.css" rel="stylesheet"> -->
     <!-- MetisMenu CSS -->
     <link href="../css/plugins/metisMenu/metisMenu.min.css" rel="stylesheet">
 
@@ -75,7 +75,9 @@ if(@$_SESSION['lang']!=NULL){
 }
 ?>
     <!-- jQuery Version 1.11.0 -->
-    <script src="../js/jquery-1.11.0.js"></script>
+    <script src="//code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <!-- <script src="../js/jquery-1.11.0.js"></script> -->
 
     <!-- Bootstrap Core JavaScript -->
     <script src="../js/bootstrap.min.js"></script>
@@ -275,9 +277,13 @@ var checkout = $('#dpd2').datepicker({
    });
    
    socket.on('show_card', (message) => {
-      console.log(message);
+      console.log(message+" index");
       checkCardCount();
-     
+      $('.hvr-buzz-out').effect("shake", { // กำหนด effect ให้เป็น shake
+            direction:'right',  // ทิศทาง  up | down | left | right  ถ้าไม่กำหนด จะเป็น left
+            distance:20, //  ระยะห่าง หน่วยเป็น pixels ถ้าไม่กำหนด ค่าเริ่มต้นจะเป็น 20
+            times:3  // จำนวนครั้งที่กระทำ ถ้าไม่กำหนด ค่าเริ่มต้น เท่ากับ 3 ครั้ง
+         }, 800);
     });
   });
  
