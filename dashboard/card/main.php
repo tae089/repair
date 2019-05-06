@@ -168,7 +168,7 @@
               $('#processes').empty();
               $('#form_add').resetForm();
               window.location='?p=card_create_detail&key='+obj.card_key;
-              socket.emit('new_card','On Add Card.');
+              //socket.emit('new_card','On Add Card.');
             }, 3000);
               
           }else{

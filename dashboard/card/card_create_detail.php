@@ -301,7 +301,7 @@ if(isset($_POST['save_edit_item'])){
 
     $(document).ready(() => { 
       //Show data 
-      socket.emit('show_card', 'Show Card');
+      socket.emit('show_card', {uclass:<?php echo $_SESSION['uclass'];?>,uwork_id:<?php echo $_SESSION['uwork_id'];?>});
       // bind 'myForm' and provide a simple callback function 
       $('#form_confirm').ajaxForm(() => { 
         var queryString = $('#form_confirm').formSerialize();
@@ -317,10 +317,11 @@ if(isset($_POST['save_edit_item'])){
               $('#btn-footer').show();
               $('#processes').empty();
               $('#form_confirm').resetForm();
-              socket.emit('show_card','Show Card.');
+              socket.emit('show_card', {uclass:<?php echo $_SESSION['uclass'];?>,uwork_id:<?php echo $_SESSION['uwork_id'];?>});
               window.location="?p=card";
             }, 3000);
-              
+            
+                
           }else{
             setTimeout(() => { 
               $('#processes').empty();

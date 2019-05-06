@@ -276,13 +276,14 @@ var checkout = $('#dpd2').datepicker({
 		 format : "yyyy-mm-dd"
    });
    
-   socket.on('show_card', (message) => {
-      console.log(message+" index");
+   socket.on('num_card', (res) => {
+      console.log(res);
       checkCardCount();
-      $('.hvr-buzz-out').effect("shake", { // กำหนด effect ให้เป็น shake
-            direction:'right',  // ทิศทาง  up | down | left | right  ถ้าไม่กำหนด จะเป็น left
-            distance:20, //  ระยะห่าง หน่วยเป็น pixels ถ้าไม่กำหนด ค่าเริ่มต้นจะเป็น 20
-            times:3  // จำนวนครั้งที่กระทำ ถ้าไม่กำหนด ค่าเริ่มต้น เท่ากับ 3 ครั้ง
+      //$('#card_count').html(res.count_all);
+      $('#card_count').effect("shake", {
+            direction:'right',
+            distance:20,
+            times:3 
          }, 800);
     });
   });

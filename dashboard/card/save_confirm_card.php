@@ -37,5 +37,5 @@ if(isset($_POST)){
      );
 }
 
-echo json_encode($data ,true);
+echo json_encode($data ,true); 
 ?>
