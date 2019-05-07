@@ -114,7 +114,7 @@ if(isset($_POST['save_edit_item'])){
                         echo '<input type="hidden" name="card_status" id="card_status" class="form-control" value="89da7d193f3c67e4310f50cbb5b36b90" autocomplete="off">';
                     } ?>
                     <div class="form-group">
-                        <label for="card_status_note">หมายเหตุสถานะ</label>
+                        <label for="card_status_note">หมายเหตุ</label>
                         <textarea name="card_status_note" id="card_status_note" class="form-control"></textarea>
                         <input type="hidden" name="card_key" id="card_key" class="form-control" value="<?php echo $card_detail->card_key; ?>">
                     </div>
@@ -301,7 +301,7 @@ if(isset($_POST['save_edit_item'])){
 
     $(document).ready(() => { 
       //Show data 
-      socket.emit('show_card', {uclass:<?php echo $_SESSION['uclass'];?>,uwork_id:<?php echo $_SESSION['uwork_id'];?>});
+      socket.emit('show_card', 'Show data Card');
       // bind 'myForm' and provide a simple callback function 
       $('#form_confirm').ajaxForm(() => { 
         var queryString = $('#form_confirm').formSerialize();
@@ -317,7 +317,7 @@ if(isset($_POST['save_edit_item'])){
               $('#btn-footer').show();
               $('#processes').empty();
               $('#form_confirm').resetForm();
-              socket.emit('show_card', {uclass:<?php echo $_SESSION['uclass'];?>,uwork_id:<?php echo $_SESSION['uwork_id'];?>});
+              socket.emit('num_card', {uclass:<?php echo $_SESSION['uclass'];?>,uwork_id:<?php echo $_SESSION['uwork_id'];?>});
               window.location="?p=card";
             }, 3000);
             

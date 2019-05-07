@@ -148,81 +148,19 @@ if(isset($_POST['save_new_status'])){
 
   </div>
 </nav>
-<?php
-   if(addslashes($_GET['type']) != NULL){
-	   $getcard_count = $getdata->my_sql_show_rows("card_info","card_status = '".addslashes($_GET['type'])."' ORDER BY card_insert");
-  }else{
-	   $getcard_count = $getdata->my_sql_show_rows("card_info","card_status <> 'hidden'  AND  card_status <> '' ORDER BY card_insert");
-  }
-   
-   if($getcard_count != 0){
-  ?>
-<div class="table-responsive">
-  <table width="100%" border="0" class="table table-bordered">
-    <thead>
-      <tr style="font-weight:bold; color:#FFF; text-align:center; background:#ff7709;">
-        <td width="12%">รหัสส่งซ่อม/เคลม</td>
-        <td width="16%">วันที่</td>
-        <td width="26%">ชื่อผู้ส่งซ่อม/เคลม</td>
-        <td width="13%">หมายเลขโทรศัพท์</td>
-        <td width="15%">สถานะ</td>
-        <td width="18%">จัดการ</td>
-      </tr>
-    </thead>
-    <tbody>
-      <?php
-  if(addslashes($_GET['type']) != NULL && $_SESSION['uclass'] !=3){
-	   $getcard = $getdata->my_sql_select(NULL,"card_info","card_customer_work_group=".$_SESSION['uwork_id']." AND card_status = '".addslashes($_GET['type'])."' ORDER BY card_insert");
-  } elseif ($_SESSION['uclass'] !=3){
-	   $getcard = $getdata->my_sql_select(NULL,"card_info","card_customer_work_group=".$_SESSION['uwork_id']." AND card_status <> 'hidden'  AND  card_status <> '' ORDER BY card_insert");
-  } else {
-    $getcard = $getdata->my_sql_select(NULL,"card_info","card_status <> 'hidden'  AND  card_status <> '' ORDER BY card_insert");
-  }
- 
-  while($showcard = mysql_fetch_object($getcard)){
-  ?>
-      <tr style="font-weight:bold;" id="<?php echo @$showcard->card_key;?>">
-        <td align="center">
-          <?php echo @$showcard->card_code;?>
-        </td>
-        <td align="center">
-          <?php echo @dateTimeConvertor($showcard->card_insert);?>
-        </td>
-        <td>&nbsp;
-          <?php echo @$showcard->card_customer_name.'&nbsp;&nbsp;&nbsp;'.$showcard->card_customer_lastname;?>
-        </td>
-        <td align="center">
-          <?php echo @$showcard->card_customer_phone;?>
-        </td>
-        <td align="center">
-          <?php echo @cardStatus($showcard->card_status);?>
-        </td>
-        <td align="right">
-          <?php if($_SESSION['uclass']==3){ ?>
-          <a class="btn btn-xs btn-default" title="ซ่อน" onClick="javascript:hideCard('<?php echo @$showcard->card_key;?>');"><i
-              class="fa fa-ban"></i></a>
-          <a data-toggle="modal" data-target="#edit_status" data-whatever="<?php echo @$showcard->card_key;?>" class="btn btn-xs btn-info"
-            title="เปลี่ยนสถานะ"><i class="fa fa-tag"></i></a>
-          <?php } ?>
-          <a href="?p=card_all_status&key=<?php echo @$showcard->card_key;?>" class="btn btn-xs btn-success" title="ประวัติ"><i
-              class="fa fa-history"></i></a><a href="card/print_card.php?key=<?php echo @$showcard->card_key;?>" target="_blank"
-            class="btn btn-xs btn-warning" title="พิมพ์"><i class="fa fa-print"></i></a><a onClick="javascript:deleteCard('<?php echo @$showcard->card_key;?>');"
-            title="ลบข้อมูล" class="btn btn-xs btn-danger"><i class="fa fa-times"></i></a></td>
-      </tr>
-      <?php
-  }
-  ?>
-    </tbody>
-
-  </table>
-
-</div>
-<?php
-   }else{
-	   echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>ไม่พบข้อมูลใบสั่งซ่อม/เคลม</div>';
-   }
-?>
+<div id="detail_card"></div>
+<script src='//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js'></script>
 <script language="javascript">
+  var socket = io('//127.0.0.1:8080');
+  $(document).ready(() => { 
+
+    $.post( "card/get_card.php", (data) => {
+        console.log(data);
+        $('#detail_card').html(data);
+      });
+
+  });
+
   $('#edit_status').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget) // Button that triggered the modal
     var recipient = button.data('whatever') // Extract info from data-* attributes
@@ -251,6 +189,7 @@ if(isset($_POST['save_new_status'])){
       } else { // code for IE6, IE5
         xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
       }
+      socket.emit('delect_card','Delect Card');
       xmlhttp.onreadystatechange = function () {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
           document.getElementById(cardkey).innerHTML = '';
@@ -277,4 +216,13 @@ if(isset($_POST['save_new_status'])){
       xmlhttp.send();
     }
   }
+
+  socket.on('show_card', (message) => {
+      console.log(message);
+      $.post( "card/get_card.php", (data) => {
+        console.log(data);
+        $('#detail_card').html(data);
+      });
+    }); 
+
 </script>

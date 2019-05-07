@@ -82,7 +82,7 @@ if(isset($_POST['save_card'])){
 <?php
    echo @$alert;?>
 
-<nav class="navbar navbar-default">
+<!-- <nav class="navbar navbar-default">
     <div class="container-fluid">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
@@ -110,7 +110,7 @@ if(isset($_POST['save_card'])){
         </div>
 
     </div>
-</nav>
+</nav> -->
 <div class="row">
     <div class="col-lg-3 col-md-6">
         <div class="panel panel-default">

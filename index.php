@@ -29,7 +29,7 @@ date_default_timezone_set('Asia/Bangkok');
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Repair</title>
+    <title>Repair/ซ่อมบำรุง</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
