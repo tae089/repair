@@ -87,13 +87,13 @@ if(isset($_POST['save_edit_item'])){
                     <h4 class="modal-title" id="myModalLabel">ยืนยันข้อมูล</h4>
                 </div>
                 <div class="modal-body">
-                    <?php if ($_SESSION['uclass'] ==3) { ?>
-                    <div class="form-group">
+                    <?php //if ($_SESSION['uclass'] ==3) { ?>
+                    <!-- <div class="form-group">
                         <label for="card_done_aprox">วันที่คาดว่าจะแล้วเสร็จ</label>
-                        <input type="text" name="card_done_aprox" id="card_done_aprox" class="form-control dpk"
+                        <input type="text" name="card_done_aprox" id="card_done_aprox" class="form-control dpk1"
                             autocomplete="off">
-                    </div>
-                    <?php } ?>
+                    </div> -->
+                    <?php //} ?>
                     <?php if($_SESSION['uclass'] == 3){ ?>
                     <div class="form-group">
                         <label for="card_status">สถานะปัจจุบัน</label>

@@ -18,16 +18,10 @@ if(isset($_POST['save_card'])){
 		$alert = '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>ข้อมูลไม่ถูกต้อง กรุณาระบุอีกครั้ง !</div>';
 	}
 }
-if(isset($_POST['save_new_status'])){
-	$getdata->my_sql_update("card_info","card_status='".addslashes($_POST['card_status'])."'","card_key='".addslashes($_POST['card_key'])."'");
-	$cstatus_key=md5(addslashes($_POST['card_status']).time("now"));
-	$getdata->my_sql_insert("card_status","cstatus_key='".$cstatus_key."',card_key='".addslashes($_POST['card_key'])."',card_status='".addslashes($_POST['card_status'])."',card_status_note='".addslashes($_POST['card_status_note'])."',user_key='".$userdata->user_key."'");
-	$alert = '<div class="alert alert-info alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>บันทึกข้อมูลสถานะ สำเร็จ</div>';
-}
 ?>
 <!-- Modal Edit -->
 <div class="modal fade" id="edit_status" tabindex="-1" role="dialog" aria-labelledby="memberModalLabel" aria-hidden="true">
-  <form method="post" enctype="multipart/form-data" name="form2" id="form2">
+  <form method="post" enctype="multipart/form-data" name="form2" id="form_new_status">
 
     <div class="modal-dialog">
       <div class="modal-content">
@@ -37,7 +31,6 @@ if(isset($_POST['save_new_status'])){
           <h4 class="modal-title" id="memberModalLabel">เปลี่ยนสถานะ</h4>
         </div>
         <div class="ct">
-
         </div>
       </div>
     </div>
@@ -137,31 +130,67 @@ if(isset($_POST['save_new_status'])){
             <?php echo @$text_cat;?></a></li>
       </ul>
 
-      <form class="navbar-form from-group navbar-right" role="search" method="get" action="?p=search">
+      <!-- <form class="navbar-form from-group navbar-right" role="search" method="get" action="?p=search">
 
         <input type="text" class="form-control" name="q" placeholder="ระบุชื่อ/หมายเลขโทรศัพท์หรือรหัสส่งซ่อม/เคลม เพื่อค้นหา"
           size="50" autofocus autocomplete="off">
         <input type="hidden" name="p" id="p" value="search">
 
-      </form>
+      </form> -->
     </div>
 
   </div>
 </nav>
 <div id="detail_card"></div>
+<script src="http://malsup.github.com/jquery.form.js"></script>
 <script src='//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js'></script>
-<script language="javascript">
+<script  type="text/javascript">
   var socket = io('//127.0.0.1:8080');
   $(document).ready(() => { 
-
+    $('.dpk1').datepicker({
+      format : "yyyy-mm-dd"
+    });
     $.post( "card/get_card.php", (data) => {
         console.log(data);
         $('#detail_card').html(data);
       });
+      
+    $('#form_new_status').ajaxForm(() => { 
+        var queryString = $('#form_new_status').formSerialize();
+        console.log("DATA:"+queryString);
+        
+        $.post('card/save_new_status.php', queryString, (response) => {
+          var obj = JSON.parse(response);
+          console.log(obj.message);   
+          if(obj.satuts===true){
+            $('#btn-footer').hide();
+            $('#processes').empty();
+            $('#processes').append(obj.message);
+            setTimeout(() => { 
+              $('#edit_status').modal('hide');
+              $('#btn-footer').show();
+              $('#processes').empty();
+			        $('#form_new_status').resetForm();
+			        socket.emit('show_card', 'Show data Card');
+              //socket.emit('num_card', {uclass:<?php echo $_SESSION['uclass'];?>,uwork_id:<?php echo $_SESSION['uwork_id'];?>});
+              //window.location="?p=card";
+            }, 3000);
+            
+                
+          }else{
+            setTimeout(() => { 
+              $('#processes').empty();
+              $('#processes').append(obj.message);
+            }, 3000);
+          }
+          
+        });          
+      }); 
 
   });
 
-  $('#edit_status').on('show.bs.modal', function (event) {
+  $('#edit_status').on('shown.bs.modal', function (event) {
+    
     var button = $(event.relatedTarget) // Button that triggered the modal
     var recipient = button.data('whatever') // Extract info from data-* attributes
     var modal = $(this);
@@ -171,7 +200,7 @@ if(isset($_POST['save_new_status'])){
       type: "GET",
       url: "card/edit_status.php",
       data: dataString,
-      cache: false,
+      //cache: false,
       success: function (data) {
         console.log(data);
         modal.find('.ct').html(data);
@@ -197,6 +226,7 @@ if(isset($_POST['save_new_status'])){
       }
       xmlhttp.open("GET", "function.php?type=delete_card&key=" + cardkey, true);
       xmlhttp.send();
+      socket.emit('num_card', {uclass:<?php echo $_SESSION['uclass'];?>,uwork_id:<?php echo $_SESSION['uwork_id'];?>});
     }
   }
 
@@ -207,6 +237,7 @@ if(isset($_POST['save_new_status'])){
       } else { // code for IE6, IE5
         xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
       }
+      socket.emit('delect_card','Delect Card');
       xmlhttp.onreadystatechange = function () {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
           document.getElementById(cardkey).innerHTML = '';
@@ -214,6 +245,7 @@ if(isset($_POST['save_new_status'])){
       }
       xmlhttp.open("GET", "function.php?type=hide_card&key=" + cardkey, true);
       xmlhttp.send();
+      socket.emit('num_card', {uclass:<?php echo $_SESSION['uclass'];?>,uwork_id:<?php echo $_SESSION['uwork_id'];?>});
     }
   }
 

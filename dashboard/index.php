@@ -272,19 +272,18 @@ var checkout = $('#dpd2').datepicker({
 <script type="text/javascript">
   $(document).ready(function(){
     $('.combobox').combobox();
-	 $('.dpk').datepicker({
-		 format : "yyyy-mm-dd"
-   });
+    
    
    socket.on('num_card', (res) => {
-      console.log(res);
-      checkCardCount();
-      //$('#card_count').html(res.count_all);
+     console.log(res);
+    //  var audio = new Audio('../sound/sound_notitfy.mp3');
+    //  audio.play();
+     checkCardCount();
       $('#card_count').effect("shake", {
             direction:'right',
             distance:20,
-            times:3 
-         }, 800);
+            times:4 
+         }, 1000);
     });
   });
  
