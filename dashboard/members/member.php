@@ -89,7 +89,7 @@ echo @$alert;
                                             <div class="form-group">
                                             <div class="row">
                                           
-                                            <div class="col-md-6"> <label for="member_name"><?php echo @LA_LB_NAME;?></label>
+                                            <div class="col-md-6"> <label for="member_name"><?php //echo @LA_LB_NAME;?></label>
                                               <input type="text" name="member_name" id="member_name" class="form-control"></div>
                                             <div class="col-md-6"><label for="member_lastname"><?php echo @LA_LB_LASTNAME;?></label>
                                                <input type="text" name="member_lastname" id="member_lastname" class="form-control"> </div>

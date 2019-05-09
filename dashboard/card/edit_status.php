@@ -41,6 +41,12 @@ $getnow_status = $getdata->my_sql_query("card_status","card_info","card_key='".a
 			?>
 		</select>
 	</div>
+	<?php if ($_SESSION['uclass'] ==3) { ?>
+	<div class="form-group">
+		<label for="card_done_aprox">วันที่คาดว่าจะแล้วเสร็จ</label>
+		<input type="text" name="card_done_aprox" id="card_done_aprox" class="form-control">
+	</div>
+	<?php } ?>
 	<div class="form-group">
 		<label for="card_status_note">หมายเหตุสถานะ</label>
 		<textarea name="card_status_note" id="card_status_note" class="form-control"></textarea>
@@ -50,8 +56,19 @@ $getnow_status = $getdata->my_sql_query("card_status","card_info","card_key='".a
 	</div>
 </div>
 <div class="modal-footer">
+<div id="btn-footer">
 	<button type="button" class="btn btn-default btn-sm" data-dismiss="modal"><i class="fa fa-times fa-fw"></i>
 		<?php echo @LA_BTN_CLOSE;?></button>
 	<button type="submit" name="save_new_status" class="btn btn-primary btn-sm"><i class="fa fa-save fa-fw"></i>
 		<?php echo @LA_BTN_SAVE;?></button>
 </div>
+	<div id="processes"></div>
+</div>
+
+
+<script type="text/javascript">
+$('#card_done_aprox').datepicker({
+    format: 'yyyy-mm-dd'
+});
+
+</script>
