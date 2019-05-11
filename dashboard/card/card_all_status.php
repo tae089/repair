@@ -12,11 +12,9 @@ if(addslashes($_GET['key']) == NULL){
     </div>
 </div>
 <ol class="breadcrumb">
-    <li><a href="index.php">
-            <?php echo @LA_MN_HOME;?></a></li>
+    <li><a href="index.php"><?php echo @LA_MN_HOME;?></a></li>
     <li><a href="?p=card">รายการส่งซ่อม/เคลม</a></li>
-    <li class="active">ประวัติการบันทึกสถานะ [
-        <?php echo @$card_detail->card_code;?>]</li>
+    <li class="active">ประวัติการบันทึกสถานะ [<?php echo @$card_detail->card_code;?>]</li>
 </ol>
 <!-- Nav tabs -->
 <ul class="nav nav-tabs">

@@ -11,13 +11,14 @@ $getdata->my_sql_set_utf8();
    $getcard_count = $getdata->my_sql_show_rows("card_info","card_status = ''  ORDER BY card_insert");
    if($getcard_count != 0){
   ?>
-<div class="table-responsive">
+<div class="table-responsive" style="overflow-x:auto;white-space: nowrap;">
   <table width="100%" border="0" class="table table-bordered" id="show_card">
     <thead>
       <tr style="font-weight:bold; color:#FFF; text-align:center; background:#ff7709;">
         <td width="12%">รหัสส่งซ่อม/เคลม</td>
         <td width="16%">วันที่</td>
         <td width="28%">ชื่อผู้ส่งซ่อม/เคลม</td>
+        <td width="16%">กลุ่มงาน</td>
         <td width="13%">หมายเลขโทรศัพท์</td>
         <td width="16%">สถานะ</td>
         <td width="15%">จัดการ</td>
@@ -34,15 +35,16 @@ $getdata->my_sql_set_utf8();
       while($showcard = mysql_fetch_object($getcard)){
       ?>
           <tr style="font-weight:bold;" id="<?php echo @$showcard->card_key;?>">
-            <td align="center">
+            <td>
               <?php echo @$showcard->card_code;?>
             </td>
-            <td align="center">
+            <td>
               <?php echo @dateTimeConvertor($showcard->card_insert);?>
             </td>
             <td>&nbsp;
               <?php echo @$showcard->card_customer_name.'&nbsp;&nbsp;&nbsp;'.$showcard->card_customer_lastname;?>
             </td>
+            <td><?php echo @getGroupWorking($showcard->card_customer_work_group);?></td>
             <td align="center">
               <?php echo @$showcard->card_customer_phone;?>
             </td>
