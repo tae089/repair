@@ -73,7 +73,10 @@
               <option value="ด่วนมาก">ด่วนมาก</option>
             </select>
           </div>
+
         </div>
+        <input type="hidden" name="user_key" id="user_key" class="form-control"
+                value="<?php echo $_SESSION['ukey']; ?>" autocomplete="off">
         <div class="modal-footer">
           <div id="btn-footer">
             <button type="button" class="btn btn-default btn-sm" data-dismiss="modal"><i class="fa fa-times fa-fw"></i>
@@ -123,7 +126,7 @@
 </nav>
 
 <div id="show_card"></div>
-<script src="../js/jquery.auto-complete.js"></script>
+
 <script src='//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js'></script>
 <script src="http://malsup.github.com/jquery.form.js"></script>
 <script language="javascript">
@@ -184,9 +187,18 @@
       $('#card_customer_name').autoComplete({
         minChars: 3,
         source: function(term, response){
-          $.getJSON('card', { q: term }, function(data){ 
+          $.getJSON('card/get_user.php', { search_user: term }, function(data){ 
             response(data); 
           });
+        },
+        renderItem: function (item, search){
+        console.log(item);
+        
+        
+        return '<div class="autocomplete-suggestion" data-langname="'+item+'" data-lang="'+item+'" data-val="'+search+'">'+item+'</div>';
+        },
+        onSelect: function(e, term, item){
+            alert('Item "'+item.data('langname')+' ('+item.data('lang')+')" selected by '+(e.type == 'keydown' ? 'pressing enter' : 'mouse click')+'.');
         }
       });
 

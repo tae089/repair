@@ -81,6 +81,7 @@ if(@$_SESSION['lang']!=NULL){
     <!-- jQuery Version 1.11.0 -->
     <script src="//code.jquery.com/jquery-1.12.4.js"></script>
     <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="../js/jquery.auto-complete.js"></script>
     <!-- <script src="../js/jquery-1.11.0.js"></script> -->
 
     <!-- Bootstrap Core JavaScript -->

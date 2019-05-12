@@ -463,14 +463,4 @@ function getGroupWorking($department_id)
 	}
 }
 
-function getSearchUser($search_user)
-{
-	$getdata = new clear_db();
-	$getdata->my_sql_connect(DB_HOST,DB_USERNAME,DB_PASSWORD,DB_NAME);
-	$getdata->my_sql_set_utf8();
-	$get_department=$getdata->my_sql_select(NULL,"opduser","name LIKE '%".$search_user."%' ");
-	while($show_department = mysql_fetch_object($get_department)){
-		return $show_department->name;
-	}
-}
 ?>

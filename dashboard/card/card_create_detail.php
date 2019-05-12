@@ -119,6 +119,8 @@ if(isset($_POST['save_edit_item'])){
                         <input type="hidden" name="card_key" id="card_key" class="form-control" value="<?php echo $card_detail->card_key; ?>">
                     </div>
                 </div>
+                <input type="hidden" name="user_key" id="user_key" class="form-control"
+                value="<?php echo $_SESSION['ukey']; ?>" autocomplete="off">
                 <div class="modal-footer">
                     <div id="btn-footer">
                         <button type="button" class="btn btn-default btn-sm" data-dismiss="modal"><i class="fa fa-times fa-fw"></i>

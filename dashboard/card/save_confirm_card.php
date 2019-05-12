@@ -1,4 +1,5 @@
 <?php
+
 require("../../core/config.core.php");
 require("../../core/connect.core.php");
 require("../../core/functions.core.php");
@@ -13,9 +14,9 @@ if(isset($_POST)){
 		$card_done_aprox = '0000-00-00';
     }
 
-	$getdata->my_sql_update("card_info","card_done_aprox='".@$card_done_aprox."',card_status='".addslashes($_REQUEST['card_status'])."',user_key='".$userdata->user_key."'","card_key='".$_POST['card_key']."'");
+	$getdata->my_sql_update("card_info","card_done_aprox='".@$card_done_aprox."',card_status='".addslashes($_REQUEST['card_status'])."',user_key='".$_POST['user_key']."'","card_key='".$_POST['card_key']."'");
 	$cstatus_key=md5(addslashes($_REQUEST['card_status']).rand().time("now"));
-	$getdata->my_sql_insert("card_status","cstatus_key='".$cstatus_key."',card_key='".$_POST['card_key']."',card_status='".addslashes($_REQUEST['card_status'])."',card_status_note='".addslashes($_POST['card_status_note'])."',user_key='".$userdata->user_key."'");
+	$getdata->my_sql_insert("card_status","cstatus_key='".$cstatus_key."',card_key='".$_POST['card_key']."',card_status='".addslashes($_REQUEST['card_status'])."',card_status_note='".addslashes($_POST['card_status_note'])."',user_key='".$_POST['user_key']."'");
     
     if($getdata){
         $data = array(
