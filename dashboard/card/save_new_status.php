@@ -13,7 +13,7 @@ if(addslashes($_POST['card_done_aprox']) != NULL){
     $card_done_aprox = '0000-00-00';
 }
 //echo 'DATA:'.$userdata->user_key; die();
-if(isset($_POST['save_new_status'])){
+if(isset($_POST['card_done_aprox'])){
 	$getdata->my_sql_update("card_info","card_done_aprox='".$card_done_aprox."',card_status='".addslashes($_POST['card_status'])."'","card_key='".addslashes($_POST['card_key'])."'");
 	$cstatus_key=md5(addslashes($_POST['card_status']).time("now"));
     $getdata->my_sql_insert("card_status","cstatus_key='".$cstatus_key."',card_key='".addslashes($_POST['card_key'])."',card_status='".addslashes($_POST['card_status'])."',card_status_note='".addslashes($_POST['card_status_note'])."',user_key='".$userdata->user_key."'");
