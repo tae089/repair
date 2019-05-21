@@ -16,7 +16,7 @@ io.on('connection', (socket) => {
         io.sockets.emit('show_card', 'Show Data Now!');
     });
 
-    socket.on('num_card',(message) => {
+    socket.on('num_card', (message) => {
         message.uclass == 3 ? sql = "select * from card_info where card_status <> '' AND card_status <> 'hidden'" : sql = "select * from card_info where card_status <> '' AND card_status <> 'hidden' AND card_customer_work_group='" + message.uwork_id + "' ";
         connection.query(sql, function(err, rows, fields) {
             if (err) throw err
@@ -37,3 +37,4 @@ io.on('connection', (socket) => {
     // });
 
 });
+3

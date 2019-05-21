@@ -162,6 +162,7 @@ if(isset($_POST['save_card'])){
                             <td width="18%">รหัส</td>
                             <td width="27%">วันที่</td>
                             <td width="35%">ชื่อผู้ส่งซ่อม/เคลม</td>
+                            <td width="20%">กลุ่มงาน</td>
                             <td width="20%">สถานะ</td>
                         </tr>
                     </thead>
@@ -185,6 +186,7 @@ if(isset($_POST['save_card'])){
                             <td>&nbsp;
                                 <?php echo @$showcard->card_customer_name.'&nbsp;&nbsp;&nbsp;'.$showcard->card_customer_lastname;?>
                             </td>
+                            <td> <?php echo @getGroupWorking($showcard->card_customer_work_group);?> </td>
                             <td align="center">
                                 <?php echo @cardStatus($showcard->card_status);?>
                             </td>

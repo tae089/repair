@@ -8,17 +8,6 @@
       <?php echo @LA_MN_HOME;?></a></li>
   <li class="active">ส่งซ่อมสินค้า/เคลม</li>
 </ol>
-<?php
-// if(isset($_POST['save_card'])){
-// 	if(addslashes($_POST['card_customer_name'])!= NULL && addslashes($_POST['card_customer_phone']) != NULL ){
-// 		$card_key=md5(addslashes($_POST['card_customer_name']).addslashes($_POST['card_code']).time("now"));
-// 		$getdata->my_sql_insert("card_info","card_key='".$card_key."',card_code='".addslashes($_POST['card_code'])."',card_customer_name='".addslashes($_POST['card_customer_name'])."',card_customer_lastname='".addslashes($_POST['card_customer_lastname'])."',card_customer_address='".addslashes($_POST['card_customer_address'])."',card_customer_phone='".addslashes($_POST['card_customer_phone'])."',card_customer_work_group=".$_POST['card_customer_work_group'].",card_note='".addslashes($_POST['card_note'])."',card_done_aprox='0000-00-00',user_key='".$user_data->user_key."',card_status=''");
-// 		echo '<script>window.location="?p=card_create_detail&key='.$card_key.'";</script>';
-// 	}else{
-// 		$alert = '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>ข้อมูลไม่ถูกต้อง กรุณาระบุอีกครั้ง !</div>';
-// 	}
-// }
-?>
 <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <form method="post" enctype="multipart/form-data" name="form1" id="form_add">
@@ -193,12 +182,15 @@
         },
         renderItem: function (item, search){
         console.log(item);
-        
-        
         return '<div class="autocomplete-suggestion" data-langname="'+item+'" data-lang="'+item+'" data-val="'+search+'">'+item+'</div>';
         },
         onSelect: function(e, term, item){
             alert('Item "'+item.data('langname')+' ('+item.data('lang')+')" selected by '+(e.type == 'keydown' ? 'pressing enter' : 'mouse click')+'.');
+            var names = item.data('langname');
+            var sname = names.split(" ");
+            console.log(sname);
+            $('#card_customer_name').val(sname[0]);
+            $('#card_customer_lastname').val(sname[1]);
         }
       });
 
