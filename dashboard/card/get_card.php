@@ -26,6 +26,7 @@ $getdata->my_sql_set_utf8();
         <td width="16%">กลุ่มงาน</td>
         <td width="13%">หมายเลขโทรศัพท์</td>
         <td width="15%">สถานะ</td>
+        <td width="15%">หมายเหตุ</td>
         <td width="18%">จัดการ</td>
       </tr>
     </thead>
@@ -57,6 +58,9 @@ $getdata->my_sql_set_utf8();
         </td>
         <td>
           <?php echo @cardStatus($showcard->card_status);?>
+        </td>
+        <td>
+          <?php echo @$showcard->card_note;?>
         </td>
         <td align="right">
           <?php if($_SESSION['uclass']==3){ ?>

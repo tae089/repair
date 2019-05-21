@@ -185,10 +185,29 @@ if(@addslashes($_GET['p']) == "cashier_nomember" || addslashes($_GET['p']) == "i
     </div>
     <!-- /#wrapper -->
 
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-app.js"></script>
 
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#config-web-app -->
+
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyCSZpsvYeT8rQ37y6ILp-vZFyM4SYk0aQ0",
+    authDomain: "web-api-a4406.firebaseapp.com",
+    databaseURL: "https://web-api-a4406.firebaseio.com",
+    projectId: "web-api-a4406",
+    storageBucket: "web-api-a4406.appspot.com",
+    messagingSenderId: "425411681459",
+    appId: "1:425411681459:web:d0a89b3ea4e690c4"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+</script>
 </body>
-
 </html>
+
 <script src='//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js'></script>
  <script>
   var socket = io('//127.0.0.1:8080');
