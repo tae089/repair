@@ -33,11 +33,11 @@ $getdata->my_sql_set_utf8();
     <tbody>
       <?php
   if(addslashes($_GET['type']) != NULL && $_SESSION['uclass'] !=3){
-	   $getcard = $getdata->my_sql_select(NULL,"card_info","card_customer_work_group='".$_SESSION['uwork_id']."' AND card_status = '".addslashes($_GET['type'])."' ORDER BY card_insert");
+	   $getcard = $getdata->my_sql_select(NULL,"card_info","card_customer_work_group='".$_SESSION['uwork_id']."' AND card_status = '".addslashes($_GET['type'])."' AND card_type='0' ORDER BY card_insert");
   } elseif ($_SESSION['uclass'] !=3){
-	   $getcard = $getdata->my_sql_select(NULL,"card_info","card_customer_work_group=".$_SESSION['uwork_id']." AND card_status <> 'hidden'  AND  card_status <> '' ORDER BY card_insert");
+	   $getcard = $getdata->my_sql_select(NULL,"card_info","card_customer_work_group=".$_SESSION['uwork_id']." AND card_status <> 'hidden'  AND  card_status <> '' AND card_type='0' ORDER BY card_insert");
   } else {
-    $getcard = $getdata->my_sql_select(NULL,"card_info","card_status <> 'hidden'  AND  card_status <> '' ORDER BY card_insert");
+    $getcard = $getdata->my_sql_select(NULL,"card_info","card_status <> 'hidden'  AND  card_status <> '' AND card_type='0' ORDER BY card_insert");
   }
  
   while($showcard = mysql_fetch_object($getcard)){

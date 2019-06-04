@@ -15,7 +15,7 @@ if(addslashes($_GET['key']) == NULL){
 <ol class="breadcrumb">
     <li><a href="index.php">
             <?php echo @LA_MN_HOME;?></a></li>
-    <li><a href="?p=card_create">ส่งซ่อมสินค้า/เคลม</a></li>
+    <li><a href="?p=card_create">ส่งซ่อม/เคลม</a></li>
     <li class="active">เพิ่มรายการส่งซ่อม/เคลม [
         <?php echo @$card_detail->card_code;?>]</li>
 </ol>

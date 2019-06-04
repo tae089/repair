@@ -1,12 +1,12 @@
 <div class="row">
   <div class="col-lg-12">
-    <h1 class="page-header"><i class="fa fa-edit fa-fw"></i> ส่งซ่อมสินค้า/เคลม</h1>
+    <h1 class="page-header"><i class="fa fa-edit fa-fw"></i> ส่งซ่อม/เคลม</h1>
   </div>
 </div>
 <ol class="breadcrumb">
   <li><a href="index.php">
       <?php echo @LA_MN_HOME;?></a></li>
-  <li class="active">ส่งซ่อมสินค้า/เคลม</li>
+  <li class="active">ส่งซ่อม/เคลม</li>
 </ol>
 <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -64,8 +64,8 @@
           </div>
 
         </div>
-        <input type="hidden" name="user_key" id="user_key" class="form-control"
-                value="<?php echo $_SESSION['ukey']; ?>" autocomplete="off">
+        <input type="hidden" name="user_key" id="user_key" class="form-control" value="<?php echo $_SESSION['ukey']; ?>" autocomplete="off">
+        <input type="hidden" name="card_type" id="card_type" class="form-control" value="0" autocomplete="off">
         <div class="modal-footer">
           <div id="btn-footer">
             <button type="button" class="btn btn-default btn-sm" data-dismiss="modal"><i class="fa fa-times fa-fw"></i>
@@ -74,7 +74,7 @@
             <?php echo @LA_BTN_SAVE;?></button>
           </div>
           <div id="processes"></div>
-        </div>
+        </div>  
       </div>
       <!-- /.modal-content -->
     </div>
@@ -185,7 +185,7 @@
         return '<div class="autocomplete-suggestion" data-langname="'+item+'" data-lang="'+item+'" data-val="'+search+'">'+item+'</div>';
         },
         onSelect: function(e, term, item){
-            alert('Item "'+item.data('langname')+' ('+item.data('lang')+')" selected by '+(e.type == 'keydown' ? 'pressing enter' : 'mouse click')+'.');
+            //alert('Item "'+item.data('langname')+' ('+item.data('lang')+')" selected by '+(e.type == 'keydown' ? 'pressing enter' : 'mouse click')+'.');
             var names = item.data('langname');
             var sname = names.split(" ");
             console.log(sname);

@@ -17,11 +17,21 @@ io.on('connection', (socket) => {
     });
 
     socket.on('num_card', (message) => {
-        message.uclass == 3 ? sql = "select * from card_info where card_status <> '' AND card_status <> 'hidden'" : sql = "select * from card_info where card_status <> '' AND card_status <> 'hidden' AND card_customer_work_group='" + message.uwork_id + "' ";
+        message.uclass == 3 ? sql = "select * from card_info where card_status <> '' AND card_status <> 'hidden' AND card_status='4973069504e1be2a5bdcf7162ade8a16' AND card_status='5cd813fcceeb00544c19201a93ca6529'" : sql = "select * from card_info where card_status <> '' AND card_status <> 'hidden' AND card_status='4973069504e1be2a5bdcf7162ade8a16' AND card_status='5cd813fcceeb00544c19201a93ca6529' AND card_type='0' AND card_customer_work_group='" + message.uwork_id + "' ";
         connection.query(sql, function(err, rows, fields) {
             if (err) throw err
             console.log('Data', rows.length);
             io.emit('num_card', { count_all: rows.length });
+        });
+        io.emit('show_card', 'Show Data Now!');
+    });
+
+    socket.on('num_card_buy', (message) => {
+        message.uclass == 3 ? sql = "select * from card_info where card_status <> '' AND card_status <> 'hidden' AND card_status='4973069504e1be2a5bdcf7162ade8a16' AND card_status='5cd813fcceeb00544c19201a93ca6529'" : sql = "select * from card_info where card_status <> '' AND card_status <> 'hidden' AND card_status<>'4973069504e1be2a5bdcf7162ade8a16' AND card_status<>'5cd813fcceeb00544c19201a93ca6529' AND card_type='1' AND card_customer_work_group='" + message.uwork_id + "' ";
+        connection.query(sql, function(err, rows, fields) {
+            if (err) throw err
+            console.log('Data', rows.length);
+            io.emit('num_card_buy', { count_all: rows.length });
         });
         io.emit('show_card', 'Show Data Now!');
     });

@@ -214,7 +214,7 @@ if(@addslashes($_GET['p']) == "cashier_nomember" || addslashes($_GET['p']) == "i
   $(document).ready(function(){
    
         checkCardCount();
-		
+        checkCardCountBuy();
   });
     // tooltip demo
     $('.tooltipx').tooltip({
@@ -309,6 +309,18 @@ var checkout = $('#dpd2').datepicker({
             times:4 
          }, 1000);
     });
+
+    socket.on('num_card_buy', (res) => {
+     console.log(res);
+    //  var audio = new Audio('../sound/sound_notitfy.mp3');
+    //  audio.play();
+     checkCardCountBuy();
+      $('#card_count_buy').effect("shake", {
+            direction:'right',
+            distance:20,
+            times:4 
+         }, 1000);
+    });
   });
  
 </script>
@@ -324,6 +336,17 @@ var checkout = $('#dpd2').datepicker({
             data: {uclass:<?php echo $_SESSION['uclass'];?>,uwork_id:<?php echo $_SESSION['uwork_id'];?>},
             success: function(data) {
               $('#card_count').html(data);
+             }
+            });
+    }
+
+    function checkCardCountBuy(){
+	 $.ajax({
+			async:false, 
+            url: 'function.php?type=show_card_count_buy',
+            data: {uclass:<?php echo $_SESSION['uclass'];?>,uwork_id:<?php echo $_SESSION['uwork_id'];?>},
+            success: function(data) {
+              $('#card_count_buy').html(data);
              }
             });
     }

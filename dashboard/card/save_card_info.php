@@ -11,7 +11,7 @@ $getdata->my_sql_set_utf8();
 if(isset($_POST)){
 	if(addslashes($_POST['card_customer_name'])!= NULL && addslashes($_POST['card_customer_phone']) != NULL ){
 		$card_key=md5(addslashes($_POST['card_customer_name']).addslashes($_POST['card_code']).time("now"));
-		$getdata->my_sql_insert("card_info","card_key='".$card_key."',card_code='".addslashes($_POST['card_code'])."',card_customer_name='".addslashes($_POST['card_customer_name'])."',card_customer_lastname='".addslashes($_POST['card_customer_lastname'])."',card_customer_address='".addslashes($_POST['card_customer_address'])."',card_customer_phone='".addslashes($_POST['card_customer_phone'])."',card_customer_work_group=".$_POST['card_customer_work_group'].",card_note='".addslashes($_POST['card_note'])."',card_done_aprox='0000-00-00',user_key='".$_POST['user_key']."',card_status=''");
+		$getdata->my_sql_insert("card_info","card_key='".$card_key."',card_code='".addslashes($_POST['card_code'])."',card_customer_name='".addslashes($_POST['card_customer_name'])."',card_customer_lastname='".addslashes($_POST['card_customer_lastname'])."',card_customer_address='".addslashes($_POST['card_customer_address'])."',card_customer_phone='".addslashes($_POST['card_customer_phone'])."',card_customer_work_group=".$_POST['card_customer_work_group'].",card_note='".addslashes($_POST['card_note'])."',card_done_aprox='0000-00-00',user_key='".$_POST['user_key']."',card_status='',card_type='".$_POST['card_type']."' ");
         
         if ($getdata) {
             $data = array(

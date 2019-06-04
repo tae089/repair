@@ -1,696 +1,843 @@
--- phpMyAdmin SQL Dump
--- version 4.6.6
--- https://www.phpmyadmin.net/
---
--- Host: localhost
--- Generation Time: May 10, 2019 at 11:07 AM
--- Server version: 5.7.17-log
--- PHP Version: 5.6.30
+/*
+ Navicat Premium Data Transfer
 
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET time_zone = "+00:00";
+ Source Server         : localhost
+ Source Server Type    : MySQL
+ Source Server Version : 50713
+ Source Host           : localhost:3306
+ Source Schema         : repair
 
+ Target Server Type    : MySQL
+ Target Server Version : 50713
+ File Encoding         : 65001
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+ Date: 04/06/2019 11:48:04
+*/
 
---
--- Database: `repair`
---
+SET NAMES utf8mb4;
+SET FOREIGN_KEY_CHECKS = 0;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `autonumber`
---
-
-CREATE TABLE `autonumber` (
+-- ----------------------------
+-- Table structure for autonumber
+-- ----------------------------
+DROP TABLE IF EXISTS `autonumber`;
+CREATE TABLE `autonumber`  (
   `item_number` int(4) UNSIGNED ZEROFILL NOT NULL,
   `finance_number` int(4) UNSIGNED ZEROFILL NOT NULL,
   `quotation_number` int(4) UNSIGNED ZEROFILL NOT NULL,
   `invoice_number` int(4) UNSIGNED ZEROFILL NOT NULL,
   `year` int(4) UNSIGNED ZEROFILL NOT NULL,
   `month` int(2) UNSIGNED ZEROFILL NOT NULL,
-  `day` int(2) UNSIGNED ZEROFILL NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `day` int(2) UNSIGNED ZEROFILL NOT NULL,
+  PRIMARY KEY (`finance_number`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
---
--- Dumping data for table `autonumber`
---
+-- ----------------------------
+-- Records of autonumber
+-- ----------------------------
+INSERT INTO `autonumber` VALUES (0004, 0001, 0001, 0001, 2019, 06, 03);
 
-INSERT INTO `autonumber` (`item_number`, `finance_number`, `quotation_number`, `invoice_number`, `year`, `month`, `day`) VALUES
-(0018, 0001, 0001, 0001, 2019, 05, 07);
+-- ----------------------------
+-- Table structure for backup_logs
+-- ----------------------------
+DROP TABLE IF EXISTS `backup_logs`;
+CREATE TABLE `backup_logs`  (
+  `backup_key` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `backup_file` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `backup_date` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
+  `user_key` char(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  PRIMARY KEY (`backup_key`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `backup_logs`
---
-
-CREATE TABLE `backup_logs` (
-  `backup_key` varchar(32) NOT NULL,
-  `backup_file` varchar(256) NOT NULL,
-  `backup_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `user_key` char(32) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `card_info`
---
-
-CREATE TABLE `card_info` (
-  `card_key` char(32) NOT NULL,
-  `card_code` varchar(16) NOT NULL,
-  `card_customer_name` varchar(64) NOT NULL,
-  `card_customer_lastname` varchar(64) NOT NULL,
-  `card_customer_address` text NOT NULL,
-  `card_customer_phone` varchar(128) NOT NULL,
+-- ----------------------------
+-- Table structure for card_info
+-- ----------------------------
+DROP TABLE IF EXISTS `card_info`;
+CREATE TABLE `card_info`  (
+  `card_key` char(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `card_code` varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `card_customer_name` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `card_customer_lastname` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `card_customer_address` text CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `card_customer_phone` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `card_customer_work_group` tinyint(5) NOT NULL COMMENT 'รหัสกลุ่มงาน',
-  `card_note` text NOT NULL,
+  `card_note` text CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `card_done_aprox` date NOT NULL,
-  `user_key` varchar(32) NOT NULL,
-  `card_status` varchar(32) NOT NULL,
-  `card_insert` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `user_key` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `card_status` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `card_insert` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
+  `card_type` tinyint(5) NOT NULL COMMENT 'ประเภท 0:ซ่อม 1::ซื้อ',
+  PRIMARY KEY (`card_key`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
---
--- Dumping data for table `card_info`
---
+-- ----------------------------
+-- Records of card_info
+-- ----------------------------
+INSERT INTO `card_info` VALUES ('50f137fad652bb23ac790884f30a3084', 'CTTUKH1', 'สุวดี', 'พลน้ำเที่ยง', 'โรงพยาบาลโนนสะอาด อ.โนนสะอาด จ.อุดรธานี 41240', '121', 18, 'ปกติ', '2019-06-10', '5c74165778e0a3b6b96f802d1290f005', '5cd813fcceeb00544c19201a93ca6529', '2019-06-03 10:43:33', 1);
+INSERT INTO `card_info` VALUES ('8c435b00d27955ec4d72e55642dd0f9d', 'CV5205GT', 'เกศราพร', 'ชาแก้ว', 'โรงพยาบาลโนนสะอาด อ.โนนสะอาด จ.อุดรธานี 41240', '121', 5, 'ปกติ', '0000-00-00', 'b79dfae9960af1a6b1fa1031d0d57af0', '89da7d193f3c67e4310f50cbb5b36b90', '2019-06-01 18:50:18', 1);
+INSERT INTO `card_info` VALUES ('94a5ca99342dd32e241bdb8eeeb96c79', 'CAHU28Z3', 'เกรียงไกร', 'อุตโรกุล', 'โรงพยาบาลโนนสะอาด อ.โนนสะอาด จ.อุดรธานี 41240', '112', 5, 'ปกติ', '2019-05-21', 'b79dfae9960af1a6b1fa1031d0d57af0', 'b1f4d8a6d50a01b4211fd877f7ae464f', '2019-05-20 14:17:25', 0);
+INSERT INTO `card_info` VALUES ('ccbc7539c3e4433e01857a6c2db2bdac', 'C75BG7WP', 'กนกวรรณ', 'อรรคนันท์', 'โรงพยาบาลโนนสะอาด อ.โนนสะอาด จ.อุดรธานี 41240', '125', 5, 'ปกติ', '0000-00-00', 'b79dfae9960af1a6b1fa1031d0d57af0', '89da7d193f3c67e4310f50cbb5b36b90', '2019-06-03 10:18:55', 1);
 
-INSERT INTO `card_info` (`card_key`, `card_code`, `card_customer_name`, `card_customer_lastname`, `card_customer_address`, `card_customer_phone`, `card_customer_work_group`, `card_note`, `card_done_aprox`, `user_key`, `card_status`, `card_insert`) VALUES
-('178f19b24562db9b85b5acea0e72e43b', 'CC2AEL0E', 'นางสาวรัตนาลักษณ์', 'โคตะชิมิ', 'โรงพยาบาลโนนสะอาด อ.โนนสะอาด จ.อุดรธานี 41240', '139', 18, 'ปกติ', '2018-11-28', '5c74165778e0a3b6b96f802d1290f005', 'b1f4d8a6d50a01b4211fd877f7ae464f', '2018-11-26 17:03:30'),
-('dcde8c7ce3fdfdce13d07adaa317b335', 'CKDAL3J', 'ทดสอบ', 'ทดสอบ', 'โรงพยาบาลโนนสะอาด อ.โนนสะอาด จ.อุดรธานี 41240', '121', 5, 'ปกติ', '2019-05-10', '', '4973069504e1be2a5bdcf7162ade8a16', '2019-05-07 07:27:08');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `card_item`
---
-
-CREATE TABLE `card_item` (
-  `item_key` char(32) NOT NULL,
-  `card_key` varchar(32) NOT NULL,
+-- ----------------------------
+-- Table structure for card_item
+-- ----------------------------
+DROP TABLE IF EXISTS `card_item`;
+CREATE TABLE `card_item`  (
+  `item_key` char(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `card_key` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `item_number` int(11) NOT NULL,
-  `item_name` varchar(128) NOT NULL,
-  `item_note` text NOT NULL,
+  `item_name` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `item_note` text CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `item_category_type` tinyint(5) NOT NULL COMMENT 'ประเภทอุปกรณ์',
   `item_price_aprox` float NOT NULL,
-  `item_insert` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `item_insert` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
+  PRIMARY KEY (`item_key`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
---
--- Dumping data for table `card_item`
---
+-- ----------------------------
+-- Records of card_item
+-- ----------------------------
+INSERT INTO `card_item` VALUES ('01f1c13682090f7391ba10fd004846e2', 'ccbc7539c3e4433e01857a6c2db2bdac', 19060002, 'Switching Hub CISCO SG250-08', 'อุปกรณ์เก่าพังแล้ว', 6, 3500, '2019-06-03 10:28:46');
+INSERT INTO `card_item` VALUES ('23a96a86e1f2b0e2911ad34b5b5f8eaf', '50f137fad652bb23ac790884f30a3084', 19060003, 'Hard disk 1TB SATA-III Seagate ', 'ตัวเดิมมีอาการเสีย ไม่สามารถใช้ได้', 7, 2500, '2019-06-03 10:49:26');
+INSERT INTO `card_item` VALUES ('3de8661d3942b992dcff8e35fed1ab2e', '94a5ca99342dd32e241bdb8eeeb96c79', 19050036, 'คอมพิวเตอร์', 'บอร์ดพังเสียหาย', 1, 0, '2019-05-20 14:17:47');
+INSERT INTO `card_item` VALUES ('e2e715f7dc160f0b52351085c11dac75', '8c435b00d27955ec4d72e55642dd0f9d', 19060001, 'แบตเตอรี UPS', 'แบตเสื่อมสภาพ', 5, 0, '2019-06-03 10:09:27');
 
-INSERT INTO `card_item` (`item_key`, `card_key`, `item_number`, `item_name`, `item_note`, `item_category_type`, `item_price_aprox`, `item_insert`) VALUES
-('0fd2084f0b864154badfe72d62336ead', 'dcde8c7ce3fdfdce13d07adaa317b335', 19050017, 'จอคอม', 'เปิดไม่ติด', 1, 0, '2019-05-07 07:27:36'),
-('5515df9fa2d314222cd3f5b3b22c8f61', '178f19b24562db9b85b5acea0e72e43b', 18110001, 'HP LaserJet Pro P1102', 'ปริ้นแล้วกระดาษติดบ่อยๆ', 3, 0, '2018-11-27 05:06:33'),
-('e012c57de786758ec93a2a7aeaf1a2fb', '74ecee88bc19fc219b3409eda144bf68', 19050007, 'ทดสอบ', 'พังเสียหาย', 3, 150, '2019-05-03 03:01:15');
+-- ----------------------------
+-- Table structure for card_status
+-- ----------------------------
+DROP TABLE IF EXISTS `card_status`;
+CREATE TABLE `card_status`  (
+  `cstatus_key` char(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `card_key` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `card_status` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `card_status_note` text CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `user_key` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `cstatus_insert` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
+  PRIMARY KEY (`cstatus_key`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
--- --------------------------------------------------------
+-- ----------------------------
+-- Records of card_status
+-- ----------------------------
+INSERT INTO `card_status` VALUES ('1049215c4c3fa71054d2ba5b324c0be2', '50f137fad652bb23ac790884f30a3084', '5cd813fcceeb00544c19201a93ca6529', '', '', '2019-06-03 11:43:49');
+INSERT INTO `card_status` VALUES ('221693dfae61e68b27d88c2097d858f5', '8c435b00d27955ec4d72e55642dd0f9d', '89da7d193f3c67e4310f50cbb5b36b90', 'ด่วนๆเลย ได้มั้ย', 'b79dfae9960af1a6b1fa1031d0d57af0', '2019-06-03 10:10:12');
+INSERT INTO `card_status` VALUES ('27a81a28f36af07c3d43a232b5e3e7db', '50f137fad652bb23ac790884f30a3084', '44d39a902c4dd1304cbd0080896e0008', '', '', '2019-06-03 11:43:29');
+INSERT INTO `card_status` VALUES ('57fd3835d044c43c05f06ad4cf0c3e62', '94a5ca99342dd32e241bdb8eeeb96c79', 'b1f4d8a6d50a01b4211fd877f7ae464f', 'โอเค', '', '2019-05-20 14:19:06');
+INSERT INTO `card_status` VALUES ('76aac8b9a7d8f91b349c48349c2eec56', '50f137fad652bb23ac790884f30a3084', '89da7d193f3c67e4310f50cbb5b36b90', 'รอเปลี่ยนอุปกรณ์อยู่ค่ะ', '5c74165778e0a3b6b96f802d1290f005', '2019-06-03 10:50:02');
+INSERT INTO `card_status` VALUES ('8b62654ff89d02176d1638d0ba2bc298', '94a5ca99342dd32e241bdb8eeeb96c79', '89da7d193f3c67e4310f50cbb5b36b90', 'ด่วน', 'b79dfae9960af1a6b1fa1031d0d57af0', '2019-05-20 14:18:11');
+INSERT INTO `card_status` VALUES ('a657908ccef52022d6e5f7d5232c94fb', 'ccbc7539c3e4433e01857a6c2db2bdac', '89da7d193f3c67e4310f50cbb5b36b90', 'ขอด่วนๆเลยนะ', 'b79dfae9960af1a6b1fa1031d0d57af0', '2019-06-03 10:29:09');
+INSERT INTO `card_status` VALUES ('a9f7faa456812731843385616b8f44c1', '50f137fad652bb23ac790884f30a3084', 'b1f4d8a6d50a01b4211fd877f7ae464f', 'โปรดรอ กำลังสั่งซื้อให้', '', '2019-06-03 10:51:51');
 
---
--- Table structure for table `card_status`
---
-
-CREATE TABLE `card_status` (
-  `cstatus_key` char(32) NOT NULL,
-  `card_key` varchar(32) NOT NULL,
-  `card_status` varchar(32) NOT NULL,
-  `card_status_note` text NOT NULL,
-  `user_key` varchar(32) NOT NULL,
-  `cstatus_insert` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `card_status`
---
-
-INSERT INTO `card_status` (`cstatus_key`, `card_key`, `card_status`, `card_status_note`, `user_key`, `cstatus_insert`) VALUES
-('13649fb1b6761f8fd7d18b220941acfc', 'dcde8c7ce3fdfdce13d07adaa317b335', 'b090c4112da52d40a08349b9000dab88', '', '', '2019-05-07 08:21:53'),
-('19d85072d1988172a86edeb6bd38c1f1', 'dcde8c7ce3fdfdce13d07adaa317b335', '89da7d193f3c67e4310f50cbb5b36b90', '', '', '2019-05-07 07:56:00'),
-('22c45953855fedc63371066a1d099570', '178f19b24562db9b85b5acea0e72e43b', '89da7d193f3c67e4310f50cbb5b36b90', 'ด่วน', '5c74165778e0a3b6b96f802d1290f005', '2018-11-26 17:37:35'),
-('664e972ddf327c086a909bf8065a5615', 'dcde8c7ce3fdfdce13d07adaa317b335', 'b1f4d8a6d50a01b4211fd877f7ae464f', '', '', '2019-05-07 07:56:41'),
-('a6a78c4ee90f1c616a3e2c1b30407a60', 'dcde8c7ce3fdfdce13d07adaa317b335', '4973069504e1be2a5bdcf7162ade8a16', '', '', '2019-05-10 08:47:55'),
-('cc5e04535815b198f0a7894fbf36081a', '178f19b24562db9b85b5acea0e72e43b', 'b1f4d8a6d50a01b4211fd877f7ae464f', 'กำลังซ่อม', '', '2018-11-26 17:39:36');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `card_type`
---
-
-CREATE TABLE `card_type` (
-  `ctype_key` char(32) NOT NULL,
-  `ctype_name` varchar(128) NOT NULL,
-  `ctype_color` varchar(16) NOT NULL,
+-- ----------------------------
+-- Table structure for card_type
+-- ----------------------------
+DROP TABLE IF EXISTS `card_type`;
+CREATE TABLE `card_type`  (
+  `ctype_key` char(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `ctype_name` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `ctype_color` varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `ctype_status` tinyint(1) NOT NULL,
-  `ctype_insert` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `ctype_insert` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
+  PRIMARY KEY (`ctype_key`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
---
--- Dumping data for table `card_type`
---
+-- ----------------------------
+-- Records of card_type
+-- ----------------------------
+INSERT INTO `card_type` VALUES ('2fdf411856947d19708cf4da19aa3af3', 'เปลี่ยนสินค้าชิ้นใหม่', '#ff6969', 0, '2016-04-25 20:50:59');
+INSERT INTO `card_type` VALUES ('31c1891444b8e5734bee09165953bca1', 'ไม่สามารถซ่อมได้', '#9e9806', 0, '2016-04-25 20:49:41');
+INSERT INTO `card_type` VALUES ('44d39a902c4dd1304cbd0080896e0008', 'ตรวจรับรายการสั่งซื้อ', '#f5dd05', 1, '2019-06-01 20:27:22');
+INSERT INTO `card_type` VALUES ('4973069504e1be2a5bdcf7162ade8a16', 'ซ่อม/เคลม เสร็จ', '#06d628', 1, '2016-04-25 20:49:21');
+INSERT INTO `card_type` VALUES ('58dc6633d9c14d0189efd328fc119591', 'ส่งมอบสินค้าคืนลูกค้าเรียบร้อย', '#2958ff', 0, '2016-04-25 20:52:56');
+INSERT INTO `card_type` VALUES ('5cd813fcceeb00544c19201a93ca6529', 'พร้อมเบิกจ่าย', '#06d628', 1, '2019-06-01 20:28:51');
+INSERT INTO `card_type` VALUES ('89da7d193f3c67e4310f50cbb5b36b90', 'นำรายการ เข้าสู่ระบบ', '#29ccff', 1, '2016-04-25 20:23:50');
+INSERT INTO `card_type` VALUES ('a5eb0dd1c5065bb9fe0cb05d61f03f4a', 'ยกเลิกการ ซื้อ/ซ่อม', '#753709', 1, '2016-04-25 20:51:39');
+INSERT INTO `card_type` VALUES ('b090c4112da52d40a08349b9000dab88', 'ตรวจสอบรายการ', '#c9c9c9', 1, '2016-04-25 20:11:34');
+INSERT INTO `card_type` VALUES ('b1f4d8a6d50a01b4211fd877f7ae464f', 'ดำเนินการ ซื้อ/ซ่อม', '#120eeb', 1, '2016-04-25 20:48:05');
+INSERT INTO `card_type` VALUES ('c382e352e2e620a3c60a2cc7c6a7fa35', 'ส่งต่อการซ่อม/เคลม', '#d940ff', 1, '2016-04-25 20:48:42');
+INSERT INTO `card_type` VALUES ('c9934ed002b3a365088862d85604b765', 'เปลี่ยนอะไหล่', '#9c9c9c', 0, '2016-04-25 20:51:16');
+INSERT INTO `card_type` VALUES ('da144a84c0660c67f115eeefa93dc56f', 'ชำระเงิน', '#ff5c00', 0, '2016-04-25 20:52:35');
 
-INSERT INTO `card_type` (`ctype_key`, `ctype_name`, `ctype_color`, `ctype_status`, `ctype_insert`) VALUES
-('2fdf411856947d19708cf4da19aa3af3', 'เปลี่ยนสินค้าชิ้นใหม่', '#ff6969', 0, '2016-04-25 13:50:59'),
-('31c1891444b8e5734bee09165953bca1', 'ไม่สามารถซ่อมได้', '#9e9806', 0, '2016-04-25 13:49:41'),
-('4973069504e1be2a5bdcf7162ade8a16', 'ซ่อม/เคลม เสร็จ', '#06d628', 1, '2016-04-25 13:49:21'),
-('58dc6633d9c14d0189efd328fc119591', 'ส่งมอบสินค้าคืนลูกค้าเรียบร้อย', '#2958ff', 0, '2016-04-25 13:52:56'),
-('89da7d193f3c67e4310f50cbb5b36b90', 'นำรายการซ่อม/เคลม เข้าระบบ', '#29ccff', 1, '2016-04-25 13:23:50'),
-('a5eb0dd1c5065bb9fe0cb05d61f03f4a', 'ยกเลิกการซ่อม/เคลม', '#753709', 1, '2016-04-25 13:51:39'),
-('b090c4112da52d40a08349b9000dab88', 'ตรวจสอบรายการซ่อม/เคลม', '#c9c9c9', 1, '2016-04-25 13:11:34'),
-('b1f4d8a6d50a01b4211fd877f7ae464f', 'ดำเนินการซ่อม/เคลม', '#120eeb', 1, '2016-04-25 13:48:05'),
-('c382e352e2e620a3c60a2cc7c6a7fa35', 'ส่งต่อการซ่อม/เคลม', '#d940ff', 1, '2016-04-25 13:48:42'),
-('c9934ed002b3a365088862d85604b765', 'เปลี่ยนอะไหล่', '#9c9c9c', 0, '2016-04-25 13:51:16'),
-('da144a84c0660c67f115eeefa93dc56f', 'ชำระเงิน', '#ff5c00', 0, '2016-04-25 13:52:35');
+-- ----------------------------
+-- Table structure for category
+-- ----------------------------
+DROP TABLE IF EXISTS `category`;
+CREATE TABLE `category`  (
+  `category_id` int(11) NOT NULL AUTO_INCREMENT,
+  `category_name_th` varchar(150) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `category_name_en` varchar(150) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `category_status` tinyint(5) NOT NULL DEFAULT 1 COMMENT '0:ซ่อน,1:แสดง',
+  PRIMARY KEY (`category_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
--- --------------------------------------------------------
+-- ----------------------------
+-- Records of category
+-- ----------------------------
+INSERT INTO `category` VALUES (1, 'คอมพิวเตอร์', 'Computer', 1);
+INSERT INTO `category` VALUES (2, 'คอมพิวเตอร์ โน๊ตบุ๊ค', 'Computer Notebook', 1);
+INSERT INTO `category` VALUES (3, 'ปริ้นเตอร์', 'Printer', 1);
+INSERT INTO `category` VALUES (4, 'เครื่องสำรองไฟ', 'UPS', 1);
+INSERT INTO `category` VALUES (5, 'อุปกรณ์ต่อพ่วง', 'Accessories', 1);
+INSERT INTO `category` VALUES (6, 'เครือข่าย', 'Network', 1);
+INSERT INTO `category` VALUES (7, 'อุปกรณ์ฮาร์ดแวร์', 'Hardware', 1);
 
---
--- Table structure for table `category`
---
+-- ----------------------------
+-- Table structure for department
+-- ----------------------------
+DROP TABLE IF EXISTS `department`;
+CREATE TABLE `department`  (
+  `department_id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(110) CHARACTER SET tis620 COLLATE tis620_thai_ci NOT NULL,
+  `work_group_id` varchar(100) CHARACTER SET tis620 COLLATE tis620_thai_ci NOT NULL,
+  PRIMARY KEY (`department_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 32 CHARACTER SET = tis620 COLLATE = tis620_thai_ci ROW_FORMAT = Dynamic;
 
-CREATE TABLE `category` (
-  `category_id` int(11) NOT NULL,
-  `category_name_th` varchar(150) NOT NULL,
-  `category_name_en` varchar(150) NOT NULL,
-  `category_status` tinyint(5) NOT NULL DEFAULT '1' COMMENT '0:ซ่อน,1:แสดง'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+-- ----------------------------
+-- Records of department
+-- ----------------------------
+INSERT INTO `department` VALUES (1, 'งานบริหารทั่วไป', '1');
+INSERT INTO `department` VALUES (2, 'งานการเงินและบัญชี', '1');
+INSERT INTO `department` VALUES (3, 'งานพัสดุ', '1');
+INSERT INTO `department` VALUES (4, 'งานการเจ้าหน้าที่', '1');
+INSERT INTO `department` VALUES (5, 'งานผู้ป่วยนอก', '2');
+INSERT INTO `department` VALUES (6, 'ตึกผู้ป่วยใน', '2');
+INSERT INTO `department` VALUES (7, 'คลินิกพิเศษ', '2');
+INSERT INTO `department` VALUES (8, 'งานซักฟอก', '2');
+INSERT INTO `department` VALUES (9, 'COC ', '2');
+INSERT INTO `department` VALUES (10, 'ทันตกรรม', '2');
+INSERT INTO `department` VALUES (11, 'เภสัชกรรม', '2');
+INSERT INTO `department` VALUES (12, 'ห้องแล็บ', '2');
+INSERT INTO `department` VALUES (13, 'อุบัติเหตุฉุกเฉิน', '2');
+INSERT INTO `department` VALUES (14, 'งานประกัน', '2');
+INSERT INTO `department` VALUES (15, 'งานระบาด', '2');
+INSERT INTO `department` VALUES (16, 'x-ray', '2');
+INSERT INTO `department` VALUES (17, 'PCU', '2');
+INSERT INTO `department` VALUES (18, 'ห้องคลอด', '2');
+INSERT INTO `department` VALUES (19, 'แพทย์แผนไทย', '2');
+INSERT INTO `department` VALUES (20, 'DPAC', '2');
+INSERT INTO `department` VALUES (21, 'กายภาพ', '2');
+INSERT INTO `department` VALUES (22, 'โภชนาการ', '2');
+INSERT INTO `department` VALUES (23, 'ซ่อมบำรุง', '1');
+INSERT INTO `department` VALUES (24, 'ซับพลาย', '2');
+INSERT INTO `department` VALUES (25, 'งาน it', '1');
+INSERT INTO `department` VALUES (26, 'งานแผน', '1');
+INSERT INTO `department` VALUES (27, 'งาน NCD', '2');
+INSERT INTO `department` VALUES (28, 'งาน TB COPD ASTHMA', '2');
+INSERT INTO `department` VALUES (29, 'งานผู้สูงอายุ', '2');
+INSERT INTO `department` VALUES (30, 'ฝ่ายการพยาบาล', '2');
+INSERT INTO `department` VALUES (31, 'งาน IC', '2');
 
---
--- Dumping data for table `category`
---
+-- ----------------------------
+-- Table structure for language
+-- ----------------------------
+DROP TABLE IF EXISTS `language`;
+CREATE TABLE `language`  (
+  `language_code` varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `language_name` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `language_status` tinyint(1) NOT NULL,
+  PRIMARY KEY (`language_code`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
-INSERT INTO `category` (`category_id`, `category_name_th`, `category_name_en`, `category_status`) VALUES
-(1, 'คอมพิวเตอร์', 'Computer', 1),
-(2, 'คอมพิวเตอร์ โน๊ตบุ๊ค', 'Computer Notebook', 1),
-(3, 'ปริ้นเตอร์', 'Printer', 1),
-(4, 'เครื่องสำรองไฟ', 'UPS', 1),
-(5, 'อุปกรณ์ต่อพ่วง', 'Accessories', 1),
-(6, 'เครือข่าย', 'Network', 1);
+-- ----------------------------
+-- Records of language
+-- ----------------------------
+INSERT INTO `language` VALUES ('en', 'English', 0);
+INSERT INTO `language` VALUES ('th', 'ภาษาไทย', 1);
 
--- --------------------------------------------------------
+-- ----------------------------
+-- Table structure for list
+-- ----------------------------
+DROP TABLE IF EXISTS `list`;
+CREATE TABLE `list`  (
+  `cases` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `menu` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `pages` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `case_status` tinyint(1) NOT NULL DEFAULT 1,
+  PRIMARY KEY (`cases`) USING BTREE
+) ENGINE = MyISAM CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
---
--- Table structure for table `department`
---
+-- ----------------------------
+-- Records of list
+-- ----------------------------
+INSERT INTO `list` VALUES ('setting', 'setting', 'settings/setting.php', 1);
+INSERT INTO `list` VALUES ('member', 'member', 'members/member.php', 1);
+INSERT INTO `list` VALUES ('cashier', 'cashier', 'cashier/cashier.php', 1);
+INSERT INTO `list` VALUES ('report', 'report', 'report/report.php', 1);
+INSERT INTO `list` VALUES ('report_export', 'report', 'report/report_export.php', 1);
+INSERT INTO `list` VALUES ('report_movement', 'report', 'report/report_movement.php', 1);
+INSERT INTO `list` VALUES ('report_income', 'report', 'report/report_income.php', 1);
+INSERT INTO `list` VALUES ('report_income_detail', 'report', 'report/report_income_detail.php', 1);
+INSERT INTO `list` VALUES ('report_booking', 'report', 'report/report_booking.php', 1);
+INSERT INTO `list` VALUES ('report_logs', 'report', 'report/report_logs.php', 1);
+INSERT INTO `list` VALUES ('report_delivery', 'report', 'report/report_delivery.php', 1);
+INSERT INTO `list` VALUES ('report_delivery_detail', 'report', 'report/report_delivery_detail.php', 1);
+INSERT INTO `list` VALUES ('setting_users', 'setting', 'settings/setting_users.php', 1);
+INSERT INTO `list` VALUES ('setting_backup', 'setting', 'settings/setting_backup.php', 1);
+INSERT INTO `list` VALUES ('setting_unit', 'setting', 'settings/setting_unit.php', 0);
+INSERT INTO `list` VALUES ('setting_categories', 'setting', 'settings/setting_categories.php', 1);
+INSERT INTO `list` VALUES ('setting_member_group', 'setting', 'settings/setting_member_group.php', 1);
+INSERT INTO `list` VALUES ('setting_promotions', 'setting', 'settings/setting_promotions.php', 1);
+INSERT INTO `list` VALUES ('report_debt', 'report', 'report/report_debt.php', 1);
+INSERT INTO `list` VALUES ('report_creditor', 'report', 'report/report_creditor.php', 1);
+INSERT INTO `list` VALUES ('setting_info', 'setting', 'settings/setting_info.php', 1);
+INSERT INTO `list` VALUES ('setting_system', 'setting', 'settings/setting_system.php', 1);
+INSERT INTO `list` VALUES ('setting_user_access', 'setting', 'settings/setting_user_access.php', 1);
+INSERT INTO `list` VALUES ('administrator_access_list', 'setting', 'administrator/administrator_access_list.php', 1);
+INSERT INTO `list` VALUES ('administrator_cases', 'setting', 'administrator/administrator_cases.php', 1);
+INSERT INTO `list` VALUES ('administrator_menus', 'setting', 'administrator/administrator_menus.php', 1);
+INSERT INTO `list` VALUES ('administrator_modules', 'setting', 'administrator/administrator_modules.php', 1);
+INSERT INTO `list` VALUES ('administrator_helper', 'seting', 'administrator/administrator_helper.php', 1);
+INSERT INTO `list` VALUES ('cashier_member', 'cashier', 'cashier/cashier_member.php', 1);
+INSERT INTO `list` VALUES ('cashier_booking', 'cashier', 'cashier/cashier_booking.php', 1);
+INSERT INTO `list` VALUES ('product_detail', 'product', 'products/product_detail.php', 1);
+INSERT INTO `list` VALUES ('member_detail', 'member', 'members/member_detail.php', 1);
+INSERT INTO `list` VALUES ('new_member', 'member', 'members/new_member.php', 1);
+INSERT INTO `list` VALUES ('member_history', 'member', 'members/member_history.php', 1);
+INSERT INTO `list` VALUES ('setting_promotion_member', 'setting', 'settings/setting_promotion_member.php', 1);
+INSERT INTO `list` VALUES ('report_cancel', 'report', 'report/report_cancel.php', 1);
+INSERT INTO `list` VALUES ('card_all_status', 'card', 'card/card_all_status.php', 1);
+INSERT INTO `list` VALUES ('search', '', 'main/search.php', 1);
+INSERT INTO `list` VALUES ('card', 'card', 'card/card.php', 1);
+INSERT INTO `list` VALUES ('setting_card_status', 'setting', 'settings/setting_card_status.php', 1);
+INSERT INTO `list` VALUES ('card_create_detail', 'card_create', 'card/card_create_detail.php', 1);
+INSERT INTO `list` VALUES ('search_code', '', 'main/search.php', 1);
+INSERT INTO `list` VALUES ('card_create', 'card_create', 'card/main.php', 1);
+INSERT INTO `list` VALUES ('setting_products', 'setting', 'settings/setting_products.php', 1);
+INSERT INTO `list` VALUES ('card_buys', 'card_create_buys', 'card/card_buys.php', 1);
+INSERT INTO `list` VALUES ('card_buys_all', 'card_create_buys', 'card/card_buys_all.php', 1);
+INSERT INTO `list` VALUES ('card_create_buy_detail', 'card_buys', 'card/card_create_buy_detail.php', 1);
 
-CREATE TABLE `department` (
-  `department_id` int(11) NOT NULL,
-  `name` varchar(110) NOT NULL,
-  `work_group_id` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=tis620;
+-- ----------------------------
+-- Table structure for logs
+-- ----------------------------
+DROP TABLE IF EXISTS `logs`;
+CREATE TABLE `logs`  (
+  `log_key` varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `log_date` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
+  `log_ipaddress` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `log_text` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `log_user` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL
+) ENGINE = MyISAM CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
---
--- Dumping data for table `department`
---
+-- ----------------------------
+-- Records of logs
+-- ----------------------------
+INSERT INTO `logs` VALUES ('05d348411cbd3f83', '2018-11-06 10:05:39', '::1', 'admin เข้าสู่ระบบ.', '');
+INSERT INTO `logs` VALUES ('b575e3965361c5a4', '2018-11-06 10:06:40', '::1', 'admin ออกจากระบบ.', '');
+INSERT INTO `logs` VALUES ('4dac6b21c0756d23', '2018-11-06 10:06:47', '::1', 'admin เข้าสู่ระบบ.', '');
+INSERT INTO `logs` VALUES ('6858f8e3855e4b68', '2018-11-07 19:52:15', '::1', 'admin ออกจากระบบ.', '');
+INSERT INTO `logs` VALUES ('81dfb7c06ce62213', '2018-11-09 13:21:15', '::1', 'admin เข้าสู่ระบบ.', '');
+INSERT INTO `logs` VALUES ('5f1985fe8819521b', '2018-11-09 13:33:28', '::1', 'user เข้าสู่ระบบ.', '5087e7c3d2a12b0da6959da954470982');
+INSERT INTO `logs` VALUES ('d4c65926242ed6ea', '2018-11-09 18:10:06', '::1', 'admin ออกจากระบบ.', '');
+INSERT INTO `logs` VALUES ('028a1d6977235382', '2018-11-09 18:10:15', '::1', 'user ออกจากระบบ.', '5087e7c3d2a12b0da6959da954470982');
+INSERT INTO `logs` VALUES ('a962c88eed83cc7c', '2018-11-10 10:30:41', '::1', 'admin เข้าสู่ระบบ.', '');
+INSERT INTO `logs` VALUES ('d95e6cf391a98ebc', '2018-11-10 13:54:53', '::1', 'admin ออกจากระบบ.', '');
+INSERT INTO `logs` VALUES ('278f5e413e205458', '2018-11-10 13:55:05', '::1', 'admin เข้าสู่ระบบ.', '');
+INSERT INTO `logs` VALUES ('f9e44fd8c4acfa65', '2018-11-14 10:16:36', '::1', 'admin เข้าสู่ระบบ.', '');
+INSERT INTO `logs` VALUES ('a5774af0cf222981', '2018-11-19 08:35:35', '::1', 'admin เข้าสู่ระบบ.', '');
+INSERT INTO `logs` VALUES ('b5f7014b0d82af21', '2018-11-22 13:03:23', '::1', 'admin เข้าสู่ระบบ.', '');
+INSERT INTO `logs` VALUES ('4aab2166dc20317b', '2018-11-23 15:23:11', '::1', 'admin เข้าสู่ระบบ.', '');
+INSERT INTO `logs` VALUES ('60d9d5f2f9817af2', '2018-11-26 16:31:03', '::1', 'lr11017 เข้าสู่ระบบ.', '5c74165778e0a3b6b96f802d1290f005');
+INSERT INTO `logs` VALUES ('1c7456e05ab6d8c2', '2018-11-26 16:32:46', '::1', 'lr11017 ออกจากระบบ.', '5c74165778e0a3b6b96f802d1290f005');
+INSERT INTO `logs` VALUES ('b5adf8e0d9a48ece', '2018-11-26 16:32:53', '::1', 'lr11017 เข้าสู่ระบบ.', '5c74165778e0a3b6b96f802d1290f005');
+INSERT INTO `logs` VALUES ('7e1b5af4903bb2f9', '2018-11-26 16:36:31', '::1', 'lr11017 เข้าสู่ระบบ.', '5c74165778e0a3b6b96f802d1290f005');
+INSERT INTO `logs` VALUES ('b07def915de1f435', '2018-11-26 16:37:36', '::1', 'lr11017 เข้าสู่ระบบ.', '5c74165778e0a3b6b96f802d1290f005');
+INSERT INTO `logs` VALUES ('36b07b0e20d5a8f3', '2018-11-26 16:52:47', '::1', 'lr11017 ออกจากระบบ.', '5c74165778e0a3b6b96f802d1290f005');
+INSERT INTO `logs` VALUES ('4b1d832dc4482404', '2018-11-26 16:53:03', '::1', 'lr11017 เข้าสู่ระบบ.', '5c74165778e0a3b6b96f802d1290f005');
+INSERT INTO `logs` VALUES ('50604577713cb568', '2018-11-26 16:54:15', '::1', 'lr11017 เข้าสู่ระบบ.', '5c74165778e0a3b6b96f802d1290f005');
+INSERT INTO `logs` VALUES ('a0b9d634fd4dbad0', '2018-11-26 16:55:14', '::1', 'lr11017 เข้าสู่ระบบ.', '5c74165778e0a3b6b96f802d1290f005');
+INSERT INTO `logs` VALUES ('4a12e983ee97eb9c', '2018-11-26 16:55:26', '::1', 'lr11017 เข้าสู่ระบบ.', '5c74165778e0a3b6b96f802d1290f005');
+INSERT INTO `logs` VALUES ('eb0b01a39b6ec810', '2018-11-26 16:56:01', '::1', 'admin ออกจากระบบ.', '');
+INSERT INTO `logs` VALUES ('520a0550d4b9d4d8', '2018-11-26 16:56:09', '::1', 'admin เข้าสู่ระบบ.', '');
+INSERT INTO `logs` VALUES ('c2de3caa132eaf87', '2018-11-26 16:56:37', '::1', 'lr11017 เข้าสู่ระบบ.', '5c74165778e0a3b6b96f802d1290f005');
+INSERT INTO `logs` VALUES ('3ccf943654addb75', '2018-11-26 16:56:42', '::1', 'admin ออกจากระบบ.', '');
+INSERT INTO `logs` VALUES ('2fedb34a9c155b1d', '2018-11-26 16:56:56', '::1', 'lr11017 เข้าสู่ระบบ.', '5c74165778e0a3b6b96f802d1290f005');
+INSERT INTO `logs` VALUES ('58e37ddfc66803e0', '2018-11-26 22:34:09', '::1', 'admin เข้าสู่ระบบ.', '');
+INSERT INTO `logs` VALUES ('41b2b54b4ef49887', '2018-11-26 22:37:04', '::1', 'lr11017 เข้าสู่ระบบ.', '5c74165778e0a3b6b96f802d1290f005');
+INSERT INTO `logs` VALUES ('54026698cecba15c', '2018-11-26 22:38:03', '::1', 'lr11017 เข้าสู่ระบบ.', '5c74165778e0a3b6b96f802d1290f005');
+INSERT INTO `logs` VALUES ('efa0ded6ddb47204', '2018-11-26 23:56:22', '::1', 'lr11017 ออกจากระบบ.', '5c74165778e0a3b6b96f802d1290f005');
+INSERT INTO `logs` VALUES ('2ddf5cef1ffb8a4d', '2018-11-26 23:56:35', '::1', 'lr11017 เข้าสู่ระบบ.', '5c74165778e0a3b6b96f802d1290f005');
+INSERT INTO `logs` VALUES ('0ae4be84a06e960d', '2018-11-26 23:57:40', '::1', 'lr11017 เข้าสู่ระบบ.', '5c74165778e0a3b6b96f802d1290f005');
+INSERT INTO `logs` VALUES ('fdb34c8347fbdbe5', '2018-11-27 00:29:26', '::1', 'admin ออกจากระบบ.', '');
+INSERT INTO `logs` VALUES ('47b31564929f8ee5', '2018-11-27 00:29:40', '::1', 'opd11017 เข้าสู่ระบบ.', 'b79dfae9960af1a6b1fa1031d0d57af0');
+INSERT INTO `logs` VALUES ('0d0b9ba19b44894a', '2018-11-27 00:30:02', '::1', 'opd11017 ออกจากระบบ.', 'b79dfae9960af1a6b1fa1031d0d57af0');
+INSERT INTO `logs` VALUES ('2a95ec9d7d38b583', '2018-11-27 00:30:11', '::1', 'admin เข้าสู่ระบบ.', '');
+INSERT INTO `logs` VALUES ('6aba21dcf049c57b', '2018-11-27 00:41:26', '::1', 'lr11017 ออกจากระบบ.', '5c74165778e0a3b6b96f802d1290f005');
+INSERT INTO `logs` VALUES ('e3f08e68b008df82', '2018-11-27 09:09:08', '::1', 'admin เข้าสู่ระบบ.', '');
+INSERT INTO `logs` VALUES ('3724ef2fe20f2017', '2018-11-27 09:18:39', '::1', 'lr11017 เข้าสู่ระบบ.', '5c74165778e0a3b6b96f802d1290f005');
+INSERT INTO `logs` VALUES ('5a9eeb702ae92ba7', '2018-11-27 11:11:01', '::1', 'opd11017 เข้าสู่ระบบ.', 'b79dfae9960af1a6b1fa1031d0d57af0');
+INSERT INTO `logs` VALUES ('eb102796914b86b7', '2018-11-27 17:10:45', '::1', 'opd11017 ออกจากระบบ.', 'b79dfae9960af1a6b1fa1031d0d57af0');
+INSERT INTO `logs` VALUES ('93207f3dff049601', '2018-11-27 17:12:14', '::1', 'lr11017 ออกจากระบบ.', '5c74165778e0a3b6b96f802d1290f005');
+INSERT INTO `logs` VALUES ('d13ddf0cafefcf9c', '2018-11-28 14:43:34', '::1', 'opd11017 เข้าสู่ระบบ.', 'b79dfae9960af1a6b1fa1031d0d57af0');
+INSERT INTO `logs` VALUES ('eb71cb60f30f9601', '2018-11-28 16:18:53', '::1', 'admin ออกจากระบบ.', '');
+INSERT INTO `logs` VALUES ('0665c87f85b76932', '2018-11-28 16:19:02', '::1', 'lr11017 เข้าสู่ระบบ.', '5c74165778e0a3b6b96f802d1290f005');
+INSERT INTO `logs` VALUES ('f20949e1fb42708d', '2018-11-28 16:26:39', '::1', 'admin เข้าสู่ระบบ.', '');
+INSERT INTO `logs` VALUES ('1cbf5aba49e450de', '2018-11-28 16:27:43', '::1', 'admin ออกจากระบบ.', '');
+INSERT INTO `logs` VALUES ('e11d361ea0d0616c', '2018-11-28 16:42:18', '::1', 'lr11017 ออกจากระบบ.', '5c74165778e0a3b6b96f802d1290f005');
+INSERT INTO `logs` VALUES ('38ee4bd3b6acca35', '2018-11-28 16:42:33', '::1', 'admin เข้าสู่ระบบ.', '');
+INSERT INTO `logs` VALUES ('7230d9d593686525', '2018-11-28 17:43:12', '::1', 'opd11017 ออกจากระบบ.', 'b79dfae9960af1a6b1fa1031d0d57af0');
+INSERT INTO `logs` VALUES ('1043418d2d7f5600', '2018-11-28 18:04:06', '::1', 'admin ออกจากระบบ.', '');
+INSERT INTO `logs` VALUES ('f7702ecc4a17a45b', '2019-02-22 09:46:12', '::1', 'admin เข้าสู่ระบบ.', '');
+INSERT INTO `logs` VALUES ('7cdc58541815e511', '2019-04-27 11:31:11', '::1', 'admin เข้าสู่ระบบ.', '');
+INSERT INTO `logs` VALUES ('af737a749aeda077', '2019-04-27 12:54:13', '::1', 'opd11017 เข้าสู่ระบบ.', 'b79dfae9960af1a6b1fa1031d0d57af0');
+INSERT INTO `logs` VALUES ('a29d66ef1d481ad1', '2019-04-29 21:49:16', '::1', 'admin เข้าสู่ระบบ.', '');
+INSERT INTO `logs` VALUES ('daaf799ec371dccb', '2019-04-29 21:50:11', '::1', 'opd11017 เข้าสู่ระบบ.', 'b79dfae9960af1a6b1fa1031d0d57af0');
+INSERT INTO `logs` VALUES ('5df9703fb24c1412', '2019-04-30 22:09:05', '::1', 'opd11017 เข้าสู่ระบบ.', 'b79dfae9960af1a6b1fa1031d0d57af0');
+INSERT INTO `logs` VALUES ('9466de8a17d4174f', '2019-05-01 00:19:02', '::1', 'opd11017 ออกจากระบบ.', 'b79dfae9960af1a6b1fa1031d0d57af0');
+INSERT INTO `logs` VALUES ('5b6029742556bc2b', '2019-05-04 00:45:28', '::1', 'admin เข้าสู่ระบบ.', '');
+INSERT INTO `logs` VALUES ('4231596869594fcf', '2019-05-04 00:49:20', '::1', 'opd11017 เข้าสู่ระบบ.', 'b79dfae9960af1a6b1fa1031d0d57af0');
+INSERT INTO `logs` VALUES ('acac481b1d97dfbe', '2019-05-04 01:03:12', '::1', 'opd11017 ออกจากระบบ.', 'b79dfae9960af1a6b1fa1031d0d57af0');
+INSERT INTO `logs` VALUES ('ef4e35599e072548', '2019-05-04 01:05:09', '::1', 'admin ออกจากระบบ.', '');
+INSERT INTO `logs` VALUES ('982b268efefafab8', '2019-05-04 10:49:39', '::1', 'opd11017 เข้าสู่ระบบ.', 'b79dfae9960af1a6b1fa1031d0d57af0');
+INSERT INTO `logs` VALUES ('a9c8a6aa0e9bb5eb', '2019-05-04 10:53:13', '::1', 'admin เข้าสู่ระบบ.', '');
+INSERT INTO `logs` VALUES ('47bb4b83c0e64a6e', '2019-05-04 22:39:09', '::1', 'admin เข้าสู่ระบบ.', '');
+INSERT INTO `logs` VALUES ('2825d7101c83c910', '2019-05-05 23:20:47', '::1', 'opd11017 เข้าสู่ระบบ.', 'b79dfae9960af1a6b1fa1031d0d57af0');
+INSERT INTO `logs` VALUES ('7a1293040169b3cc', '2019-05-09 10:03:48', '::1', 'admin เข้าสู่ระบบ.', '');
+INSERT INTO `logs` VALUES ('1399b92fb41144ff', '2019-05-09 10:03:55', '::1', 'opd11017 เข้าสู่ระบบ.', 'b79dfae9960af1a6b1fa1031d0d57af0');
+INSERT INTO `logs` VALUES ('5d63b6e6f10491ef', '2019-05-09 11:38:19', '::1', 'lr11017 เข้าสู่ระบบ.', '5c74165778e0a3b6b96f802d1290f005');
+INSERT INTO `logs` VALUES ('5d63b6e6f10491ef', '2019-05-09 11:38:19', '::1', 'lr11017 เข้าสู่ระบบ.', '5c74165778e0a3b6b96f802d1290f005');
+INSERT INTO `logs` VALUES ('09a48c155f3622fd', '2019-05-09 11:48:00', '::1', 'lr11017 ออกจากระบบ.', '5c74165778e0a3b6b96f802d1290f005');
+INSERT INTO `logs` VALUES ('49908175708715aa', '2019-05-09 13:48:53', '::1', 'admin ออกจากระบบ.', '');
+INSERT INTO `logs` VALUES ('2655268fabe2837a', '2019-05-09 13:49:09', '::1', 'admin เข้าสู่ระบบ.', '');
+INSERT INTO `logs` VALUES ('9ae0d16979e3516b', '2019-05-09 17:59:43', '::1', 'admin ออกจากระบบ.', '');
+INSERT INTO `logs` VALUES ('668938c20014d0c5', '2019-05-09 17:59:56', '::1', 'admin เข้าสู่ระบบ.', '19ce6d340eec8a0e9d659e4bdc1512ab');
+INSERT INTO `logs` VALUES ('a49e2a7d78487b59', '2019-05-09 18:03:02', '::1', 'lr11017 เข้าสู่ระบบ.', '5c74165778e0a3b6b96f802d1290f005');
+INSERT INTO `logs` VALUES ('b41c42c03d02dcd3', '2019-05-09 18:21:47', '::1', 'opd11017 ออกจากระบบ.', 'b79dfae9960af1a6b1fa1031d0d57af0');
+INSERT INTO `logs` VALUES ('a2d514b6f4a6ddd3', '2019-05-09 18:21:54', '::1', 'lr11017 ออกจากระบบ.', '5c74165778e0a3b6b96f802d1290f005');
+INSERT INTO `logs` VALUES ('eacc218be401396a', '2019-05-09 18:22:06', '::1', 'admin ออกจากระบบ.', '19ce6d340eec8a0e9d659e4bdc1512ab');
+INSERT INTO `logs` VALUES ('c93e2660399d0883', '2019-05-09 21:46:34', '::1', 'opd11017 เข้าสู่ระบบ.', 'b79dfae9960af1a6b1fa1031d0d57af0');
+INSERT INTO `logs` VALUES ('b4d0255bb474a55c', '2019-05-09 21:46:39', '::1', 'admin เข้าสู่ระบบ.', '19ce6d340eec8a0e9d659e4bdc1512ab');
+INSERT INTO `logs` VALUES ('81a9e99daf0ab27c', '2019-05-12 20:13:57', '::1', 'admin ออกจากระบบ.', '19ce6d340eec8a0e9d659e4bdc1512ab');
+INSERT INTO `logs` VALUES ('60f0eaa92c61d4a2', '2019-05-12 20:59:44', '::1', 'admin เข้าสู่ระบบ.', '19ce6d340eec8a0e9d659e4bdc1512ab');
+INSERT INTO `logs` VALUES ('46bd17b875d43cf4', '2019-05-12 21:08:03', '::1', 'opd11017 เข้าสู่ระบบ.', 'b79dfae9960af1a6b1fa1031d0d57af0');
+INSERT INTO `logs` VALUES ('bc754e098a92323e', '2019-05-12 23:06:53', '::1', 'opd11017 ออกจากระบบ.', 'b79dfae9960af1a6b1fa1031d0d57af0');
+INSERT INTO `logs` VALUES ('217b3276d56700fb', '2019-05-12 23:06:59', '::1', 'opd11017 เข้าสู่ระบบ.', 'b79dfae9960af1a6b1fa1031d0d57af0');
+INSERT INTO `logs` VALUES ('d97224543ee2abb1', '2019-05-12 23:09:35', '::1', 'admin ออกจากระบบ.', '19ce6d340eec8a0e9d659e4bdc1512ab');
+INSERT INTO `logs` VALUES ('00d139f616895ad9', '2019-05-12 23:09:45', '::1', 'admin เข้าสู่ระบบ.', '');
+INSERT INTO `logs` VALUES ('63726ddb485e15cf', '2019-05-14 19:51:21', '::1', 'opd11017 เข้าสู่ระบบ.', 'b79dfae9960af1a6b1fa1031d0d57af0');
+INSERT INTO `logs` VALUES ('61e5c504aa1a2178', '2019-05-19 23:13:56', '::1', 'admin เข้าสู่ระบบ.', '');
+INSERT INTO `logs` VALUES ('a3010649d3954805', '2019-05-19 23:15:09', '::1', 'opd11017 เข้าสู่ระบบ.', 'b79dfae9960af1a6b1fa1031d0d57af0');
+INSERT INTO `logs` VALUES ('a470b96de224fb01', '2019-05-20 13:33:16', '::1', 'admin เข้าสู่ระบบ.', '');
+INSERT INTO `logs` VALUES ('312e65f2b39a94f3', '2019-05-20 13:33:26', '::1', 'opd11017 เข้าสู่ระบบ.', 'b79dfae9960af1a6b1fa1031d0d57af0');
+INSERT INTO `logs` VALUES ('f45e6bc0b9c592c2', '2019-05-20 14:22:44', '::1', 'opd11017 ออกจากระบบ.', 'b79dfae9960af1a6b1fa1031d0d57af0');
+INSERT INTO `logs` VALUES ('28adb1518a4e4b36', '2019-05-20 14:23:18', '::1', 'opd11017 เข้าสู่ระบบ.', 'b79dfae9960af1a6b1fa1031d0d57af0');
+INSERT INTO `logs` VALUES ('1f88dd25a106e3e8', '2019-05-25 14:44:45', '::1', 'admin เข้าสู่ระบบ.', '');
+INSERT INTO `logs` VALUES ('8a945d1a7832c963', '2019-05-25 16:34:07', '::1', 'admin ออกจากระบบ.', '');
+INSERT INTO `logs` VALUES ('e2ebb69c7fa62d49', '2019-06-01 00:04:01', '::1', 'admin เข้าสู่ระบบ.', '');
+INSERT INTO `logs` VALUES ('6f52f326731fed9e', '2019-06-01 09:21:18', '::1', 'admin เข้าสู่ระบบ.', '');
+INSERT INTO `logs` VALUES ('71fb65c07336e350', '2019-06-01 09:40:16', '::1', 'admin ออกจากระบบ.', '');
+INSERT INTO `logs` VALUES ('93b608cb55d40cc0', '2019-06-01 09:40:21', '::1', 'admin เข้าสู่ระบบ.', '');
+INSERT INTO `logs` VALUES ('a7b877bfe19872be', '2019-06-01 09:52:05', '::1', 'opd11017 เข้าสู่ระบบ.', 'b79dfae9960af1a6b1fa1031d0d57af0');
+INSERT INTO `logs` VALUES ('628ad9b074b4f514', '2019-06-01 11:32:03', '::1', 'opd11017 ออกจากระบบ.', 'b79dfae9960af1a6b1fa1031d0d57af0');
+INSERT INTO `logs` VALUES ('e5ac6be19726563f', '2019-06-01 18:39:20', '::1', 'opd11017 เข้าสู่ระบบ.', 'b79dfae9960af1a6b1fa1031d0d57af0');
+INSERT INTO `logs` VALUES ('4140cadbab2e3d65', '2019-06-03 10:37:21', '::1', 'opd11017 ออกจากระบบ.', 'b79dfae9960af1a6b1fa1031d0d57af0');
+INSERT INTO `logs` VALUES ('ac05225e2019eb2c', '2019-06-03 10:37:31', '::1', 'lr11017 เข้าสู่ระบบ.', '5c74165778e0a3b6b96f802d1290f005');
+INSERT INTO `logs` VALUES ('9dfedf1a9000037f', '2019-06-03 10:40:46', '::1', 'lr11017 ออกจากระบบ.', '5c74165778e0a3b6b96f802d1290f005');
+INSERT INTO `logs` VALUES ('08dba61c8cdcf4c0', '2019-06-03 10:40:54', '::1', 'opd11017 เข้าสู่ระบบ.', 'b79dfae9960af1a6b1fa1031d0d57af0');
+INSERT INTO `logs` VALUES ('f295eb22c2bb6fd1', '2019-06-03 10:41:07', '::1', 'opd11017 ออกจากระบบ.', 'b79dfae9960af1a6b1fa1031d0d57af0');
+INSERT INTO `logs` VALUES ('ffb8989c5b6620e5', '2019-06-03 10:41:43', '::1', 'lr11017 เข้าสู่ระบบ.', '5c74165778e0a3b6b96f802d1290f005');
+INSERT INTO `logs` VALUES ('c6f03312894c774f', '2019-06-03 10:53:14', '::1', 'admin ออกจากระบบ.', '');
+INSERT INTO `logs` VALUES ('cf627822536413cb', '2019-06-03 10:53:19', '::1', 'admin เข้าสู่ระบบ.', '');
+INSERT INTO `logs` VALUES ('37ef5a6ae8de33c8', '2019-06-04 00:24:24', '::1', 'lr11017 ออกจากระบบ.', '5c74165778e0a3b6b96f802d1290f005');
 
-INSERT INTO `department` (`department_id`, `name`, `work_group_id`) VALUES
-(1, 'งานบริหารทั่วไป', '1'),
-(2, 'งานการเงินและบัญชี', '1'),
-(3, 'งานพัสดุ', '1'),
-(4, 'งานการเจ้าหน้าที่', '1'),
-(5, 'งานผู้ป่วยนอก', '2'),
-(6, 'ตึกผู้ป่วยใน', '2'),
-(7, 'คลินิกพิเศษ', '2'),
-(8, 'งานซักฟอก', '2'),
-(9, 'COC ', '2'),
-(10, 'ทันตกรรม', '2'),
-(11, 'เภสัชกรรม', '2'),
-(12, 'ห้องแล็บ', '2'),
-(13, 'อุบัติเหตุฉุกเฉิน', '2'),
-(14, 'งานประกัน', '2'),
-(15, 'งานระบาด', '2'),
-(16, 'x-ray', '2'),
-(17, 'PCU', '2'),
-(18, 'ห้องคลอด', '2'),
-(19, 'แพทย์แผนไทย', '2'),
-(20, 'DPAC', '2'),
-(21, 'กายภาพ', '2'),
-(22, 'โภชนาการ', '2'),
-(23, 'ซ่อมบำรุง', '1'),
-(24, 'ซับพลาย', '2'),
-(25, 'งาน it', '1'),
-(26, 'งานแผน', '1'),
-(27, 'งาน NCD', '2'),
-(28, 'งาน TB COPD ASTHMA', '2'),
-(29, 'งานผู้สูงอายุ', '2'),
-(30, 'ฝ่ายการพยาบาล', '2'),
-(31, 'งาน IC', '2');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `language`
---
-
-CREATE TABLE `language` (
-  `language_code` varchar(16) NOT NULL,
-  `language_name` varchar(32) NOT NULL,
-  `language_status` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `language`
---
-
-INSERT INTO `language` (`language_code`, `language_name`, `language_status`) VALUES
-('en', 'English', 0),
-('th', 'ภาษาไทย', 1);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `list`
---
-
-CREATE TABLE `list` (
-  `cases` varchar(64) NOT NULL,
-  `menu` varchar(64) NOT NULL,
-  `pages` varchar(128) NOT NULL,
-  `case_status` tinyint(1) NOT NULL DEFAULT '1'
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `list`
---
-
-INSERT INTO `list` (`cases`, `menu`, `pages`, `case_status`) VALUES
-('setting', 'setting', 'settings/setting.php', 1),
-('member', 'member', 'members/member.php', 1),
-('cashier', 'cashier', 'cashier/cashier.php', 1),
-('report', 'report', 'report/report.php', 1),
-('report_export', 'report', 'report/report_export.php', 1),
-('report_movement', 'report', 'report/report_movement.php', 1),
-('report_income', 'report', 'report/report_income.php', 1),
-('report_income_detail', 'report', 'report/report_income_detail.php', 1),
-('report_booking', 'report', 'report/report_booking.php', 1),
-('report_logs', 'report', 'report/report_logs.php', 1),
-('report_delivery', 'report', 'report/report_delivery.php', 1),
-('report_delivery_detail', 'report', 'report/report_delivery_detail.php', 1),
-('setting_users', 'setting', 'settings/setting_users.php', 1),
-('setting_backup', 'setting', 'settings/setting_backup.php', 1),
-('setting_unit', 'setting', 'settings/setting_unit.php', 0),
-('setting_categories', 'setting', 'settings/setting_categories.php', 1),
-('setting_member_group', 'setting', 'settings/setting_member_group.php', 1),
-('setting_promotions', 'setting', 'settings/setting_promotions.php', 1),
-('report_debt', 'report', 'report/report_debt.php', 1),
-('report_creditor', 'report', 'report/report_creditor.php', 1),
-('setting_info', 'setting', 'settings/setting_info.php', 1),
-('setting_system', 'setting', 'settings/setting_system.php', 1),
-('setting_user_access', 'setting', 'settings/setting_user_access.php', 1),
-('administrator_access_list', 'setting', 'administrator/administrator_access_list.php', 1),
-('administrator_cases', 'setting', 'administrator/administrator_cases.php', 1),
-('administrator_menus', 'setting', 'administrator/administrator_menus.php', 1),
-('administrator_modules', 'setting', 'administrator/administrator_modules.php', 1),
-('administrator_helper', 'seting', 'administrator/administrator_helper.php', 1),
-('cashier_member', 'cashier', 'cashier/cashier_member.php', 1),
-('cashier_booking', 'cashier', 'cashier/cashier_booking.php', 1),
-('product_detail', 'product', 'products/product_detail.php', 1),
-('member_detail', 'member', 'members/member_detail.php', 1),
-('new_member', 'member', 'members/new_member.php', 1),
-('member_history', 'member', 'members/member_history.php', 1),
-('setting_promotion_member', 'setting', 'settings/setting_promotion_member.php', 1),
-('report_cancel', 'report', 'report/report_cancel.php', 1),
-('card_all_status', 'card', 'card/card_all_status.php', 1),
-('search', '', 'main/search.php', 1),
-('card', 'card', 'card/card.php', 1),
-('setting_card_status', 'setting', 'settings/setting_card_status.php', 1),
-('card_create_detail', 'card_create', 'card/card_create_detail.php', 1),
-('search_code', '', 'main/search.php', 1),
-('card_create', 'card_create', 'card/main.php', 1),
-('setting_products', 'setting', 'settings/setting_products.php', 1);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `logs`
---
-
-CREATE TABLE `logs` (
-  `log_key` varchar(16) NOT NULL,
-  `log_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `log_ipaddress` varchar(32) NOT NULL,
-  `log_text` varchar(256) NOT NULL,
-  `log_user` varchar(32) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `logs`
---
-
-INSERT INTO `logs` (`log_key`, `log_date`, `log_ipaddress`, `log_text`, `log_user`) VALUES
-('05d348411cbd3f83', '2018-11-06 03:05:39', '::1', 'admin เข้าสู่ระบบ.', ''),
-('b575e3965361c5a4', '2018-11-06 03:06:40', '::1', 'admin ออกจากระบบ.', ''),
-('4dac6b21c0756d23', '2018-11-06 03:06:47', '::1', 'admin เข้าสู่ระบบ.', ''),
-('6858f8e3855e4b68', '2018-11-07 12:52:15', '::1', 'admin ออกจากระบบ.', ''),
-('81dfb7c06ce62213', '2018-11-09 06:21:15', '::1', 'admin เข้าสู่ระบบ.', ''),
-('5f1985fe8819521b', '2018-11-09 06:33:28', '::1', 'user เข้าสู่ระบบ.', '5087e7c3d2a12b0da6959da954470982'),
-('d4c65926242ed6ea', '2018-11-09 11:10:06', '::1', 'admin ออกจากระบบ.', ''),
-('028a1d6977235382', '2018-11-09 11:10:15', '::1', 'user ออกจากระบบ.', '5087e7c3d2a12b0da6959da954470982'),
-('a962c88eed83cc7c', '2018-11-10 03:30:41', '::1', 'admin เข้าสู่ระบบ.', ''),
-('d95e6cf391a98ebc', '2018-11-10 06:54:53', '::1', 'admin ออกจากระบบ.', ''),
-('278f5e413e205458', '2018-11-10 06:55:05', '::1', 'admin เข้าสู่ระบบ.', ''),
-('f9e44fd8c4acfa65', '2018-11-14 03:16:36', '::1', 'admin เข้าสู่ระบบ.', ''),
-('a5774af0cf222981', '2018-11-19 01:35:35', '::1', 'admin เข้าสู่ระบบ.', ''),
-('b5f7014b0d82af21', '2018-11-22 06:03:23', '::1', 'admin เข้าสู่ระบบ.', ''),
-('4aab2166dc20317b', '2018-11-23 08:23:11', '::1', 'admin เข้าสู่ระบบ.', ''),
-('60d9d5f2f9817af2', '2018-11-26 09:31:03', '::1', 'lr11017 เข้าสู่ระบบ.', '5c74165778e0a3b6b96f802d1290f005'),
-('1c7456e05ab6d8c2', '2018-11-26 09:32:46', '::1', 'lr11017 ออกจากระบบ.', '5c74165778e0a3b6b96f802d1290f005'),
-('b5adf8e0d9a48ece', '2018-11-26 09:32:53', '::1', 'lr11017 เข้าสู่ระบบ.', '5c74165778e0a3b6b96f802d1290f005'),
-('7e1b5af4903bb2f9', '2018-11-26 09:36:31', '::1', 'lr11017 เข้าสู่ระบบ.', '5c74165778e0a3b6b96f802d1290f005'),
-('b07def915de1f435', '2018-11-26 09:37:36', '::1', 'lr11017 เข้าสู่ระบบ.', '5c74165778e0a3b6b96f802d1290f005'),
-('36b07b0e20d5a8f3', '2018-11-26 09:52:47', '::1', 'lr11017 ออกจากระบบ.', '5c74165778e0a3b6b96f802d1290f005'),
-('4b1d832dc4482404', '2018-11-26 09:53:03', '::1', 'lr11017 เข้าสู่ระบบ.', '5c74165778e0a3b6b96f802d1290f005'),
-('50604577713cb568', '2018-11-26 09:54:15', '::1', 'lr11017 เข้าสู่ระบบ.', '5c74165778e0a3b6b96f802d1290f005'),
-('a0b9d634fd4dbad0', '2018-11-26 09:55:14', '::1', 'lr11017 เข้าสู่ระบบ.', '5c74165778e0a3b6b96f802d1290f005'),
-('4a12e983ee97eb9c', '2018-11-26 09:55:26', '::1', 'lr11017 เข้าสู่ระบบ.', '5c74165778e0a3b6b96f802d1290f005'),
-('eb0b01a39b6ec810', '2018-11-26 09:56:01', '::1', 'admin ออกจากระบบ.', ''),
-('520a0550d4b9d4d8', '2018-11-26 09:56:09', '::1', 'admin เข้าสู่ระบบ.', ''),
-('c2de3caa132eaf87', '2018-11-26 09:56:37', '::1', 'lr11017 เข้าสู่ระบบ.', '5c74165778e0a3b6b96f802d1290f005'),
-('3ccf943654addb75', '2018-11-26 09:56:42', '::1', 'admin ออกจากระบบ.', ''),
-('2fedb34a9c155b1d', '2018-11-26 09:56:56', '::1', 'lr11017 เข้าสู่ระบบ.', '5c74165778e0a3b6b96f802d1290f005'),
-('58e37ddfc66803e0', '2018-11-26 15:34:09', '::1', 'admin เข้าสู่ระบบ.', ''),
-('41b2b54b4ef49887', '2018-11-26 15:37:04', '::1', 'lr11017 เข้าสู่ระบบ.', '5c74165778e0a3b6b96f802d1290f005'),
-('54026698cecba15c', '2018-11-26 15:38:03', '::1', 'lr11017 เข้าสู่ระบบ.', '5c74165778e0a3b6b96f802d1290f005'),
-('efa0ded6ddb47204', '2018-11-26 16:56:22', '::1', 'lr11017 ออกจากระบบ.', '5c74165778e0a3b6b96f802d1290f005'),
-('2ddf5cef1ffb8a4d', '2018-11-26 16:56:35', '::1', 'lr11017 เข้าสู่ระบบ.', '5c74165778e0a3b6b96f802d1290f005'),
-('0ae4be84a06e960d', '2018-11-26 16:57:40', '::1', 'lr11017 เข้าสู่ระบบ.', '5c74165778e0a3b6b96f802d1290f005'),
-('fdb34c8347fbdbe5', '2018-11-26 17:29:26', '::1', 'admin ออกจากระบบ.', ''),
-('47b31564929f8ee5', '2018-11-26 17:29:40', '::1', 'opd11017 เข้าสู่ระบบ.', 'b79dfae9960af1a6b1fa1031d0d57af0'),
-('0d0b9ba19b44894a', '2018-11-26 17:30:02', '::1', 'opd11017 ออกจากระบบ.', 'b79dfae9960af1a6b1fa1031d0d57af0'),
-('2a95ec9d7d38b583', '2018-11-26 17:30:11', '::1', 'admin เข้าสู่ระบบ.', ''),
-('6aba21dcf049c57b', '2018-11-26 17:41:26', '::1', 'lr11017 ออกจากระบบ.', '5c74165778e0a3b6b96f802d1290f005'),
-('e3f08e68b008df82', '2018-11-27 02:09:08', '::1', 'admin เข้าสู่ระบบ.', ''),
-('3724ef2fe20f2017', '2018-11-27 02:18:39', '::1', 'lr11017 เข้าสู่ระบบ.', '5c74165778e0a3b6b96f802d1290f005'),
-('5a9eeb702ae92ba7', '2018-11-27 04:11:01', '::1', 'opd11017 เข้าสู่ระบบ.', 'b79dfae9960af1a6b1fa1031d0d57af0'),
-('eb102796914b86b7', '2018-11-27 10:10:45', '::1', 'opd11017 ออกจากระบบ.', 'b79dfae9960af1a6b1fa1031d0d57af0'),
-('93207f3dff049601', '2018-11-27 10:12:14', '::1', 'lr11017 ออกจากระบบ.', '5c74165778e0a3b6b96f802d1290f005'),
-('d13ddf0cafefcf9c', '2018-11-28 07:43:34', '::1', 'opd11017 เข้าสู่ระบบ.', 'b79dfae9960af1a6b1fa1031d0d57af0'),
-('eb71cb60f30f9601', '2018-11-28 09:18:53', '::1', 'admin ออกจากระบบ.', ''),
-('0665c87f85b76932', '2018-11-28 09:19:02', '::1', 'lr11017 เข้าสู่ระบบ.', '5c74165778e0a3b6b96f802d1290f005'),
-('f20949e1fb42708d', '2018-11-28 09:26:39', '::1', 'admin เข้าสู่ระบบ.', ''),
-('1cbf5aba49e450de', '2018-11-28 09:27:43', '::1', 'admin ออกจากระบบ.', ''),
-('e11d361ea0d0616c', '2018-11-28 09:42:18', '::1', 'lr11017 ออกจากระบบ.', '5c74165778e0a3b6b96f802d1290f005'),
-('38ee4bd3b6acca35', '2018-11-28 09:42:33', '::1', 'admin เข้าสู่ระบบ.', ''),
-('7230d9d593686525', '2018-11-28 10:43:12', '::1', 'opd11017 ออกจากระบบ.', 'b79dfae9960af1a6b1fa1031d0d57af0'),
-('1043418d2d7f5600', '2018-11-28 11:04:06', '::1', 'admin ออกจากระบบ.', ''),
-('170439a6e87512a6', '2019-03-12 08:09:01', '::1', 'admin เข้าสู่ระบบ.', ''),
-('8df1d4e2e2601af6', '2019-03-12 08:09:14', '::1', 'admin ออกจากระบบ.', ''),
-('94093519ac3c2915', '2019-03-12 08:09:30', '::1', 'lr11017 เข้าสู่ระบบ.', '5c74165778e0a3b6b96f802d1290f005'),
-('91187d0ba69d141e', '2019-03-12 08:09:38', '::1', 'lr11017 ออกจากระบบ.', '5c74165778e0a3b6b96f802d1290f005'),
-('d795811a259c1b7f', '2019-04-22 07:30:08', '::1', 'admin เข้าสู่ระบบ.', ''),
-('7e82327154d1d923', '2019-04-22 10:20:21', '127.0.0.1', 'lr11017 เข้าสู่ระบบ.', '5c74165778e0a3b6b96f802d1290f005'),
-('a3738e177ef9ba9d', '2019-04-22 10:31:02', '127.0.0.1', 'lr11017 ออกจากระบบ.', '5c74165778e0a3b6b96f802d1290f005'),
-('99063a90f6b9a473', '2019-04-22 10:31:21', '127.0.0.1', 'opd11017 เข้าสู่ระบบ.', 'b79dfae9960af1a6b1fa1031d0d57af0'),
-('a1df0120adbd4a6b', '2019-04-22 10:31:58', '127.0.0.1', 'opd11017 ออกจากระบบ.', 'b79dfae9960af1a6b1fa1031d0d57af0'),
-('27e0fc9fe45c6997', '2019-04-22 10:32:06', '127.0.0.1', 'lr11017 เข้าสู่ระบบ.', '5c74165778e0a3b6b96f802d1290f005'),
-('083704c86edf2751', '2019-04-22 11:03:16', '127.0.0.1', 'lr11017 ออกจากระบบ.', '5c74165778e0a3b6b96f802d1290f005'),
-('a955b6c266f8eec5', '2019-04-22 11:10:57', '::1', 'admin ออกจากระบบ.', ''),
-('4048de231a5cc06c', '2019-04-23 07:24:08', '::1', 'admin เข้าสู่ระบบ.', ''),
-('6a41d388f6077f8f', '2019-04-23 07:25:45', '127.0.0.1', 'lr11017 เข้าสู่ระบบ.', '5c74165778e0a3b6b96f802d1290f005'),
-('39011ec6737de36c', '2019-04-23 07:34:19', '127.0.0.1', 'lr11017 ออกจากระบบ.', '5c74165778e0a3b6b96f802d1290f005'),
-('6f5f7f6764bf7926', '2019-04-23 07:34:39', '127.0.0.1', 'opd11017 เข้าสู่ระบบ.', 'b79dfae9960af1a6b1fa1031d0d57af0'),
-('923faeb566cd6d72', '2019-04-23 07:55:19', '::1', 'admin ออกจากระบบ.', ''),
-('35ccc87c6f498ff3', '2019-04-23 07:55:56', '::1', 'lr11017 เข้าสู่ระบบ.', '5c74165778e0a3b6b96f802d1290f005'),
-('d99fffb442ede54f', '2019-04-23 11:24:55', '127.0.0.1', 'opd11017 ออกจากระบบ.', 'b79dfae9960af1a6b1fa1031d0d57af0'),
-('509f61adf4c7a00e', '2019-04-23 11:25:01', '::1', 'lr11017 ออกจากระบบ.', '5c74165778e0a3b6b96f802d1290f005'),
-('53cc541cec82890a', '2019-04-29 02:42:12', '::1', 'admin เข้าสู่ระบบ.', ''),
-('1b10452094bf6db3', '2019-04-29 03:25:50', '::1', 'opd11017 เข้าสู่ระบบ.', 'b79dfae9960af1a6b1fa1031d0d57af0'),
-('d46d10a8cf4eb8f0', '2019-04-30 03:02:17', '::1', 'admin เข้าสู่ระบบ.', ''),
-('2a6b85335112ddb5', '2019-04-30 03:04:05', '127.0.0.1', 'opd11017 เข้าสู่ระบบ.', 'b79dfae9960af1a6b1fa1031d0d57af0'),
-('9de3a2d4638b146a', '2019-04-30 11:25:45', '127.0.0.1', 'opd11017 ออกจากระบบ.', 'b79dfae9960af1a6b1fa1031d0d57af0'),
-('51b4616e6cafcfba', '2019-04-30 11:28:25', '::1', 'admin ออกจากระบบ.', ''),
-('a7d73dbe6fbf182a', '2019-05-01 02:59:23', '::1', 'admin เข้าสู่ระบบ.', ''),
-('b25c4a51f576eff9', '2019-05-01 03:01:07', '::1', 'opd11017 เข้าสู่ระบบ.', 'b79dfae9960af1a6b1fa1031d0d57af0'),
-('e085967433df9fd1', '2019-05-03 02:32:43', '::1', 'admin เข้าสู่ระบบ.', ''),
-('dbcf8deeaf7ccae1', '2019-05-03 02:33:20', '::1', 'opd11017 เข้าสู่ระบบ.', 'b79dfae9960af1a6b1fa1031d0d57af0'),
-('019caa0e733bff25', '2019-05-03 09:41:02', '::1', 'opd11017 ออกจากระบบ.', 'b79dfae9960af1a6b1fa1031d0d57af0'),
-('c6ee29305faf985b', '2019-05-07 02:49:27', '::1', 'admin เข้าสู่ระบบ.', ''),
-('0f99f9b2164c5e9a', '2019-05-07 02:51:16', '::1', 'opd11017 เข้าสู่ระบบ.', 'b79dfae9960af1a6b1fa1031d0d57af0'),
-('a84554820aed7078', '2019-05-07 09:43:50', '::1', 'admin ออกจากระบบ.', ''),
-('248d4ea7449bdcdf', '2019-05-10 08:38:26', '::1', 'admin เข้าสู่ระบบ.', ''),
-('75a772200c3e1193', '2019-05-10 08:39:54', '::1', 'opd11017 เข้าสู่ระบบ.', 'b79dfae9960af1a6b1fa1031d0d57af0');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `menus`
---
-
-CREATE TABLE `menus` (
-  `menu_key` char(32) NOT NULL,
-  `menu_upkey` char(32) NOT NULL,
-  `menu_icon` varchar(256) NOT NULL,
-  `menu_name` varchar(128) NOT NULL,
-  `menu_case` varchar(128) NOT NULL,
-  `menu_link` varchar(256) NOT NULL,
+-- ----------------------------
+-- Table structure for menus
+-- ----------------------------
+DROP TABLE IF EXISTS `menus`;
+CREATE TABLE `menus`  (
+  `menu_key` char(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `menu_upkey` char(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `menu_icon` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `menu_name` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `menu_case` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `menu_link` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `menu_status` tinyint(1) NOT NULL,
-  `menu_sorting` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `menu_sorting` int(11) NOT NULL,
+  PRIMARY KEY (`menu_key`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
---
--- Dumping data for table `menus`
---
+-- ----------------------------
+-- Records of menus
+-- ----------------------------
+INSERT INTO `menus` VALUES ('0a3c8aabc6cdbce67a157ba1701b3fa9', '0a3c8aabc6cdbce67a157ba1701b3fa9', '<i class=\"fa fa-pie-chart fa-fw\"></i>', 'LA_MN_REPORT', 'report', '?p=report', 1, 8);
+INSERT INTO `menus` VALUES ('2309e0cdb2c541bf7cb8ef0dee7b7eba', '2309e0cdb2c541bf7cb8ef0dee7b7eba', '<i class=\"fa fa-gear  fa-fw\"></i>', 'LA_MN_SETTING', 'setting', '?p=setting', 1, 9);
+INSERT INTO `menus` VALUES ('26f7e62109e2566eaec8b01fe8e3598d', '26f7e62109e2566eaec8b01fe8e3598d', '<i class=\"fa fa-edit fa-fw\"></i>', 'ส่งซ่อม/เคลม', 'card_create', '?p=card_create', 1, 2);
+INSERT INTO `menus` VALUES ('295744c466c17b46170f88b5c1b9104d', '295744c466c17b46170f88b5c1b9104d', '<i class=\"fa fa-list fa-fw\"></i>', 'รายการส่งซ่อม/เคลม<span class=\"pull-right\"><span class=\"badge\" id=\"card_count\"></span></span>', 'card', '?p=card', 1, 3);
+INSERT INTO `menus` VALUES ('439c4113b058975e22f776669bb36bf0', 'ff7d5a554f4300b09f2de2e06d523be9', '<i class=\"fa flaticon-stack4 fa-fw\"></i>', 'LA_MN_PRODUCTS_DATA', 'product', '?p=product', 1, 31);
+INSERT INTO `menus` VALUES ('4cd05730afedbc1ca917bbca1b3dd0a2', '4cd05730afedbc1ca917bbca1b3dd0a2', '<i class=\"fa fa-edit fa-fw\"></i>', 'สั่งซื้อ', 'card_buys', '?p=card_buys', 1, 4);
+INSERT INTO `menus` VALUES ('a16043256ea5ca0ea86995e2b69ec238', 'a16043256ea5ca0ea86995e2b69ec238', '<i class=\"fa fa-home fa-fw\"></i>', 'LA_MN_HOME', '', 'index.php', 1, 1);
+INSERT INTO `menus` VALUES ('ba1fb07c99e9ce68483b7d2f354e86da', 'ba1fb07c99e9ce68483b7d2f354e86da', '<i class=\"fa fa-list fa-fw\"></i>', 'รายการสั่งซื้อ<span class=\"pull-right\"><span class=\"badge\" id=\"card_count_buy\"></span></span>', 'card_buys_all', '?p=card_buys_all', 1, 5);
+INSERT INTO `menus` VALUES ('c6c8729b45d1fec563f8453c16ff03b8', 'c6c8729b45d1fec563f8453c16ff03b8', '<i class=\"fa fa-lock fa-fw\"></i>', 'LA_MN_LOGOUT', 'logout', '../core/logout.core.php', 1, 10);
+INSERT INTO `menus` VALUES ('f1344bc0fb9c5594fa0e3d3f37a56957', 'f1344bc0fb9c5594fa0e3d3f37a56957', '<i class=\"fa fa-users fa-fw\"></i>', 'LA_MN_MEMBERS', 'member', '?p=member', 0, 6);
 
-INSERT INTO `menus` (`menu_key`, `menu_upkey`, `menu_icon`, `menu_name`, `menu_case`, `menu_link`, `menu_status`, `menu_sorting`) VALUES
-('0a3c8aabc6cdbce67a157ba1701b3fa9', '0a3c8aabc6cdbce67a157ba1701b3fa9', '<i class=\"fa fa-pie-chart fa-fw\"></i>', 'LA_MN_REPORT', 'report', '?p=report', 1, 8),
-('2309e0cdb2c541bf7cb8ef0dee7b7eba', '2309e0cdb2c541bf7cb8ef0dee7b7eba', '<i class=\"fa fa-gear  fa-fw\"></i>', 'LA_MN_SETTING', 'setting', '?p=setting', 1, 9),
-('26f7e62109e2566eaec8b01fe8e3598d', '26f7e62109e2566eaec8b01fe8e3598d', '<i class=\"fa fa-edit fa-fw\"></i>', 'ส่งซ่อมสินค้า/เคลม', 'card_create', '?p=card_create', 1, 2),
-('295744c466c17b46170f88b5c1b9104d', '295744c466c17b46170f88b5c1b9104d', '<i class=\"fa fa-list fa-fw\"></i>', 'รายการส่งซ่อม/เคลม<span class=\"pull-right\"><span class=\"badge hvr-buzz-out\" id=\"card_count\"></span></span>', 'card', '?p=card', 1, 3),
-('439c4113b058975e22f776669bb36bf0', 'ff7d5a554f4300b09f2de2e06d523be9', '<i class=\"fa flaticon-stack4 fa-fw\"></i>', 'LA_MN_PRODUCTS_DATA', 'product', '?p=product', 1, 31),
-('a16043256ea5ca0ea86995e2b69ec238', 'a16043256ea5ca0ea86995e2b69ec238', '<i class=\"fa fa-home fa-fw\"></i>', 'LA_MN_HOME', '', 'index.php', 1, 1),
-('c6c8729b45d1fec563f8453c16ff03b8', 'c6c8729b45d1fec563f8453c16ff03b8', '<i class=\"fa fa-lock fa-fw\"></i>', 'LA_MN_LOGOUT', 'logout', '../core/logout.core.php', 1, 10),
-('f1344bc0fb9c5594fa0e3d3f37a56957', 'f1344bc0fb9c5594fa0e3d3f37a56957', '<i class=\"fa fa-users fa-fw\"></i>', 'LA_MN_MEMBERS', 'member', '?p=member', 0, 4);
+-- ----------------------------
+-- Table structure for opduser
+-- ----------------------------
+DROP TABLE IF EXISTS `opduser`;
+CREATE TABLE `opduser`  (
+  `loginname` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `password` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `passweb` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `accessright` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `department` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `departmentposition` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `entryposition` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `picture` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `startfullscreen` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `doctorcode` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `drug_access_level` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `groupname` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `visible_menu` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `viewallmenu` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `lab_staff` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `hospital_department_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `nhso_user` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `nhso_password` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `max_station` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `show_tip` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `password_expire_date` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `password_recheck_date` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `new_password_date` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `check_lab_password` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `pcu_user` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `account_disable` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `restrict_ward_access` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `real_staff` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `restrict_clinic_access` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `no_lab_result_display` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `no_doctor_consult_display` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `no_announce_display` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `announce_read_count` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `xray_staff` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `hos_guid` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `lab_check_password` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `cid` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `hos_guid_ext` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `auto_logout_minute` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `userright` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
 
--- --------------------------------------------------------
+-- ----------------------------
+-- Records of opduser
+-- ----------------------------
+INSERT INTO `opduser` VALUES ('073', 'พัชรี ภาสกานนท์', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E74A', '202cb962ac59075b964b07152d234b70', '[][ACCESS_REPORT_FROM_MASTER][APPOINTMENT][ARREAR_LOST_LIST][CHECKUP_LIST][CLINIC][Death_Form][DOCTOR][DRUG_ALLERGY_ENTRY][Drug_Information_Service][DRUG_USE_EVALUATION][EMR_VIEW][EndUser_Report][ER1][FINANCE_REPORT][HELTH_MED_LIST][INFORMATION_FRONT][INJ', NULL, NULL, 'พยาบาลวิชาชีพ', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '102', '10', 'อุบัติเหตุฉุกเฉิน', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1095', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('1184', 'นิตยา โกนันท์', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E441D6', '97af4fb322bb5c8973ade16764156bed', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][ARREAR_LOST_LIST][CHANGE_LOCKED_PTTYPE][CHECKUP_LIST][CLINIC][COPD_CLINIC][DATACENTER_BROWSER][Death_Form][DELETE_IPD_DIAGNOSIS][DELETE_IPD_NURSE_OPER][DentalEntry][DMHT_CLINIC][DO_HN_MER', NULL, NULL, 'พยาบาลวิชาชีพ', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '008', '10', 'พยาบาล', NULL, 'Y', 'N', '6', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1242', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('1230', 'วริษา ใบบัวเงินตระกูล', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E74A', '202cb962ac59075b964b07152d234b70', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][ARREAR_LOST_LIST][CHANGE_LOCKED_PTTYPE][CHECKUP_LIST][CLINIC][COPD_CLINIC][DATACENTER_BROWSER][Death_Form][DELETE_IPD_DIAGNOSIS][DELETE_IPD_NURSE_OPER][DentalEntry][DMHT_CLINIC][DO_HN_MER', NULL, NULL, 'พยาบาลวิชาชีพ', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '009', '10', 'พยาบาล', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '560', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('1333', 'ทรงกลด  สาเกตุ', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E74A', '202cb962ac59075b964b07152d234b70', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][APPOINTMENT][ARREAR_LOST_LIST][CHECKUP_LIST][Death_Form][DentalEntry][DMHT_CLINIC][Drug_Information_Service][DRUG_USE_EVALUATION][EMR_VIEW][EndUser_Report][HHC-CLINIC][INFORMATION_FRONT][IPD_CHART_STATUS_UPDATE][I', NULL, NULL, 'นักวิชาการสาธารณสุข', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '074', '10', 'ทันตสาธารณสุข', NULL, 'Y', 'N', '5', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Y', NULL, NULL, NULL, NULL, NULL, NULL, '207', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('14159', 'นพ.สุทธิพงษ์ ปิ่นแก้ว', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E74AD6', '81dc9bdb52d04dc20036dbd8313ed055', '[][ACCESS_REPORT_FROM_MASTER][ACCOUNT_AR][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][APPOINTMENT_PENDING_][ARREAR_CANCEL][ARREAR_LIST][ARREAR_LOST_LIST][ASTHMA_CLINIC][BATCH_RX_ORDER_WARD_02][BED_STATUS_UPDATE][BILL_ABORT_LIST][CANCEL_IPD_FINANCE_CLEARING][CAN', NULL, NULL, 'นายแพทย์เชี่ยวชาญ', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '086', '10', 'แพทย์', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('1829', 'เกรียงไกร อุตโรกุล', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A31E748', 'caf1a3dfb505ffed0d024130f58c5cfa', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][ARREAR_LOST_LIST][CHANGE_LOCKED_PTTYPE][CHECKUP_LIST][CLINIC][COPD_CLINIC][DATACENTER_BROWSER][Death_Form][DELETE_IPD_DIAGNOSIS][DELETE_IPD_NURSE_OPER][DentalEntry][DMHT_CLINIC][DO_HN_MER', NULL, NULL, 'พยาบยาลวิชาชีพ', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '103', '10', 'พยาบาล', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '92', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('1874', 'ฉวี  เครือชารี', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A71B8108E47', '3ddaeb82fbba964fb3461d4e4f1342eb', '[][ACCESS_REPORT_FROM_MASTER][APPOINTMENT][ARREAR_LOST_LIST][CHECKUP_LIST][CLINIC][Death_Form][DentalEntry][DOCTOR][Drug_Information_Service][DRUG_USE_EVALUATION][EMR_VIEW][EndUser_Report][ER1][FINANCE_REPORT][HELTH_MED_LIST][HHC-CLINIC][HHC_VISIT][INFORM', NULL, NULL, 'พนักงานผู้ช่วยเหลือคนไข้', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '105', '10', 'เวชปฏิบัติชุมชน', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '111', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('24817', 'พญ.พรดี  จิตธรรมมา', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A30E141D315', 'd38d719f68f335deb774cc5ff8682ced', '[][ACCESS_REPORT_FROM_MASTER][ACCOUNT_AR][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][APPOINTMENT_PENDING_][ARREAR_CANCEL][ARREAR_LIST][ARREAR_LOST_LIST][ASTHMA_CLINIC][BATCH_RX_ORDER_WARD_02][BED_STATUS_UPDATE][BILL_ABORT_LIST][CANCEL_IPD_FINANCE_CLEARING][CAN', NULL, NULL, 'แพทย์', NULL, NULL, '126', '10', 'แพทย์', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Y', NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('25001', 'สุกัญญา สายปิ่น', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A30E049D213', '330add99531b6d578cc1c18e8444b10a', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][ARREAR_LOST_LIST][CHANGE_LOCKED_PTTYPE][CHECKUP_LIST][CLINIC][COPD_CLINIC][DATACENTER_BROWSER][Death_Form][DELETE_IPD_DIAGNOSIS][DELETE_IPD_NURSE_OPER][DentalEntry][DMHT_CLINIC][DO_HN_MER', NULL, NULL, 'พยาบาลวิชาชีพ', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', 'N', '011', '10', 'พยาบาล', NULL, 'Y', 'N', NULL, NULL, '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A', NULL, 'Y', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '314', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('2509', 'จินตนา สุทธิวรรณา', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A30E049DB', '8db9264228dc48fbf47535e888c02ae0', '[][ACCESS_REPORT_FROM_MASTER][ACCOUNT_AR][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][APPOINTMENT_PENDING_][ARREAR_CANCEL][ARREAR_LIST][ARREAR_LOST_LIST][ASTHMA_CLINIC][BATCH_RX_ORDER_WARD_02][BED_STATUS_UPDATE][BILL_ABORT_LIST][CANCEL_IPD_FINANCE_CLEARING][CAN', NULL, NULL, 'พยาบาลวิชาชีพ', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', 'N', '010', '10', 'แพทย์', NULL, 'Y', 'N', NULL, NULL, '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A', NULL, 'Y', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '669', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('2525', 'วาสนา แก้ววงษา', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E74A', '202cb962ac59075b964b07152d234b70', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][ARREAR_LOST_LIST][CHANGE_LOCKED_PTTYPE][CHECKUP_LIST][CLINIC][COPD_CLINIC][DATACENTER_BROWSER][Death_Form][DELETE_IPD_DIAGNOSIS][DELETE_IPD_NURSE_OPER][DentalEntry][DMHT_CLINIC][DO_HN_MER', NULL, NULL, 'พยาบาลวิชาชีพ', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '012', '10', 'พยาบาล', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '273', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('2530', 'พญ.ปานทิพย์  วงศ์พุฒ', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A30E04AD2', '55a988dfb00a914717b3000a3374694c', '[][ACCESS_REPORT_FROM_MASTER][ACCOUNT_AR][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][APPOINTMENT_PENDING_][ARREAR_CANCEL][ARREAR_LIST][ARREAR_LOST_LIST][ASTHMA_CLINIC][BATCH_RX_ORDER_WARD_02][BED_STATUS_UPDATE][BILL_ABORT_LIST][CANCEL_IPD_FINANCE_CLEARING][CAN', NULL, NULL, 'แพทย์', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '109', '10', 'แพทย์', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Y', NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('3129', 'จารุวรรณ ทองคำ', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E74A', '202cb962ac59075b964b07152d234b70', '[][ACCESS_REPORT_FROM_MASTER][APPOINTMENT][ARREAR_LOST_LIST][CHECKUP_LIST][CLINIC][Death_Form][DOCTOR][DRUG_ALLERGY_ENTRY][Drug_Information_Service][DRUG_USE_EVALUATION][EMR_VIEW][EndUser_Report][ER1][FINANCE_REPORT][HELTH_MED_LIST][INFORMATION_FRONT][INJ', NULL, NULL, 'พยาบาลวิชาชีพ', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '013', '10', 'อุบัติเหตุฉุกเฉิน', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '244', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('37811', 'พัณ์ชิตา  สารสม', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E74A', '202cb962ac59075b964b07152d234b70', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][ARREAR_LOST_LIST][CHANGE_LOCKED_PTTYPE][CHECKUP_LIST][CLINIC][COPD_CLINIC][DATACENTER_BROWSER][Death_Form][DELETE_IPD_DIAGNOSIS][DELETE_IPD_NURSE_OPER][DentalEntry][DMHT_CLINIC][DO_HN_MER', NULL, NULL, 'พยาบาลวิชาชีพ', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '015', '10', 'พยาบาล', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('37927', 'ปิยอร บุณยประทีปรัตน์', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A30E209', 'c71623576e485d8375b3c14a8d3d3565', '[][ACCESS_REPORT_FROM_MASTER][ACCOUNT_AR][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][APPOINTMENT_PENDING_][ARREAR_CANCEL][ARREAR_LIST][ARREAR_LOST_LIST][ASTHMA_CLINIC][BATCH_RX_ORDER_WARD_02][BED_STATUS_UPDATE][BILL_ABORT_LIST][CANCEL_IPD_FINANCE_CLEARING][CAN', NULL, NULL, 'แพทย์', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', 'N', '004', '10', 'แพทย์', NULL, 'Y', 'N', NULL, NULL, '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A', NULL, 'Y', NULL, NULL, NULL, NULL, NULL, 'Y', NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('37992', 'พญ.สุดารัตน์ ศิรประภานุรัตน์', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E74A', '202cb962ac59075b964b07152d234b70', '[][ACCESS_REPORT_FROM_MASTER][ACCOUNT_AR][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][APPOINTMENT_PENDING_][ARREAR_CANCEL][ARREAR_LIST][ARREAR_LOST_LIST][ASTHMA_CLINIC][BATCH_RX_ORDER_WARD_02][BED_STATUS_UPDATE][BILL_ABORT_LIST][CANCEL_IPD_FINANCE_CLEARING][CAN', NULL, NULL, 'แพทย์', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', 'N', '003', '10', 'แพทย์', NULL, 'Y', 'N', NULL, NULL, '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A', NULL, 'Y', NULL, NULL, NULL, NULL, NULL, 'Y', NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('38000', 'พญ.อรกานต์ หลานวงษ์', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E74A', '202cb962ac59075b964b07152d234b70', '[][ACCESS_REPORT_FROM_MASTER][ACCOUNT_AR][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][APPOINTMENT_PENDING_][ARREAR_CANCEL][ARREAR_LIST][ARREAR_LOST_LIST][ASTHMA_CLINIC][BATCH_RX_ORDER_WARD_02][BED_STATUS_UPDATE][BILL_ABORT_LIST][CANCEL_IPD_FINANCE_CLEARING][CAN', NULL, NULL, 'แพทย์', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', 'N', '006', '10', 'แพทย์', NULL, 'Y', 'N', NULL, NULL, '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A', NULL, 'Y', NULL, NULL, NULL, NULL, NULL, 'Y', NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('40041', 'พญ.ธัญญา  อภิชาติวัลลภ', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A36E549D613', '33361cd70854b41ce5b022000f77b434', '[][ACCESS_REPORT_FROM_MASTER][ACCOUNT_AR][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][APPOINTMENT_PENDING_][ARREAR_CANCEL][ARREAR_LIST][ARREAR_LOST_LIST][ASTHMA_CLINIC][BATCH_RX_ORDER_WARD_02][BED_STATUS_UPDATE][BILL_ABORT_LIST][CANCEL_IPD_FINANCE_CLEARING][CAN', NULL, NULL, 'แพทย์', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '095', '10', 'แพทย์', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Y', NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('40046', 'นพ.นครินทร์ พจน์อริยะ', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A31E748', 'caf1a3dfb505ffed0d024130f58c5cfa', '[][ACCESS_REPORT_FROM_MASTER][ACCOUNT_AR][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][APPOINTMENT_PENDING_][ARREAR_CANCEL][ARREAR_LIST][ARREAR_LOST_LIST][ASTHMA_CLINIC][BATCH_RX_ORDER_WARD_02][BED_STATUS_UPDATE][BILL_ABORT_LIST][CANCEL_IPD_FINANCE_CLEARING][CAN', NULL, NULL, 'แพทย์', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', 'N', '005', '10', 'แพทย์', NULL, 'Y', 'N', NULL, NULL, '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A', NULL, 'N', NULL, NULL, NULL, NULL, NULL, 'Y', NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('41103', 'นพ.ฑัฒพร  คชรักษา', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E74AD1', 'e034fb6b66aacc1d48f445ddfb08da98', '[][ACCESS_REPORT_FROM_MASTER][ACCOUNT_AR][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][APPOINTMENT_PENDING_][ARREAR_CANCEL][ARREAR_LIST][ARREAR_LOST_LIST][ASTHMA_CLINIC][BATCH_RX_ORDER_WARD_02][BED_STATUS_UPDATE][BILL_ABORT_LIST][CANCEL_IPD_FINANCE_CLEARING][CAN', NULL, NULL, 'แพทย์', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', 'N', '101', '10', 'แพทย์', NULL, 'Y', 'N', NULL, NULL, '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A', NULL, 'Y', NULL, NULL, NULL, NULL, NULL, 'Y', NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('4321', 'นางสาวสุรีรัตน์ อินทะวัน', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E74AD6', '81dc9bdb52d04dc20036dbd8313ed055', '[][ACCESS_REPORT_FROM_MASTER][APPOINTMENT][ARREAR_LOST_LIST][CHECKUP_LIST][CLINIC][Death_Form][DentalEntry][DOCTOR][Drug_Information_Service][DRUG_USE_EVALUATION][EMR_VIEW][EndUser_Report][ER1][FINANCE_REPORT][HELTH_MED_LIST][HHC-CLINIC][HHC_VISIT][INFORM', NULL, NULL, 'พนักงานบันทึกข้อมูล', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '110', '10', 'เวชปฏิบัติชุมชน', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Y', NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('46544', 'พญ.กรวีกานต์ ศรีพงษ์วิวัฒน์', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A36E34CD616', '2e6acfbf608843554a2621b903f87409', '[][ACCESS_REPORT_FROM_MASTER][ACCOUNT_AR][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][APPOINTMENT_PENDING_][ARREAR_CANCEL][ARREAR_LIST][ARREAR_LOST_LIST][ASTHMA_CLINIC][BATCH_RX_ORDER_WARD_02][BED_STATUS_UPDATE][BILL_ABORT_LIST][CANCEL_IPD_FINANCE_CLEARING][CAN', NULL, NULL, 'แพทย์', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '114', '10', 'แพทย์', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Y', NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('46638', 'พญ.นฤดี  โพธิ์เตี้ย', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A36E34FD11A', 'c5c8f54138e6b9a67eeb4b5d186b27d0', '[][ACCESS_REPORT_FROM_MASTER][ACCOUNT_AR][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][APPOINTMENT_PENDING_][ARREAR_CANCEL][ARREAR_LIST][ARREAR_LOST_LIST][ASTHMA_CLINIC][BATCH_RX_ORDER_WARD_02][BED_STATUS_UPDATE][BILL_ABORT_LIST][CANCEL_IPD_FINANCE_CLEARING][CAN', NULL, NULL, 'แพทย์', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '115', '10', 'แพทย์', NULL, 'Y', 'N', '1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Y', 'Y', NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('46951', 'พญ.ชญานิน สีชมภู', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A36E340D713', 'ddbfc14f2f93b8eeb75d4b11a876b7ba', '[][ACCESS_REPORT_FROM_MASTER][ACCOUNT_AR][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][APPOINTMENT_PENDING_][ARREAR_CANCEL][ARREAR_LIST][ARREAR_LOST_LIST][ASTHMA_CLINIC][BATCH_RX_ORDER_WARD_02][BED_STATUS_UPDATE][BILL_ABORT_LIST][CANCEL_IPD_FINANCE_CLEARING][CAN', NULL, NULL, 'แพทย์', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '116', '10', 'แพทย์', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Y', 'Y', NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('5540', 'ทพ.ธีรพงศ์ พงศ์ปริตร', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A37E04DD2', '86edc93505434db5aa0e091e50e678b7', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][APPOINTMENT][ARREAR_LOST_LIST][CHECKUP_LIST][Death_Form][DentalEntry][DMHT_CLINIC][Drug_Information_Service][DRUG_USE_EVALUATION][EMR_VIEW][EndUser_Report][HHC-CLINIC][INFORMATION_FRONT][IPD_CHART_STATUS_UPDATE][I', NULL, NULL, 'ทันตแพทย์', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '002', '10', 'ทันตสาธารณสุข', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('5552', 'ผกามาศ ตาวงศ์', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A37E04CD0', '4502591a3be059858cf9e9d763134ee3', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][ARREAR_LOST_LIST][CHANGE_LOCKED_PTTYPE][CHECKUP_LIST][CLINIC][COPD_CLINIC][DATACENTER_BROWSER][Death_Form][DELETE_IPD_DIAGNOSIS][DELETE_IPD_NURSE_OPER][DentalEntry][DMHT_CLINIC][DO_HN_MER', NULL, NULL, 'พยาบาลวิชาชีพ', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '014', '10', 'พยาบาล', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '32', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('777', 'นาง กชพรรน มงคลคำชาว', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A35E24E', 'f1c1592588411002af340cbaedd6fc33', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][APPOINTMENT][ARREAR_LOST_LIST][CHANGE_LOCKED_PTTYPE][CHECKUP_LIST][CLINIC][Death_Form][DELETE_IPD_DIAGNOSIS][DELETE_IPD_NURSE_OPER][DentalEntry][DO_HN_MERGE][DOCTOR][DOCTOR_DIAG_PRINT][DRUG_ALLERGY_ENTRY][Drug_Inf', NULL, NULL, 'พนักงานช่วยเหลือคนไข้', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '127', NULL, 'ผู้ป่วยใน', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '652', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('81440', 'แว่น ชาวงษ์', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A3AE44DD612', '89202350af983d0e793ea79697accf55', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][ARREAR_LOST_LIST][CHANGE_LOCKED_PTTYPE][CHECKUP_LIST][CLINIC][COPD_CLINIC][DATACENTER_BROWSER][Death_Form][DELETE_IPD_DIAGNOSIS][DELETE_IPD_NURSE_OPER][DentalEntry][DMHT_CLINIC][DO_HN_MER', NULL, NULL, 'พยาบาลวิชาชีพ', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', 'N', '016', '10', 'พยาบาล', NULL, 'Y', 'N', NULL, NULL, '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A', NULL, 'Y', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1584', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('8292', 'กัญญา มหาชัย', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E74A', '202cb962ac59075b964b07152d234b70', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][ARREAR_LOST_LIST][CHANGE_LOCKED_PTTYPE][CHECKUP_LIST][CLINIC][COPD_CLINIC][DATACENTER_BROWSER][Death_Form][DELETE_IPD_DIAGNOSIS][DELETE_IPD_NURSE_OPER][DentalEntry][DMHT_CLINIC][DO_HN_MER', NULL, NULL, 'พยาบาลวิชาชีพ', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '017', '10', 'พยาบาล', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '610', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('9375', 'ทพ.สุรัตน์ แสงจินดา', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A3BE64ED7', 'ef4c88811e3816f40407421553982e89', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][APPOINTMENT][ARREAR_LOST_LIST][CHECKUP_LIST][Death_Form][DentalEntry][DMHT_CLINIC][Drug_Information_Service][DRUG_USE_EVALUATION][EMR_VIEW][EndUser_Report][HHC-CLINIC][INFORMATION_FRONT][IPD_CHART_STATUS_UPDATE][I', NULL, NULL, 'ทันตแพทย์', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '007', '10', 'ทันตสาธารณสุข', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Y', NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('9417', 'ทพ.วิทยา วสุเมธารัศมี', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E74A', '202cb962ac59075b964b07152d234b70', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][APPOINTMENT][ARREAR_LOST_LIST][CHECKUP_LIST][Death_Form][DentalEntry][DMHT_CLINIC][Drug_Information_Service][DRUG_USE_EVALUATION][EMR_VIEW][EndUser_Report][HHC-CLINIC][INFORMATION_FRONT][IPD_CHART_STATUS_UPDATE][I', NULL, NULL, 'ทันตเเพทย์', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '078', '10', 'ทันตสาธารณสุข', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Y', NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('aa', 'บัญฑิต คำอาจ', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E74A', '202cb962ac59075b964b07152d234b70', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][ARREAR_LOST_LIST][CHECKUP_LIST][CLINIC][Death_Form][DELETE_IPD_NURSE_OPER][DentalEntry][DOCTOR][DOCTOR_DIAG_PRINT][DRUG_ALLERGY_ENTRY][DRUG_EVALUATION_EDIT][Drug_Information_Service][DRUG', NULL, NULL, 'พนักงานช่วยเหลือคนไข้', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '093', '10', 'เวชระเบียน', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '202', NULL, NULL, NULL, NULL, NULL, '5000', NULL);
+INSERT INTO `opduser` VALUES ('admin', 'administrator', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A36C2F6A31B524397E621', '058ee560c33dfdb094aef4851440e1d4', '[][ACCESS_REPORT_FROM_MASTER][ACCOUNT_AR][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][APPOINTMENT_PENDING_][ARREAR_CANCEL][ARREAR_LIST][ARREAR_LOST_LIST][ASTHMA_CLINIC][BATCH_RX_ORDER_WARD_02][BED_STATUS_UPDATE][BILL_ABORT_LIST][CANCEL_IPD_FINANCE_CLEARING][CAN', NULL, NULL, 'administrator', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '999', '10', 'Administrator', NULL, 'Y', 'Y', NULL, NULL, '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A', NULL, 'Y', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '6', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('admin1', 'มรกต  เครือชารี', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33A4189851C439', '96e98952b440e8d0361c552fb0e67bc6', '[][ACCESS_REPORT_FROM_MASTER][ACCOUNT_AR][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][APPOINTMENT_PENDING_][ARREAR_CANCEL][ARREAR_LIST][ARREAR_LOST_LIST][ASTHMA_CLINIC][BATCH_RX_ORDER_WARD_02][BED_STATUS_UPDATE][BILL_ABORT_LIST][CANCEL_IPD_FINANCE_CLEARING][CAN', NULL, NULL, 'Administrator', '/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAEAAPgDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '997', '10', 'Administrator', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1000', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('admin2', 'Mr.Chatchawan Tonghorm', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A0D171E4FB690FE1240', '8e587d0891b64cd05cc06a40adc557eb', '[][ADMIN]', 'IT', NULL, 'นวก.คอมพิวเตอร์', NULL, 'Y', '998', '10', 'ผู้ดูแลระบบ', NULL, 'Y', 'N', NULL, NULL, '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A', NULL, 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'N', 'Y', '1', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('aimqfm', 'พญ.เอมอัชนา  แก้วใสย์', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A30E549DB1191', '56864cc54b6672256ed792884f4db2d4', '[][ACCESS_REPORT_FROM_MASTER][ACCOUNT_AR][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][APPOINTMENT_PENDING_][ARREAR_CANCEL][ARREAR_LIST][ARREAR_LOST_LIST][ASTHMA_CLINIC][BATCH_RX_ORDER_WARD_02][BED_STATUS_UPDATE][BILL_ABORT_LIST][CANCEL_IPD_FINANCE_CLEARING][CAN', NULL, NULL, 'แพทย์', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '100', '10', 'แพทย์', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Y', NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('air', 'บุษรา  กองเงิน', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E74A', '202cb962ac59075b964b07152d234b70', '[][DOCTOR][DRUG_ALLERGY_ENTRY][DRUG_USE_EVALUATION][EMR_VIEW][EndUser_Report][FINANCE_REPORT][HELTH_MED_LIST][INFORMATION_FRONT][IPD_CHART_STATUS_UPDATE][IPD_RX_ORDER_DELETE_TRX][IPD_RX_ORDER_SAVE][IPD_RX_PRINT_STICKER][IPD_SERVICE_CHARGE][IPD_SERVICE_CHA', NULL, NULL, 'พนักงานนวดแผนไทย', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '083', '10', 'แพทย์แผนไทย', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('amy', 'ปัทมา สงไพรสน', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E74A', '202cb962ac59075b964b07152d234b70', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][ARREAR_LOST_LIST][CHANGE_LOCKED_PTTYPE][CHECKUP_LIST][CLINIC][COPD_CLINIC][DATACENTER_BROWSER][Death_Form][DELETE_IPD_DIAGNOSIS][DELETE_IPD_NURSE_OPER][DentalEntry][DMHT_CLINIC][DO_HN_MER', NULL, NULL, 'พยาบาลวิชาชีพ', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '065', '10', 'พยาบาล', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('ant', 'ปาณญาดา ธานีวรรณ', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E74AD6', '81dc9bdb52d04dc20036dbd8313ed055', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][ARREAR_LOST_LIST][CHANGE_LOCKED_PTTYPE][CHECKUP_LIST][CLINIC][COPD_CLINIC][DATACENTER_BROWSER][Death_Form][DELETE_IPD_DIAGNOSIS][DELETE_IPD_NURSE_OPER][DentalEntry][DMHT_CLINIC][DO_HN_MER', NULL, NULL, 'พยาบาลวิชาชีพ', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', 'N', '019', '10', 'พยาบาล', NULL, 'Y', 'N', NULL, NULL, '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A', NULL, 'Y', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1128', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('Ao', 'วิภารัตน์ จันทะคุณ', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E74A', '202cb962ac59075b964b07152d234b70', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][ARREAR_LOST_LIST][CHANGE_LOCKED_PTTYPE][CHECKUP_LIST][CLINIC][COPD_CLINIC][DATACENTER_BROWSER][Death_Form][DELETE_IPD_DIAGNOSIS][DELETE_IPD_NURSE_OPER][DentalEntry][DMHT_CLINIC][DO_HN_MER', NULL, NULL, 'พยาบาลวิชาชีพ', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '018', '10', 'พยาบาล', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '100', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('aran', 'น.ส.อรัญญา  ลุพรหมมา', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E74AD6', '81dc9bdb52d04dc20036dbd8313ed055', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][ARREAR_LOST_LIST][CHANGE_LOCKED_PTTYPE][CHECKUP_LIST][CLINIC][COPD_CLINIC][DATACENTER_BROWSER][Death_Form][DELETE_IPD_DIAGNOSIS][DELETE_IPD_NURSE_OPER][DentalEntry][DMHT_CLINIC][DO_HN_MER', NULL, NULL, 'พยาบาลวิชาชีพ', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '088', '10', 'พยาบาล', NULL, 'Y', 'N', '3', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1457', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('aroonrot', 'พญ.อรุณโรจน์  อุ่นใจ', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171ABC6327729499A86A', '0bf285b6b2fed3bb3be63a6682963c0f', '[][ACCESS_REPORT_FROM_MASTER][ACCOUNT_AR][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][APPOINTMENT_PENDING_][ARREAR_CANCEL][ARREAR_LIST][ARREAR_LOST_LIST][ASTHMA_CLINIC][BATCH_RX_ORDER_WARD_02][BED_STATUS_UPDATE][BILL_ABORT_LIST][CANCEL_IPD_FINANCE_CLEARING][CAN', NULL, NULL, 'แพทย์', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '099', '10', 'แพทย์', NULL, 'Y', 'N', '3', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Y', NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('aun', 'ชัชวาลย์ ทองหอม', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A30E44BD71097', '2ec76e2f23746196a0a69adfe18ea691', '[][ADMIN]', NULL, NULL, 'นวก.คอมพิวเตอร์', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '998', '10', 'ผู้ดูแลระบบ', NULL, 'Y', 'N', '13', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '805', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('autji', 'นางอัจจิมา ดวงเพียอ้ม', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A32E349DB', 'bbdf56e2fbd1dbb503ceb433bed825ca', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][ARREAR_LOST_LIST][CHANGE_LOCKED_PTTYPE][CHECKUP_LIST][CLINIC][COPD_CLINIC][DATACENTER_BROWSER][Death_Form][DELETE_IPD_DIAGNOSIS][DELETE_IPD_NURSE_OPER][DentalEntry][DMHT_CLINIC][DO_HN_MER', NULL, NULL, 'พยาบาลวิชาชีพ', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '104', '10', 'พยาบาล', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1625', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('beelo', 'วิไลลักษณ์  สุรเกตุ', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E74A', '202cb962ac59075b964b07152d234b70', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][ARREAR_LOST_LIST][CHANGE_LOCKED_PTTYPE][CHECKUP_LIST][CLINIC][COPD_CLINIC][DATACENTER_BROWSER][Death_Form][DELETE_IPD_DIAGNOSIS][DELETE_IPD_NURSE_OPER][DentalEntry][DMHT_CLINIC][DO_HN_MER', NULL, NULL, 'พยาบาลวิชาชีพ', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '089', '10', 'พยาบาล', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1450', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('benja', 'เบญจรัตน์ แสนบุตร', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E74A', '202cb962ac59075b964b07152d234b70', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][ARREAR_LOST_LIST][CHANGE_LOCKED_PTTYPE][CHECKUP_LIST][CLINIC][COPD_CLINIC][DATACENTER_BROWSER][Death_Form][DELETE_IPD_DIAGNOSIS][DELETE_IPD_NURSE_OPER][DentalEntry][DMHT_CLINIC][DO_HN_MER', NULL, NULL, 'พยาบาลวิชาชีพ', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '048', '10', 'พยาบาล', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '609', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('bill1', 'วิภาวรรณ สุระเสนา', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E74A', '202cb962ac59075b964b07152d234b70', '[][ARREAR_LIST][BILL_ABORT_LIST][CANCEL_IPD_FINANCE_CLEARING][CONFIRM_IPD_FINANCE_CLEARING][DEBT_LIST][DELETE_FINANCE_RX][EMR_VIEW][EndUser_Report][FINANCE_CHANGE_PTTYPE][FINANCE_DEPOSIT_VIEW_LIST][FINANCE_REPORT][IPD_RX_DEBT_CANCEL][IPD_RX_ORDER_DELETE][', NULL, NULL, 'พนักงานช่วยเหลือคนไข้', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '066', '10', 'การเงิน', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('bumbim', 'จุฬีพร ไขแสง', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E049DB', '1cd3882394520876dc88d1472aa2a93f', '[][DOCTOR][DRUG_ALLERGY_ENTRY][DRUG_USE_EVALUATION][EMR_VIEW][EndUser_Report][FINANCE_REPORT][HELTH_MED_LIST][INFORMATION_FRONT][IPD_CHART_STATUS_UPDATE][IPD_RX_ORDER_DELETE_TRX][IPD_RX_ORDER_SAVE][IPD_RX_PRINT_STICKER][IPD_SERVICE_CHARGE][IPD_SERVICE_CHA', NULL, NULL, 'แพทย์แผนไทย', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '111', '10', 'แพทย์แผนไทย', NULL, 'Y', 'N', '14', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '851', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('card1', 'พจนกร นันทะมา', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A71A5', '1952a01898073d1e561b9b4f2e42cbd7', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][ARREAR_LOST_LIST][CHECKUP_LIST][CLINIC][Death_Form][DELETE_IPD_NURSE_OPER][DentalEntry][DOCTOR][DOCTOR_DIAG_PRINT][DRUG_ALLERGY_ENTRY][DRUG_EVALUATION_EDIT][Drug_Information_Service][DRUG', NULL, NULL, 'พนักงานช่วยเหลือคนไข้', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '060', '10', 'เวชระเบียน', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '3518', NULL, NULL, NULL, NULL, NULL, '500', NULL);
+INSERT INTO `opduser` VALUES ('card2', 'อธิวัฒน์ สิมโสม', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E74A', '202cb962ac59075b964b07152d234b70', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][ARREAR_LOST_LIST][CHECKUP_LIST][CLINIC][Death_Form][DELETE_IPD_NURSE_OPER][DentalEntry][DOCTOR][DOCTOR_DIAG_PRINT][DRUG_ALLERGY_ENTRY][DRUG_EVALUATION_EDIT][Drug_Information_Service][DRUG', NULL, NULL, 'พนักงานช่วยเหลือคนไข้', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '061', '10', 'เวชระเบียน', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Y', NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('card3', 'เกศราพร ชาแก้ว', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A32', 'cfcd208495d565ef66e7dff9f98764da', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][ARREAR_LOST_LIST][CHANGE_IPT_PTTYPE_DATA][CHECKUP_LIST][CLINIC][Death_Form][DELETE_IPD_NURSE_OPER][DentalEntry][DOCTOR][DOCTOR_DIAG_PRINT][DRUG_ALLERGY_ENTRY][DRUG_EVALUATION_EDIT][Drug_I', NULL, NULL, 'พนักงานช่วยเหลือคนไข้', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', 'N', '062', '10', 'เวชระเบียน', NULL, 'Y', 'N', NULL, NULL, '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A', NULL, 'Y', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Y', '229', NULL, NULL, NULL, NULL, NULL, '500', NULL);
+INSERT INTO `opduser` VALUES ('card4', 'กิตติวัฒน์  มูลอามาตย์', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A31E34BD5', '2bf283c05b601f21364d052ca0ec798d', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][ARREAR_LOST_LIST][CHECKUP_LIST][CLINIC][Death_Form][DELETE_IPD_NURSE_OPER][DentalEntry][DOCTOR][DOCTOR_DIAG_PRINT][DRUG_ALLERGY_ENTRY][DRUG_EVALUATION_EDIT][Drug_Information_Service][DRUG', NULL, NULL, 'พนักงานช่วยเหลือคนไข้', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', 'N', '094', NULL, 'เวชระเบียน', NULL, 'Y', 'N', NULL, NULL, '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A', NULL, 'Y', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1078', NULL, NULL, NULL, NULL, NULL, '5000', NULL);
+INSERT INTO `opduser` VALUES ('card5', 'นาย จีรวงศ์ ปราบณรงค์', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E74AD6', '81dc9bdb52d04dc20036dbd8313ed055', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][ARREAR_LOST_LIST][CHECKUP_LIST][CLINIC][Death_Form][DELETE_IPD_NURSE_OPER][DentalEntry][DOCTOR][DOCTOR_DIAG_PRINT][DRUG_ALLERGY_ENTRY][DRUG_EVALUATION_EDIT][Drug_Information_Service][DRUG', NULL, NULL, 'พนักงานทั่วไป', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '125', NULL, 'เวชระเบียน', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1486', NULL, NULL, NULL, NULL, NULL, '500', NULL);
+INSERT INTO `opduser` VALUES ('d2530', 'พญ.ปานทิพย์  วงศ์พุฒ', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A66E74CD112', 'ea481973e0eaf322b8f78498e9cceb6f', '[][ACCESS_REPORT_FROM_MASTER][ACCOUNT_AR][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][APPOINTMENT_PENDING_][ARREAR_CANCEL][ARREAR_LIST][ARREAR_LOST_LIST][ASTHMA_CLINIC][BATCH_RX_ORDER_WARD_02][BED_STATUS_UPDATE][BILL_ABORT_LIST][CANCEL_IPD_FINANCE_CLEARING][CAN', NULL, NULL, 'แพทย์', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '109', '10', 'แพทย์', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Y', NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('dennapa', 'นางเด่นนภา ทาสีแสง', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171AC19F0A9D8A491B7A8194', '28bb5b5b0797a4c3170635bd12e9dc68', '[][EMR_VIEW][EndUser_Report][LAB1][LAB_DESIGN][LAB_EDIT][LAB_ONLINE_CLOUD_ENTRY_REPORT][LAB_ORDER_MANUAL][LAB_PRINT][LAB_SET_APPROVED][LABOR][LABORDER][OPD_LABORDER][PATIENT_ALLERGY_LIST][STAFF_LOCK_LAB_RESULT][SYS_LAB_REPORT][SYS_LABOUR_REPORT][VIEW_CLIN', NULL, NULL, 'จพ.วิทยาศาสาตร์การแพทย์', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', 'N', '001', '10', 'LAB', NULL, 'Y', 'Y', NULL, NULL, '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A', NULL, 'Y', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '299', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('fon', 'พิไลวรรณ คำยอง', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A644B2E193525890B18F7', 'fea0b1c59b8c76fe2e68f96a87fa9ecd', '[][ACCESS_REPORT_FROM_MASTER][ACCOUNT_AR][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][APPOINTMENT_PENDING_][ARREAR_CANCEL][ARREAR_LIST][ARREAR_LOST_LIST][ASTHMA_CLINIC][BATCH_RX_ORDER_WARD_02][BED_STATUS_UPDATE][BILL_ABORT_LIST][CANCEL_IPD_FINANCE_CLEARING][CAN', NULL, NULL, 'จพ.เวชสถิติ', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', 'N', '053', '10', 'Administrator', NULL, 'Y', 'N', NULL, NULL, '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A', NULL, 'Y', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '4945', NULL, NULL, NULL, NULL, NULL, '1000', NULL);
+INSERT INTO `opduser` VALUES ('gotchoon', 'พญ.เยาวลักษณ์ อาจนาวัง', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A36E249D21B', 'a78ea664e2643a7f2e51ef826c077ab2', '[][ACCESS_REPORT_FROM_MASTER][ACCOUNT_AR][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][APPOINTMENT_PENDING_][ARREAR_CANCEL][ARREAR_LIST][ARREAR_LOST_LIST][ASTHMA_CLINIC][BATCH_RX_ORDER_WARD_02][BED_STATUS_UPDATE][BILL_ABORT_LIST][CANCEL_IPD_FINANCE_CLEARING][CAN', NULL, NULL, 'แพทย์', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '112', '10', 'แพทย์', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Y', NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('hem', 'น.ส.เหมสุดา ทวีปไทยสงค์', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E74CD2', '81e5f81db77c596492e6f1a5a792ed53', '[][ACCESS_REPORT_FROM_MASTER][APPOINTMENT][ARREAR_LOST_LIST][CHECKUP_LIST][CLINIC][Death_Form][DentalEntry][DOCTOR][Drug_Information_Service][DRUG_USE_EVALUATION][EMR_VIEW][EndUser_Report][ER1][FINANCE_REPORT][HELTH_MED_LIST][HHC-CLINIC][HHC_VISIT][INFORM', NULL, NULL, 'พนักงานคีย์ข้อมูล', NULL, NULL, '121', NULL, 'เวชปฏิบัติชุมชน', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('jira', 'จิราพัชร รัตสิมวงศ์', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E74A', '202cb962ac59075b964b07152d234b70', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][ARREAR_LOST_LIST][CHANGE_LOCKED_PTTYPE][CHECKUP_LIST][CLINIC][COPD_CLINIC][DATACENTER_BROWSER][Death_Form][DELETE_IPD_DIAGNOSIS][DELETE_IPD_NURSE_OPER][DentalEntry][DMHT_CLINIC][DO_HN_MER', NULL, NULL, 'พยาบาลวิชาชีพ', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '036', '10', 'พยาบาล', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '412', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('kaem', 'น.ส.อัญชลี โคตรคีรี', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E74AD6', '81dc9bdb52d04dc20036dbd8313ed055', '[][ARREAR_LIST][BILL_ABORT_LIST][DEBT_LIST][DELETE_FINANCE_RX][EMR_VIEW][EndUser_Report][FINANCE_CHANGE_PTTYPE][FINANCE_DEPOSIT_VIEW_LIST][FINANCE_REPORT][IPD_RX_DEBT_CANCEL][IPD_RX_ORDER_DELETE][IPD_RX_ORDER_DELETE_TRX][IPD_RX_ORDER_SAVE][IPD_RX_PRINT_ST', NULL, NULL, 'จพ.การเงินและบัญชี', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '123', NULL, 'การเงิน', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('kan', 'ทนพญ. กาญจนา เพียรักษา', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E74A', '202cb962ac59075b964b07152d234b70', '[][EMR_VIEW][EndUser_Report][LAB1][LAB_DESIGN][LAB_EDIT][LAB_ONLINE_CLOUD_ENTRY_REPORT][LAB_ORDER_MANUAL][LAB_PRINT][LAB_SET_APPROVED][LABOR][LABORDER][OPD_LABORDER][PATIENT_ALLERGY_LIST][STAFF_LOCK_LAB_RESULT][SYS_LAB_REPORT][SYS_LABOUR_REPORT][VIEW_CLIN', NULL, NULL, 'นักเทคนิคการแพทย์', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '047', '10', 'LAB', NULL, 'Y', 'Y', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('kanchanin', 'นพ.กันต์ชนินทร์  บุณย์ศุภา', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171AC3BEB47D7D46F1DE', '20fb8688f6742cfb407b5cb0d75c8b86', '[][ACCESS_REPORT_FROM_MASTER][ACCOUNT_AR][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][APPOINTMENT_PENDING_][ARREAR_CANCEL][ARREAR_LIST][ARREAR_LOST_LIST][ASTHMA_CLINIC][BATCH_RX_ORDER_WARD_02][BED_STATUS_UPDATE][BILL_ABORT_LIST][CANCEL_IPD_FINANCE_CLEARING][CAN', NULL, NULL, 'แพทย์', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '119', '10', 'แพทย์', NULL, 'Y', 'N', '1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Y', NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('KANJANA', 'พญ.กาญจนา  อักษรวรนารถ', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E44AD1', 'fd06b8ea02fe5b1c2496fe1700e9d16c', '[][ACCESS_REPORT_FROM_MASTER][ACCOUNT_AR][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][APPOINTMENT_PENDING_][ARREAR_CANCEL][ARREAR_LIST][ARREAR_LOST_LIST][ASTHMA_CLINIC][BATCH_RX_ORDER_WARD_02][BED_STATUS_UPDATE][BILL_ABORT_LIST][CANCEL_IPD_FINANCE_CLEARING][CAN', NULL, NULL, 'แพทย์', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', 'N', '080', '10', 'แพทย์', NULL, 'Y', 'N', NULL, NULL, '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A', NULL, 'Y', NULL, NULL, NULL, NULL, NULL, 'Y', NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('kanok', 'กนกวรรณ อรรคนันท์', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E74A', '202cb962ac59075b964b07152d234b70', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][ARREAR_LOST_LIST][CHANGE_LOCKED_PTTYPE][CHECKUP_LIST][CLINIC][COPD_CLINIC][DATACENTER_BROWSER][Death_Form][DELETE_IPD_DIAGNOSIS][DELETE_IPD_NURSE_OPER][DentalEntry][DMHT_CLINIC][DO_HN_MER', NULL, NULL, 'พยาบาลวิชาชีพ', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '046', '10', 'พยาบาล', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('kapook', 'สุชาดา  สมจิตมูล', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E249D7', '2a27b8144ac02f67687f76782a3b5d8f', '[][ACCESS_REPORT_FROM_MASTER][APPOINTMENT][ARREAR_LOST_LIST][CHECKUP_LIST][CLINIC][Death_Form][DOCTOR][DRUG_ALLERGY_ENTRY][Drug_Information_Service][DRUG_USE_EVALUATION][EMR_VIEW][EndUser_Report][ER1][FINANCE_REPORT][HELTH_MED_LIST][INFORMATION_FRONT][INJ', NULL, NULL, 'จพ.เวชกิจฉุกเฉิน', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '079', '10', 'อุบัติเหตุฉุกเฉิน', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '283', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('keawsai', 'ภัทราพร ชูศร', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A30E148D31A96', '8bddb7a3bb1ec634aa48d0951d45599a', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][ARREAR_LOST_LIST][CHANGE_LOCKED_PTTYPE][CHECKUP_LIST][CLINIC][COPD_CLINIC][DATACENTER_BROWSER][Death_Form][DELETE_IPD_DIAGNOSIS][DELETE_IPD_NURSE_OPER][DentalEntry][DMHT_CLINIC][DO_HN_MER', NULL, NULL, 'นักโภชนาการ', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '045', '10', 'พยาบาล', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('kim', 'คิมหันต์ เกษมสุข', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E74A', '202cb962ac59075b964b07152d234b70', '[][ACCESS_REPORT_FROM_MASTER][APPOINTMENT][ARREAR_LOST_LIST][CHECKUP_LIST][CLINIC][Death_Form][DOCTOR][DRUG_ALLERGY_ENTRY][Drug_Information_Service][DRUG_USE_EVALUATION][EMR_VIEW][EndUser_Report][ER1][FINANCE_REPORT][HELTH_MED_LIST][INFORMATION_FRONT][INJ', NULL, NULL, 'พยาบาลวิชาชีพ', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '038', '10', 'อุบัติเหตุฉุกเฉิน', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Y', NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('koy', 'ปิยวรรณ ขุนใหญ่', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E74A', '202cb962ac59075b964b07152d234b70', '[][LAB1][LAB_EDIT][LAB_ORDER_MANUAL][LABORDER][STAFF_LOCK_LAB_RESULT][View_EMR][VIEW_LAB]', NULL, NULL, 'ผู้ช่วยเหลือคนไข้', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '106', '10', 'LAB2', NULL, 'Y', 'N', '4', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '9', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('lad', 'ลัดดา  แสนเสนา', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E74AD6', '81dc9bdb52d04dc20036dbd8313ed055', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][ARREAR_LOST_LIST][CHECKUP_LIST][CLINIC][Death_Form][DELETE_IPD_NURSE_OPER][DentalEntry][DOCTOR][DOCTOR_DIAG_PRINT][DRUG_ALLERGY_ENTRY][DRUG_EVALUATION_EDIT][Drug_Information_Service][DRUG', NULL, NULL, 'จพ.การเงินและบัญชี', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '118', NULL, 'เวชระเบียน', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Y', NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('lampon', 'ลำพูน พ่อพิลา', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E74A', '202cb962ac59075b964b07152d234b70', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][ARREAR_LOST_LIST][CHECKUP_LIST][CLINIC][Death_Form][DELETE_IPD_NURSE_OPER][DentalEntry][DOCTOR][DOCTOR_DIAG_PRINT][DRUG_ALLERGY_ENTRY][DRUG_EVALUATION_EDIT][Drug_Information_Service][DRUG', NULL, NULL, 'พนักงานขับรถ', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '075', '10', 'เวชระเบียน', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, '5000', NULL);
+INSERT INTO `opduser` VALUES ('lu', 'จิตรานนท์ โยธานนท์', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E74A', '202cb962ac59075b964b07152d234b70', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][APPOINTMENT][ARREAR_LOST_LIST][CHECKUP_LIST][Death_Form][DentalEntry][DMHT_CLINIC][Drug_Information_Service][DRUG_USE_EVALUATION][EMR_VIEW][EndUser_Report][HHC-CLINIC][INFORMATION_FRONT][IPD_CHART_STATUS_UPDATE][I', NULL, NULL, 'จพ.ทันตสาธารณสุข', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '059', '10', 'ทันตสาธารณสุข', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '535', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('marinee', 'ทนพญ.มาริณี วัชรสุตานนท์', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E74A', '202cb962ac59075b964b07152d234b70', '[][EMR_VIEW][EndUser_Report][LAB1][LAB_DESIGN][LAB_EDIT][LAB_ONLINE_CLOUD_ENTRY_REPORT][LAB_ORDER_MANUAL][LAB_PRINT][LAB_SET_APPROVED][LABOR][LABORDER][OPD_LABORDER][PATIENT_ALLERGY_LIST][STAFF_LOCK_LAB_RESULT][SYS_LAB_REPORT][SYS_LABOUR_REPORT][VIEW_CLIN', NULL, NULL, 'นักเทคนิคการแพทย์', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', 'N', '049', '10', 'LAB', NULL, 'Y', 'Y', NULL, NULL, '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A', NULL, 'Y', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '3156', NULL, NULL, NULL, 'ทน.11009', NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('min', 'รัชนก วรรณพราหมณ์', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A32E148D31197', '10d5438c6dfb9ab9b8259294c6e6ca1b', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][APPOINTMENT][ARREAR_LOST_LIST][CHANGE_LOCKED_PTTYPE][CHECKUP_LIST][CLINIC][Death_Form][DELETE_IPD_DIAGNOSIS][DELETE_IPD_NURSE_OPER][DentalEntry][DO_HN_MERGE][DOCTOR][DRG_EXPORT][DRUG_ALLERGY_ENTRY][DRUG_COUNSELING', NULL, NULL, 'จพ.เภสัชกรรม', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '113', '10', 'เภสัชกรรมชุมชน', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '768', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('chananya', 'ชนันต์ญาต์ ศรีพันดอน', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171AED802B0F1C2A3AB3', '86bc79e40a2d2b38cf683ba9cf706827', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][ARREAR_LOST_LIST][CHANGE_LOCKED_PTTYPE][CHECKUP_LIST][CLINIC][COPD_CLINIC][DATACENTER_BROWSER][Death_Form][DELETE_IPD_DIAGNOSIS][DELETE_IPD_NURSE_OPER][DentalEntry][DMHT_CLINIC][DO_HN_MER', NULL, NULL, 'พยาบาลวิชาชีพ', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', 'N', '020', '10', 'พยาบาล', NULL, 'Y', 'N', '3', NULL, '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A', NULL, 'Y', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '902', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('422', 'นายบุญทง สุขรมย์', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A36E74B', 'f85454e8279be180185cac7d243c5eb3', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][ARREAR_LOST_LIST][CHECKUP_LIST][CLINIC][Death_Form][DELETE_IPD_NURSE_OPER][DentalEntry][DOCTOR][DOCTOR_DIAG_PRINT][DRUG_ALLERGY_ENTRY][DRUG_EVALUATION_EDIT][Drug_Information_Service][DRUG', NULL, NULL, 'พนักงานขับรถ', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '155', NULL, 'เวชระเบียน', NULL, 'Y', 'N', '1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '16', NULL, NULL, NULL, NULL, NULL, '5000', NULL);
+INSERT INTO `opduser` VALUES ('mor', 'moragot  khraucharee', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A36C2F6A31B524397E621', '058ee560c33dfdb094aef4851440e1d4', '[][ADMIN]', NULL, NULL, 'master', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '999', '10', 'ผู้ดูแลระบบ', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '4', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('music', 'รุ่งเรืองศรี วชิรเวช', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E74A', '202cb962ac59075b964b07152d234b70', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][ARREAR_LOST_LIST][CHANGE_LOCKED_PTTYPE][CHECKUP_LIST][CLINIC][COPD_CLINIC][DATACENTER_BROWSER][Death_Form][DELETE_IPD_DIAGNOSIS][DELETE_IPD_NURSE_OPER][DentalEntry][DMHT_CLINIC][DO_HN_MER', NULL, NULL, 'พยาบาลวิชาชีพ', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '021', '10', 'พยาบาล', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Y', NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('namo', 'อนุสรณ์  ต้นกันยา', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E148D312', '4427350b39dcbd8e8da4f053283e3984', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][ARREAR_LOST_LIST][CHANGE_LOCKED_PTTYPE][CHECKUP_LIST][CLINIC][COPD_CLINIC][DATACENTER_BROWSER][Death_Form][DELETE_IPD_DIAGNOSIS][DELETE_IPD_NURSE_OPER][DentalEntry][DMHT_CLINIC][DO_HN_MER', NULL, NULL, 'พยาบาลวิชาชีพ', NULL, NULL, '077', '10', 'พยาบาล', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('nannamza', 'น่าน  จันทรเสนา', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E74AD6', '81dc9bdb52d04dc20036dbd8313ed055', '[][DOCTOR][DRUG_ALLERGY_ENTRY][DRUG_USE_EVALUATION][EMR_VIEW][EndUser_Report][FINANCE_REPORT][HELTH_MED_LIST][INFORMATION_FRONT][IPD_CHART_STATUS_UPDATE][IPD_RX_ORDER_DELETE_TRX][IPD_RX_ORDER_SAVE][IPD_RX_PRINT_STICKER][IPD_SERVICE_CHARGE][IPD_SERVICE_CHA', NULL, NULL, 'จพ.สาธารณสุขชุมชน', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '097', '10', 'แพทย์แผนไทย', NULL, 'Y', 'N', '14', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Y', NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('nanthana', 'น.ส.นันทนา ทันโหศักดิ์', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A32EC4BD5', '131eefef31381096aac8b8b1fbdaafdb', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][APPOINTMENT][ARREAR_LOST_LIST][CHANGE_LOCKED_PTTYPE][CHECKUP_LIST][CLINIC][Death_Form][DELETE_IPD_DIAGNOSIS][DELETE_IPD_NURSE_OPER][DentalEntry][DO_HN_MERGE][DOCTOR][DRG_EXPORT][DRUG_ALLERGY_ENTRY][DRUG_COUNSELING', NULL, NULL, 'ผู้ช่วยเภสัชกร', NULL, NULL, '087', '10', 'เภสัชกรรมชุมชน', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('nark', 'ประภัสสร นาคดิลก', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A3BED41DB', 'e1f979ea2b94f4a754835ee9f85cf0d0', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][ARREAR_LOST_LIST][CHANGE_LOCKED_PTTYPE][CHECKUP_LIST][CLINIC][COPD_CLINIC][DATACENTER_BROWSER][Death_Form][DELETE_IPD_DIAGNOSIS][DELETE_IPD_NURSE_OPER][DentalEntry][DMHT_CLINIC][DO_HN_MER', NULL, NULL, 'พยาบาลวิชาชีพ', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', 'N', '022', '10', 'พยาบาล', NULL, 'Y', 'N', NULL, NULL, '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A', NULL, 'Y', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1018', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('nc', 'นัฏฐินี ชุดชา', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E74A', '202cb962ac59075b964b07152d234b70', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][ARREAR_LOST_LIST][CHANGE_LOCKED_PTTYPE][CHECKUP_LIST][CLINIC][COPD_CLINIC][DATACENTER_BROWSER][Death_Form][DELETE_IPD_DIAGNOSIS][DELETE_IPD_NURSE_OPER][DentalEntry][DMHT_CLINIC][DO_HN_MER', NULL, NULL, 'พยาบาลวิชาชีพ', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '023', '10', 'พยาบาล', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1254', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('ning', 'วรกมล พีระชัย', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E74A', '202cb962ac59075b964b07152d234b70', '[][ACCESS_REPORT_FROM_MASTER][APPOINTMENT][ARREAR_LOST_LIST][CHECKUP_LIST][CLINIC][Death_Form][DOCTOR][DRUG_ALLERGY_ENTRY][Drug_Information_Service][DRUG_USE_EVALUATION][EMR_VIEW][EndUser_Report][ER1][FINANCE_REPORT][HELTH_MED_LIST][INFORMATION_FRONT][INJ', NULL, NULL, 'พยาบาลวิชาชีพ', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '024', '10', 'อุบัติเหตุฉุกเฉิน', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Y', NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('nom', 'พนม โคตรคีรี', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E74A', '202cb962ac59075b964b07152d234b70', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][ARREAR_LOST_LIST][CHECKUP_LIST][CLINIC][Death_Form][DELETE_IPD_NURSE_OPER][DentalEntry][DOCTOR][DOCTOR_DIAG_PRINT][DRUG_ALLERGY_ENTRY][DRUG_EVALUATION_EDIT][Drug_Information_Service][DRUG', NULL, NULL, 'พนักงานช่วยเหลือคนไข้', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '092', '10', 'เวชระเบียน', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '687', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('nueng', 'สุชาวดี นามวงศ์ษา', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E74A', '202cb962ac59075b964b07152d234b70', '[][ACCESS_REPORT_FROM_MASTER][APPOINTMENT][ARREAR_LOST_LIST][CHECKUP_LIST][CLINIC][Death_Form][DOCTOR][DRUG_ALLERGY_ENTRY][Drug_Information_Service][DRUG_USE_EVALUATION][EMR_VIEW][EndUser_Report][ER1][FINANCE_REPORT][HELTH_MED_LIST][INFORMATION_FRONT][INJ', NULL, NULL, 'จพ.เวชกิจฉุกเฉิน', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '056', '10', 'อุบัติเหตุฉุกเฉิน', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '377', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('nut', 'ณัชชา พุทธวารี', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E74A', '202cb962ac59075b964b07152d234b70', '[][ACCESS_REPORT_FROM_MASTER][APPOINTMENT][ARREAR_LOST_LIST][CHECKUP_LIST][CLINIC][Death_Form][DOCTOR][Drug_Information_Service][DRUG_USE_EVALUATION][EMR_VIEW][EndUser_Report][ER1][FINANCE_REPORT][HELTH_MED_LIST][INFORMATION_FRONT][INJURY_SURVEILLENCE][IP', NULL, NULL, 'พยาบาลวิชาชีพ', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '026', '10', 'ผู้ป่วยนอก', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('nutty', 'ธีรวัฒน์  สุโพธิ์เมือง', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A30E04AD21090', '3ab77f218dd68845472066de731aa8c4', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][ARREAR_LOST_LIST][CHANGE_LOCKED_PTTYPE][CHECKUP_LIST][CLINIC][COPD_CLINIC][DATACENTER_BROWSER][Death_Form][DELETE_IPD_DIAGNOSIS][DELETE_IPD_NURSE_OPER][DentalEntry][DMHT_CLINIC][DO_HN_MER', NULL, NULL, 'พยาบาลวิชาชีพ', NULL, 'N', '076', '10', 'พยาบาล', NULL, 'Y', 'N', NULL, NULL, '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A', NULL, 'Y', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('oiank', 'กัลยา  นามโนรินทร์', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A32E54BD0', '147768d3955e38c4e662c0a95d807abc', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][ARREAR_LOST_LIST][CHANGE_LOCKED_PTTYPE][CHECKUP_LIST][CLINIC][COPD_CLINIC][DATACENTER_BROWSER][Death_Form][DELETE_IPD_DIAGNOSIS][DELETE_IPD_NURSE_OPER][DentalEntry][DMHT_CLINIC][DO_HN_MER', NULL, NULL, 'พยาบาลวิชาชีพ', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '096', '10', 'พยาบาล', NULL, 'Y', 'N', '3', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1340', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('panjai', 'สราญลักษณ์ มีพลงาม', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A32E348D3', 'ad9be0b5d43f9e2aba895f3ede723aa1', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][ARREAR_LOST_LIST][CHANGE_LOCKED_PTTYPE][CHECKUP_LIST][CLINIC][COPD_CLINIC][DATACENTER_BROWSER][Death_Form][DELETE_IPD_DIAGNOSIS][DELETE_IPD_NURSE_OPER][DentalEntry][DMHT_CLINIC][DO_HN_MER', NULL, NULL, 'พยาบาลวิชาชีพ', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '027', '10', 'พยาบาล', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1265', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('paweena', 'ภญ.ปวีณา ดาวเศรษฐ์', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E74A', '202cb962ac59075b964b07152d234b70', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][APPOINTMENT][ARREAR_LOST_LIST][CHANGE_LOCKED_PTTYPE][CHECKUP_LIST][CLINIC][Death_Form][DELETE_IPD_DIAGNOSIS][DELETE_IPD_NURSE_OPER][DentalEntry][DO_HN_MERGE][DOCTOR][DRG_EXPORT][DRUG_ALLERGY_ENTRY][DRUG_COUNSELING', NULL, NULL, 'เภสัชกร', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '043', '10', 'เภสัชกรรมชุมชน', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '614', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('peduoizz', 'พญ.วรรณิสา  โกมลไพศาล', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A40434AAA1BD48E60', '2a0d8c8487c1250cb769acf32fae6e32', '[][ACCESS_REPORT_FROM_MASTER][ACCOUNT_AR][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][APPOINTMENT_PENDING_][ARREAR_CANCEL][ARREAR_LIST][ARREAR_LOST_LIST][ASTHMA_CLINIC][BATCH_RX_ORDER_WARD_02][BED_STATUS_UPDATE][BILL_ABORT_LIST][CANCEL_IPD_FINANCE_CLEARING][CAN', NULL, NULL, 'แพทย์', NULL, NULL, '124', '10', 'แพทย์', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Y', NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('pen', 'เพ็ญนภา คงศิลา', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E74A', '202cb962ac59075b964b07152d234b70', '[][ACCESS_REPORT_FROM_MASTER][APPOINTMENT][ARREAR_LOST_LIST][CHECKUP_LIST][CLINIC][Death_Form][DentalEntry][DOCTOR][Drug_Information_Service][DRUG_USE_EVALUATION][EMR_VIEW][EndUser_Report][ER1][FINANCE_REPORT][HELTH_MED_LIST][HHC-CLINIC][HHC_VISIT][INFORM', NULL, NULL, 'นวก.สาธารณสุข', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '072', '10', 'เวชปฏิบัติชุมชน', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '331', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('peng', 'ศรัญญา หล่มระลึก', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A36E148', '15d4e891d784977cacbfcbb00c48f133', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][ARREAR_LOST_LIST][CHANGE_LOCKED_PTTYPE][CHECKUP_LIST][CLINIC][Death_Form][DELETE_IPD_DIAGNOSIS][DELETE_IPD_NURSE_OPER][DentalEntry][DMHT_CLINIC][DO_HN_MERGE][DOCTOR][DOCTOR_DIAG_PRINT][DR', NULL, NULL, 'พยาบาลวิชาชีพ', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', 'N', '028', '10', 'คลินิกปกปิด', NULL, 'Y', 'N', '11', NULL, '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A', NULL, 'Y', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '703', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('phupa', 'รัตนาภรณ์  ด่านลี', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A30EC4AD2', '6624b6d8217cf71640993409df58204f', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][ARREAR_LOST_LIST][CHANGE_LOCKED_PTTYPE][CHECKUP_LIST][CLINIC][COPD_CLINIC][DATACENTER_BROWSER][Death_Form][DELETE_IPD_DIAGNOSIS][DELETE_IPD_NURSE_OPER][DentalEntry][DMHT_CLINIC][DO_HN_MER', NULL, NULL, 'พยาบาลวิชาชีพ', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '091', '10', 'พยาบาล', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('phupha', 'รัตนาภรณ์  ด่านลี', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A30EC4AD2', '6624b6d8217cf71640993409df58204f', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][ARREAR_LOST_LIST][CHANGE_LOCKED_PTTYPE][CHECKUP_LIST][CLINIC][COPD_CLINIC][DATACENTER_BROWSER][Death_Form][DELETE_IPD_DIAGNOSIS][DELETE_IPD_NURSE_OPER][DentalEntry][DMHT_CLINIC][DO_HN_MER', NULL, NULL, 'พยาบาลวิชาชีพ', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '091', '10', 'พยาบาล', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1717', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('pien', 'เพียร ชุมสีวัน', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E74A', '202cb962ac59075b964b07152d234b70', '[][ACCESS_REPORT_FROM_MASTER][APPOINTMENT][ARREAR_LOST_LIST][CHECKUP_LIST][CLINIC][Death_Form][DentalEntry][DOCTOR][Drug_Information_Service][DRUG_USE_EVALUATION][EMR_VIEW][EndUser_Report][ER1][FINANCE_REPORT][HELTH_MED_LIST][HHC-CLINIC][HHC_VISIT][INFORM', NULL, NULL, 'นวก.สาธารณสุข', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', 'N', '063', '10', 'เวชปฏิบัติชุมชน', NULL, 'Y', 'N', NULL, NULL, '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A', '1', 'Y', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1100', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('pin', 'ภิญญดา แก้วนารี', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E74A', '202cb962ac59075b964b07152d234b70', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][ARREAR_LOST_LIST][CHANGE_LOCKED_PTTYPE][CHECKUP_LIST][CLINIC][COPD_CLINIC][DATACENTER_BROWSER][Death_Form][DELETE_IPD_DIAGNOSIS][DELETE_IPD_NURSE_OPER][DentalEntry][DMHT_CLINIC][DO_HN_MER', NULL, NULL, 'พยาบาลวิชาชีพ', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '029', '9', 'พยาบาล', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Y', NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('pkk', 'ปฐมพงศ์  กว้างขวาง', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A37E04C', '15de21c670ae7c3f6f3f1f37029303c9', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][ARREAR_LOST_LIST][CHANGE_LOCKED_PTTYPE][CHECKUP_LIST][CLINIC][COPD_CLINIC][DATACENTER_BROWSER][Death_Form][DELETE_IPD_DIAGNOSIS][DELETE_IPD_NURSE_OPER][DentalEntry][DMHT_CLINIC][DO_HN_MER', NULL, NULL, 'พยาบาลวิชาชีพ', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '090', '10', 'พยาบาล', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('pond', 'วันวิสาข์ อินทรประเสริฐ', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A36E148D3', 'e243aa93e6b6e031797f86d0858f5e40', '[][ADMIN]', NULL, NULL, 'จพ.เภสัชกรรม', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', 'N', '057', '10', 'ผู้ดูแลระบบ', NULL, 'Y', 'N', NULL, NULL, '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A', NULL, 'Y', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '186', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('ิbuaban', 'น.ส.บ้วบาน  ตุ่มเตี้ย', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E649D41196', '46e9aa744a738f500d6b2d8d4e7c4a60', '[][ACCESS_REPORT_FROM_MASTER][APPOINTMENT][ARREAR_LOST_LIST][CHECKUP_LIST][CLINIC][Death_Form][DentalEntry][DOCTOR][Drug_Information_Service][DRUG_USE_EVALUATION][EMR_VIEW][EndUser_Report][ER1][FINANCE_REPORT][HELTH_MED_LIST][HHC-CLINIC][HHC_VISIT][INFORM', NULL, NULL, 'นวก.สาธารณสุข', NULL, NULL, NULL, NULL, 'เวชปฏิบัติชุมชน', NULL, NULL, 'N', '999', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('poulthai001', 'นพ.พัฒนจัก  วิภาดากุล', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A73D7C86B42AE6A4A9A', 'd8f78a099d3c8205fccd7457ed11dc3d', '[][ACCESS_REPORT_FROM_MASTER][ACCOUNT_AR][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][APPOINTMENT_PENDING_][ARREAR_CANCEL][ARREAR_LIST][ARREAR_LOST_LIST][ASTHMA_CLINIC][BATCH_RX_ORDER_WARD_02][BED_STATUS_UPDATE][BILL_ABORT_LIST][CANCEL_IPD_FINANCE_CLEARING][CAN', NULL, NULL, 'แพทย์', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '098', '10', 'แพทย์', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Y', NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('pp', 'ประภาส ภักดีราช', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E74A', '202cb962ac59075b964b07152d234b70', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][ARREAR_LOST_LIST][CHECKUP_LIST][CLINIC][Death_Form][DELETE_IPD_NURSE_OPER][DentalEntry][DOCTOR][DOCTOR_DIAG_PRINT][DRUG_ALLERGY_ENTRY][DRUG_EVALUATION_EDIT][Drug_Information_Service][DRUG', NULL, NULL, 'พนักงานช่วยเหลือคนไข้', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '067', '10', 'เวชระเบียน', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('pu', 'บุญฤทธิ์  วงศ์กันยา', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A', 'd41d8cd98f00b204e9800998ecf8427e', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][APPOINTMENT][ARREAR_LOST_LIST][CHANGE_LOCKED_PTTYPE][CHECKUP_LIST][CLINIC][Death_Form][DELETE_IPD_DIAGNOSIS][DELETE_IPD_NURSE_OPER][DentalEntry][DO_HN_MERGE][DOCTOR][DOCTOR_DIAG_PRINT][DRUG_ALLERGY_ENTRY][Drug_Inf', NULL, NULL, 'พนักงานผู้ช่วยเหลือคนไข้', NULL, NULL, '108', NULL, 'ผู้ป่วยใน', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('puilui', 'ขวัญใจ ชื่นจอหอ', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A30E04BD5', 'ba3e9b6a519cfddc560b5d53210df1bd', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][ARREAR_LOST_LIST][CHANGE_LOCKED_PTTYPE][CHECKUP_LIST][CLINIC][COPD_CLINIC][DATACENTER_BROWSER][Death_Form][DELETE_IPD_DIAGNOSIS][DELETE_IPD_NURSE_OPER][DentalEntry][DMHT_CLINIC][DO_HN_MER', NULL, NULL, 'พยาบาลวิชาชีพ', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '054', '10', 'พยาบาล', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1029', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('puy', 'ขวัญใจ ชื่นจอหอ', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E74A', '202cb962ac59075b964b07152d234b70', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][ARREAR_LOST_LIST][CHANGE_LOCKED_PTTYPE][CHECKUP_LIST][CLINIC][COPD_CLINIC][DATACENTER_BROWSER][Death_Form][DELETE_IPD_DIAGNOSIS][DELETE_IPD_NURSE_OPER][DentalEntry][DMHT_CLINIC][DO_HN_MER', NULL, NULL, 'พยาบาลวิชาชีพ', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '054', '10', 'พยาบาล', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Y', NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('rutti', 'รัตติยา ภูดวงจิต', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E74A', '202cb962ac59075b964b07152d234b70', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][ARREAR_LIST][CHECKUP_LIST][CLINIC][Death_Form][DELETE_IPD_NURSE_OPER][DentalEntry][DOCTOR][DOCTOR_DIAG_PRINT][DRUG_ALLERGY_ENTRY][DRUG_EVALUATION_PATIENT_VIEW][Drug_Information_Service][D', NULL, NULL, 'จพ.รังสีการแพทย์', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '069', '10', 'X-RAY', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '419', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('saif', 'สายฝน ดวงเพียอ้ม', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A32E349DB', 'bbdf56e2fbd1dbb503ceb433bed825ca', '[][ACCESS_REPORT_FROM_MASTER][APPOINTMENT][ARREAR_LOST_LIST][CHECKUP_LIST][CLINIC][Death_Form][DOCTOR][DRUG_ALLERGY_ENTRY][Drug_Information_Service][DRUG_USE_EVALUATION][EMR_VIEW][EndUser_Report][ER1][FINANCE_REPORT][HELTH_MED_LIST][INFORMATION_FRONT][INJ', NULL, NULL, 'พยาบาลวิชาชีพ', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', 'N', '030', '10', 'อุบัติเหตุฉุกเฉิน', NULL, 'Y', 'N', NULL, NULL, '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A', NULL, 'Y', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('siriwat', 'นพ.ศิริวัฒน์  ไชยเอีย', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E641D716', 'bfb26b513b7a640448c79c3bdd6d2bb0', '[][ACCESS_REPORT_FROM_MASTER][ACCOUNT_AR][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][APPOINTMENT_PENDING_][ARREAR_CANCEL][ARREAR_LIST][ARREAR_LOST_LIST][ASTHMA_CLINIC][BATCH_RX_ORDER_WARD_02][BED_STATUS_UPDATE][BILL_ABORT_LIST][CANCEL_IPD_FINANCE_CLEARING][CAN', NULL, NULL, 'แพทย์', NULL, NULL, '122', '10', 'แพทย์', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Y', NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('som', 'น.ส.ศิริลักษณ์ เหล่าสียง', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A32ED40DB', '47c8c701a4cd6e769579376af52560cc', '[][ACCESS_REPORT_FROM_MASTER][APPOINTMENT][ARREAR_LOST_LIST][CHECKUP_LIST][CLINIC][Death_Form][DentalEntry][DOCTOR][Drug_Information_Service][DRUG_USE_EVALUATION][EMR_VIEW][EndUser_Report][ER1][FINANCE_REPORT][HELTH_MED_LIST][HHC-CLINIC][HHC_VISIT][INFORM', NULL, NULL, 'พนักงานช่วยเหลือคนไข้', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '120', NULL, 'เวชปฏิบัติชุมชน', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Y', NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('som-o', 'จิราทิพย์ โสตะภา', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E74A', '202cb962ac59075b964b07152d234b70', '[][ACCESS_REPORT_FROM_MASTER][APPOINTMENT][ARREAR_LOST_LIST][CHECKUP_LIST][CLINIC][Death_Form][DOCTOR][DRUG_ALLERGY_ENTRY][Drug_Information_Service][DRUG_USE_EVALUATION][EMR_VIEW][EndUser_Report][ER1][FINANCE_REPORT][HELTH_MED_LIST][INFORMATION_FRONT][INJ', NULL, NULL, 'จพ.เวชกิจฉุกเฉิน', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '031', '10', 'อุบัติเหตุฉุกเฉิน', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '479', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('somga', 'พญ.สมกมล  รัตนวงศ์ไพบูลย์', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E74AD6', '81dc9bdb52d04dc20036dbd8313ed055', '[][ACCESS_REPORT_FROM_MASTER][ACCOUNT_AR][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][APPOINTMENT_PENDING_][ARREAR_CANCEL][ARREAR_LIST][ARREAR_LOST_LIST][ASTHMA_CLINIC][BATCH_RX_ORDER_WARD_02][BED_STATUS_UPDATE][BILL_ABORT_LIST][CANCEL_IPD_FINANCE_CLEARING][CAN', NULL, NULL, 'แพทย์', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '129', '10', 'แพทย์', NULL, 'Y', 'N', '3', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Y', NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('somjin', 'ทนพญ. สมจินตนา วงษ์จันทร์', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E74A', '202cb962ac59075b964b07152d234b70', '[][EMR_VIEW][EndUser_Report][LAB1][LAB_DESIGN][LAB_EDIT][LAB_ONLINE_CLOUD_ENTRY_REPORT][LAB_ORDER_MANUAL][LAB_PRINT][LAB_SET_APPROVED][LABOR][LABORDER][OPD_LABORDER][PATIENT_ALLERGY_LIST][STAFF_LOCK_LAB_RESULT][SYS_LAB_REPORT][SYS_LABOUR_REPORT][VIEW_CLIN', NULL, NULL, 'นักเทคนิคการแพทย์', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '025', '10', 'LAB', NULL, 'Y', 'Y', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('SORAYA', 'พญ.โสรยา  หลวงชาญ', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A6BBB0CD211', '17351b1c7a53c20ec9b923d67a83ce06', '[][ACCESS_REPORT_FROM_MASTER][ACCOUNT_AR][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][APPOINTMENT_PENDING_][ARREAR_CANCEL][ARREAR_LIST][ARREAR_LOST_LIST][ASTHMA_CLINIC][BATCH_RX_ORDER_WARD_02][BED_STATUS_UPDATE][BILL_ABORT_LIST][CANCEL_IPD_FINANCE_CLEARING][CAN', NULL, NULL, 'แพทย์', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '081', '10', 'แพทย์', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Y', NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('sp.k', 'สุภารัตน์ คลื่นแก้ว', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E74A', '202cb962ac59075b964b07152d234b70', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][ARREAR_LOST_LIST][CHANGE_LOCKED_PTTYPE][CHECKUP_LIST][CLINIC][COPD_CLINIC][DATACENTER_BROWSER][Death_Form][DELETE_IPD_DIAGNOSIS][DELETE_IPD_NURSE_OPER][DentalEntry][DMHT_CLINIC][DO_HN_MER', NULL, NULL, 'พยาบาลวิชาชีพ', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '032', '10', 'พยาบาล', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2928', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('sriring', 'ผกามาศ ศรีหริ่ง', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A37E44BDB', '15212f24321aa2c3dc8e9acf820f3c15', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][APPOINTMENT][ARREAR_LOST_LIST][CHECKUP_LIST][CLINIC][Death_Form][DMHT_CLINIC][DOCTOR][DOCTOR_DIAG_PRINT][DRUG_ALLERGY_ENTRY][Drug_Information_Service][DRUG_USE_EVALUATION][EMR-PRINT-IPD-DOC][EMR-PRINT-OPD-CARD][EM', NULL, 'นักกายภาพบำบัด', 'นักกายภาพบำบัด', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', 'N', '050', '10', 'กายภาพบำบัด', NULL, 'Y', 'N', NULL, NULL, '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A', NULL, 'Y', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '344', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('236', 'นพ.ณัฐวุฒิ  โพธิ์เสนา', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E74A', '202cb962ac59075b964b07152d234b70', '[][ACCESS_REPORT_FROM_MASTER][ACCOUNT_AR][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][APPOINTMENT_PENDING_][ARREAR_CANCEL][ARREAR_LIST][ARREAR_LOST_LIST][ASTHMA_CLINIC][BATCH_RX_ORDER_WARD_02][BED_STATUS_UPDATE][BILL_ABORT_LIST][CANCEL_IPD_FINANCE_CLEARING][CAN', NULL, NULL, 'แพทย์', NULL, NULL, '138', '10', 'แพทย์', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Y', NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('suk', 'สุขสวัสดิ์ พิมพ์โซ', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E74A', '202cb962ac59075b964b07152d234b70', '[][ACCESS_REPORT_FROM_MASTER][APPOINTMENT][ARREAR_LOST_LIST][CHECKUP_LIST][CLINIC][Death_Form][DOCTOR][Drug_Information_Service][DRUG_USE_EVALUATION][EMR_VIEW][EndUser_Report][ER1][FINANCE_REPORT][HELTH_MED_LIST][INFORMATION_FRONT][INJURY_SURVEILLENCE][IP', NULL, NULL, 'ผู้ช่วยเหลือคนไข้', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '073', '10', 'ผู้ป่วยนอก', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Y', NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('supin', 'สุปิน สาระพันธ์', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E74A', '202cb962ac59075b964b07152d234b70', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][ARREAR_LOST_LIST][CHANGE_LOCKED_PTTYPE][CHECKUP_LIST][CLINIC][COPD_CLINIC][DATACENTER_BROWSER][Death_Form][DELETE_IPD_DIAGNOSIS][DELETE_IPD_NURSE_OPER][DentalEntry][DMHT_CLINIC][DO_HN_MER', NULL, NULL, 'พยาบาลวิชาชีพ', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '033', '10', 'พยาบาล', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('surayut', 'สุรยุทธ', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33EC4FD3', 'f106b7f99d2cb30c3db1c3cc0fde9ccb', '[][ACCESS_REPORT_FROM_MASTER][APPOINTMENT][ARREAR_LOST_LIST][CHECKUP_LIST][CLINIC][Death_Form][DOCTOR][DRUG_ALLERGY_ENTRY][Drug_Information_Service][DRUG_USE_EVALUATION][EMR_VIEW][EndUser_Report][ER1][FINANCE_REPORT][HELTH_MED_LIST][INFORMATION_FRONT][INJ', 'ER', 'RN', 'พยาบาลวิชาชีพ', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', 'N', '034', '10', 'อุบัติเหตุฉุกเฉิน', NULL, 'Y', 'N', NULL, NULL, '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A', NULL, 'N', NULL, NULL, NULL, NULL, NULL, 'Y', NULL, NULL, NULL, NULL, NULL, 'Y', '40', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('thaksin', 'ภก.ทักษิณ ชาวดร', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A3AE24BDA13913F', 'dd5f5dd68fb14b933664be7e354734e8', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][APPOINTMENT][ARREAR_LOST_LIST][CHANGE_LOCKED_PTTYPE][CHECKUP_LIST][CLINIC][Death_Form][DELETE_IPD_DIAGNOSIS][DELETE_IPD_NURSE_OPER][DentalEntry][DO_HN_MERGE][DOCTOR][DRG_EXPORT][DRUG_ALLERGY_ENTRY][DRUG_COUNSELING', NULL, NULL, 'เภสัชกร', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', 'N', '044', '10', 'เภสัชกรรมชุมชน', NULL, 'Y', 'N', NULL, NULL, '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A', NULL, 'Y', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '246', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('tiwa', 'นพ.ทิวา  ชัยทรงฤทธิ์', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A36E549D115', 'dbc47b8c1f31c559de985ed898f644de', '[][ACCESS_REPORT_FROM_MASTER][ACCOUNT_AR][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][APPOINTMENT_PENDING_][ARREAR_CANCEL][ARREAR_LIST][ARREAR_LOST_LIST][ASTHMA_CLINIC][BATCH_RX_ORDER_WARD_02][BED_STATUS_UPDATE][BILL_ABORT_LIST][CANCEL_IPD_FINANCE_CLEARING][CAN', NULL, NULL, 'แพทย์', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '082', '10', 'แพทย์', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Y', NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('tonaor', 'พรธวัล พรหมเทพ', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E74A', '202cb962ac59075b964b07152d234b70', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][ARREAR_LOST_LIST][CHANGE_LOCKED_PTTYPE][CHECKUP_LIST][CLINIC][COPD_CLINIC][DATACENTER_BROWSER][Death_Form][DELETE_IPD_DIAGNOSIS][DELETE_IPD_NURSE_OPER][DentalEntry][DMHT_CLINIC][DO_HN_MER', NULL, NULL, 'พยาบาลวิชาชีพ', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '035', '10', 'พยาบาล', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('tong', 'จักรพล แสนเสนา', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A30E04AD3', '217c0e01c1828e7279051f1b6675745d', '[][LAB1][LAB_EDIT][LAB_ORDER_MANUAL][LABORDER][STAFF_LOCK_LAB_RESULT][View_EMR][VIEW_LAB]', NULL, NULL, NULL, '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '107', '10', 'LAB2', NULL, 'Y', 'N', '4', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '157', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('tookta', 'นงนุช อุดมพันธ์', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E74A', '202cb962ac59075b964b07152d234b70', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][ARREAR_LOST_LIST][CHANGE_LOCKED_PTTYPE][CHECKUP_LIST][CLINIC][COPD_CLINIC][DATACENTER_BROWSER][Death_Form][DELETE_IPD_DIAGNOSIS][DELETE_IPD_NURSE_OPER][DentalEntry][DMHT_CLINIC][DO_HN_MER', NULL, NULL, 'พยาบาลวิชาชีพ', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '037', '10', 'พยาบาล', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '457', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('tooktik', 'อัจฉรา ศรีสุข', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E74A', '202cb962ac59075b964b07152d234b70', '[][ACCESS_REPORT_FROM_MASTER][APPOINTMENT][ARREAR_LOST_LIST][CHECKUP_LIST][CLINIC][Death_Form][DentalEntry][DOCTOR][Drug_Information_Service][DRUG_USE_EVALUATION][EMR_VIEW][EndUser_Report][ER1][FINANCE_REPORT][HELTH_MED_LIST][HHC-CLINIC][HHC_VISIT][INFORM', NULL, NULL, 'นวก.สาธารณสุข', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '064', '10', 'เวชปฏิบัติชุมชน', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '24', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('tukta', 'จริยา บำรุงภักดี', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E74A', '202cb962ac59075b964b07152d234b70', '[][ACCESS_REPORT_FROM_MASTER][APPOINTMENT][ARREAR_LOST_LIST][CHECKUP_LIST][CLINIC][Death_Form][DOCTOR][DRUG_ALLERGY_ENTRY][Drug_Information_Service][DRUG_USE_EVALUATION][EMR_VIEW][EndUser_Report][ER1][FINANCE_REPORT][HELTH_MED_LIST][INFORMATION_FRONT][INJ', NULL, NULL, 'จพ.เวชกิจฉุกเฉิน', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', 'N', '039', '10', 'อุบัติเหตุฉุกเฉิน', NULL, 'Y', 'N', NULL, NULL, '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A', NULL, 'Y', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '186', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('urairat', 'อุไรรัตน์  ถิตย์บุญครอง', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E34CD6', '9d2682367c3935defcb1f9e247a97c0d', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][ARREAR_LOST_LIST][CHANGE_LOCKED_PTTYPE][CHECKUP_LIST][CLINIC][COPD_CLINIC][DATACENTER_BROWSER][Death_Form][DELETE_IPD_DIAGNOSIS][DELETE_IPD_NURSE_OPER][DentalEntry][DMHT_CLINIC][DO_HN_MER', NULL, NULL, 'พยาบาลวิชาชีพ', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '117', '10', 'พยาบาล', NULL, 'Y', 'N', '10', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '436', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('v2546', 'วิฑูร คำโสภา', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A30E04BD7', '9407c826d8e3c07ad37cb2d13d1cb641', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][ARREAR_LOST_LIST][CHECKUP_LIST][CLINIC][Death_Form][DELETE_IPD_NURSE_OPER][DentalEntry][DOCTOR][DOCTOR_DIAG_PRINT][DRUG_ALLERGY_ENTRY][DRUG_EVALUATION_EDIT][Drug_Information_Service][DRUG', NULL, NULL, 'พนักงานทั่วไป', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '128', '10', 'เวชระเบียน', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '147', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('vawa', 'สุวดี พลน้ำเที่ยง', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E74A', '202cb962ac59075b964b07152d234b70', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][ARREAR_LOST_LIST][CHANGE_LOCKED_PTTYPE][CHECKUP_LIST][CLINIC][COPD_CLINIC][DATACENTER_BROWSER][Death_Form][DELETE_IPD_DIAGNOSIS][DELETE_IPD_NURSE_OPER][DentalEntry][DMHT_CLINIC][DO_HN_MER', NULL, NULL, 'พยาบาลวิชาชีพ', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '040', '10', 'พยาบาล', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '504', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('wan', 'สุมารี ชัยเดช', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E74A', '202cb962ac59075b964b07152d234b70', '[][DOCTOR][DRUG_ALLERGY_ENTRY][DRUG_USE_EVALUATION][EMR_VIEW][EndUser_Report][FINANCE_REPORT][HELTH_MED_LIST][INFORMATION_FRONT][IPD_CHART_STATUS_UPDATE][IPD_RX_ORDER_DELETE_TRX][IPD_RX_ORDER_SAVE][IPD_RX_PRINT_STICKER][IPD_SERVICE_CHARGE][IPD_SERVICE_CHA', NULL, NULL, 'จพ.สธ.แพทย์แผนไทย', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '041', '10', 'แพทย์แผนไทย', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Y', NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('wimuti', 'ภก.วิมุติ อุทะกัง', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E74A', '202cb962ac59075b964b07152d234b70', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][APPOINTMENT][ARREAR_LOST_LIST][CHANGE_LOCKED_PTTYPE][CHECKUP_LIST][CLINIC][Death_Form][DELETE_IPD_DIAGNOSIS][DELETE_IPD_NURSE_OPER][DentalEntry][DO_HN_MERGE][DOCTOR][DRG_EXPORT][DRUG_ALLERGY_ENTRY][DRUG_COUNSELING', NULL, NULL, 'เภสัชกร', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '042', '10', 'เภสัชกรรมชุมชน', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '998', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('wisanu', 'ทพ.วิษณุ  อาชาไกรสร', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A30E649DA', 'e58aea67b01fa747687f038dfde066f6', '[][ADMIN]', NULL, NULL, 'ทันตแพทย์', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '085', '10', 'ผู้ดูแลระบบ', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('x1', 'มังกร เหล่าทองสาร', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E74A', '202cb962ac59075b964b07152d234b70', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][ARREAR_LIST][CHECKUP_LIST][CLINIC][Death_Form][DELETE_IPD_NURSE_OPER][DentalEntry][DOCTOR][DOCTOR_DIAG_PRINT][DRUG_ALLERGY_ENTRY][DRUG_EVALUATION_PATIENT_VIEW][Drug_Information_Service][D', NULL, NULL, 'ผู้ช่วยเหลือคนไข้', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '051', '10', 'X-RAY', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Y', NULL, NULL, NULL, NULL, NULL, NULL, '378', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('x2', 'อรุณ สุทวา', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E74AD6', '81dc9bdb52d04dc20036dbd8313ed055', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][ARREAR_LOST_LIST][CHECKUP_LIST][CLINIC][Death_Form][DELETE_IPD_NURSE_OPER][DentalEntry][DOCTOR][DOCTOR_DIAG_PRINT][DRUG_ALLERGY_ENTRY][DRUG_EVALUATION_EDIT][Drug_Information_Service][DRUG', NULL, NULL, 'พนักงานช่วยเหลือคนไข้', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', 'N', '058', '10', 'เวชระเบียน', NULL, 'Y', 'N', NULL, NULL, '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A', NULL, 'Y', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1417', NULL, NULL, NULL, NULL, NULL, '5000', NULL);
+INSERT INTO `opduser` VALUES ('x3', 'บุญเลิศ มงคลคำขาว', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E74A', '202cb962ac59075b964b07152d234b70', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][ARREAR_LOST_LIST][CHECKUP_LIST][CLINIC][Death_Form][DELETE_IPD_NURSE_OPER][DentalEntry][DOCTOR][DOCTOR_DIAG_PRINT][DRUG_ALLERGY_ENTRY][DRUG_EVALUATION_EDIT][Drug_Information_Service][DRUG', NULL, NULL, 'พนักงานช่วยเหลือคนไข้', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '068', '10', 'เวชระเบียน', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1157', NULL, NULL, NULL, NULL, NULL, '5000', NULL);
+INSERT INTO `opduser` VALUES ('ying', 'ละมัย อุตลวง', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E34BD71192', 'ac40692100a2f20c66fc313c25d0fd1b', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][APPOINTMENT][ARREAR_LOST_LIST][CHANGE_LOCKED_PTTYPE][CHECKUP_LIST][CLINIC][Death_Form][DELETE_IPD_DIAGNOSIS][DELETE_IPD_NURSE_OPER][DentalEntry][DO_HN_MERGE][DOCTOR][DRG_EXPORT][DRUG_ALLERGY_ENTRY][DRUG_COUNSELING', NULL, NULL, 'จพ.เภสัชกรรม', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', 'N', '052', '10', 'เภสัชกรรมชุมชน', NULL, 'Y', 'N', NULL, NULL, '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A', NULL, 'Y', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '420', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('nutty1', 'ธีรวัฒน์  สุโพธิ์เมือง', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E74A', '202cb962ac59075b964b07152d234b70', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][ARREAR_LOST_LIST][CHANGE_LOCKED_PTTYPE][CHECKUP_LIST][CLINIC][COPD_CLINIC][DATACENTER_BROWSER][Death_Form][DELETE_IPD_DIAGNOSIS][DELETE_IPD_NURSE_OPER][DentalEntry][DMHT_CLINIC][DO_HN_MER', NULL, NULL, 'พยาบาลวิชาชีพ', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '076', '10', 'พยาบาล', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Y', NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('bouquet', 'น.ส. กันธิมา ภูมิโยชน์', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A30E04AD6', '7827d1ec626c891d4b61a15c9dff296e', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][APPOINTMENT][ARREAR_LOST_LIST][CHECKUP_LIST][CLINIC][Death_Form][DMHT_CLINIC][DOCTOR][DOCTOR_DIAG_PRINT][DRUG_ALLERGY_ENTRY][Drug_Information_Service][DRUG_USE_EVALUATION][EMR-PRINT-IPD-DOC][EMR-PRINT-OPD-CARD][EM', NULL, NULL, 'นักกายภาพบำบัด', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '130', '10', 'กายภาพบำบัด', NULL, 'Y', 'N', '9', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '881', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('49827', 'นพ.รัตภูมิ แก่นศักดิ์ศิริ', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E74AD617', '827ccb0eea8a706c4c34a16891f84e7b', '[][ACCESS_REPORT_FROM_MASTER][ACCOUNT_AR][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][APPOINTMENT_PENDING_][ARREAR_CANCEL][ARREAR_LIST][ARREAR_LOST_LIST][ASTHMA_CLINIC][BATCH_RX_ORDER_WARD_02][BED_STATUS_UPDATE][BILL_ABORT_LIST][CANCEL_IPD_FINANCE_CLEARING][CAN', NULL, NULL, 'แพทย์', NULL, NULL, '131', '10', 'แพทย์', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Y', NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('jin', 'ภญ.จินตนา ชัยบุรมณ์', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E549D3', 'b8c37e33defde51cf91e1e03e51657da', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][APPOINTMENT][ARREAR_LOST_LIST][CHANGE_LOCKED_PTTYPE][CHECKUP_LIST][CLINIC][Death_Form][DELETE_IPD_DIAGNOSIS][DELETE_IPD_NURSE_OPER][DentalEntry][DO_HN_MERGE][DOCTOR][DRG_EXPORT][DRUG_ALLERGY_ENTRY][DRUG_COUNSELING', NULL, NULL, 'เภสัชกร', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', 'N', '135', '10', 'เภสัชกรรมชุมชน', NULL, 'Y', 'N', '1', NULL, '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A', NULL, 'Y', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1033', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('tingying', 'สิริรักษ์ ปัญญาใส', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33EC40D1', 'c5a4e7e6882845ea7bb4d9462868219b', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][ARREAR_LOST_LIST][CHANGE_LOCKED_PTTYPE][CHECKUP_LIST][CLINIC][COPD_CLINIC][DATACENTER_BROWSER][Death_Form][DELETE_IPD_DIAGNOSIS][DELETE_IPD_NURSE_OPER][DentalEntry][DMHT_CLINIC][DO_HN_MER', NULL, NULL, 'พยาบาลวิชาชีพ', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '132', '10', 'พยาบาล', NULL, 'Y', 'N', '10', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '306', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('siya', 'กษิญา  แก้วนารี', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E74A', '202cb962ac59075b964b07152d234b70', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][ARREAR_LOST_LIST][CHANGE_LOCKED_PTTYPE][CHECKUP_LIST][CLINIC][COPD_CLINIC][DATACENTER_BROWSER][Death_Form][DELETE_IPD_DIAGNOSIS][DELETE_IPD_NURSE_OPER][DentalEntry][DMHT_CLINIC][DO_HN_MER', NULL, NULL, 'พยาบาลวิชาชีพ', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '133', '10', 'พยาบาล', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1860', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('duangrudee', 'น.ส.ดวงฤดี จันทรักษ์', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A31E64BD0', 'f7cfdde9db36af8e0d9a6d123d5c385e', '[][DOCTOR][DRUG_ALLERGY_ENTRY][DRUG_USE_EVALUATION][EMR_VIEW][EndUser_Report][FINANCE_REPORT][HELTH_MED_LIST][INFORMATION_FRONT][IPD_CHART_STATUS_UPDATE][IPD_RX_ORDER_DELETE_TRX][IPD_RX_ORDER_SAVE][IPD_RX_PRINT_STICKER][IPD_SERVICE_CHARGE][IPD_SERVICE_CHA', NULL, NULL, 'นักแพทย์แผนไทย', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '134', '10', 'แพทย์แผนไทย', NULL, 'Y', 'N', '14', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '898', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('47923', 'นพ.วิบูลย์ เจียมทับทักษิณ', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A5F086866345270CF', '1bbd886460827015e5d605ed44252251', '[][ACCESS_REPORT_FROM_MASTER][ACCOUNT_AR][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][APPOINTMENT_PENDING_][ARREAR_CANCEL][ARREAR_LIST][ARREAR_LOST_LIST][ASTHMA_CLINIC][BATCH_RX_ORDER_WARD_02][BED_STATUS_UPDATE][BILL_ABORT_LIST][CANCEL_IPD_FINANCE_CLEARING][CAN', NULL, NULL, 'แพทย์', NULL, NULL, '136', '10', 'แพทย์', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Y', NULL, NULL, NULL, NULL, NULL, NULL, '12', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('1991', 'น.ส.อัญชลี โคตรคีรี', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33EC40D3', '96055f5b06bf9381ac43879351642cf5', '[][ARREAR_LIST][BILL_ABORT_LIST][DEBT_LIST][DELETE_FINANCE_RX][EMR_VIEW][EndUser_Report][FINANCE_CHANGE_PTTYPE][FINANCE_DEPOSIT_VIEW_LIST][FINANCE_REPORT][IPD_RX_DEBT_CANCEL][IPD_RX_ORDER_DELETE][IPD_RX_ORDER_DELETE_TRX][IPD_RX_ORDER_SAVE][IPD_RX_PRINT_ST', NULL, NULL, 'จพ.การเงินและบัญชี', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '137', NULL, 'การเงิน', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('51497', 'นพ.ตฤณ  งามดี', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A37E44DDB15', '5c6f0d82ae0b848264af08cbbeba8f2c', '[][ACCESS_REPORT_FROM_MASTER][ACCOUNT_AR][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][APPOINTMENT_PENDING_][ARREAR_CANCEL][ARREAR_LIST][ARREAR_LOST_LIST][ASTHMA_CLINIC][BATCH_RX_ORDER_WARD_02][BED_STATUS_UPDATE][BILL_ABORT_LIST][CANCEL_IPD_FINANCE_CLEARING][CAN', NULL, NULL, 'แพทย์', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '139', '10', 'แพทย์', NULL, 'Y', 'N', '3', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Y', NULL, NULL, NULL, NULL, NULL, NULL, '3', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('Souwanee', 'ทนพญ.เสาวณีย์ พลสงคราม', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E048D414', '1b8df7db8a335c9096e43973615601d8', '[][EMR_VIEW][EndUser_Report][LAB1][LAB_DESIGN][LAB_EDIT][LAB_ONLINE_CLOUD_ENTRY_REPORT][LAB_ORDER_MANUAL][LAB_PRINT][LAB_SET_APPROVED][LABOR][LABORDER][OPD_LABORDER][PATIENT_ALLERGY_LIST][STAFF_LOCK_LAB_RESULT][SYS_LAB_REPORT][SYS_LABOUR_REPORT][VIEW_CLIN', NULL, NULL, 'นักเทคนิคการแพทย์', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '140', NULL, 'LAB', NULL, 'Y', 'Y', '4', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('41002', 'นพ.วิษณุ เกตุรุน', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A36E449D210', '0dd989c64c054921672af61a0c7a5e95', '[][ACCESS_REPORT_FROM_MASTER][ACCOUNT_AR][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][APPOINTMENT_PENDING_][ARREAR_CANCEL][ARREAR_LIST][ARREAR_LOST_LIST][ASTHMA_CLINIC][BATCH_RX_ORDER_WARD_02][BED_STATUS_UPDATE][BILL_ABORT_LIST][CANCEL_IPD_FINANCE_CLEARING][CAN', NULL, NULL, 'แพทย์', NULL, NULL, '141', '10', 'แพทย์', NULL, 'Y', 'N', '3', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Y', NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('46644', 'นพ.ปกฤษฎา กลิ่นจันทร์แดง', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A36E34FD616', 'bb7272eafe90d1ea3a8dd6db76688ad1', '[][ACCESS_REPORT_FROM_MASTER][ACCOUNT_AR][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][APPOINTMENT_PENDING_][ARREAR_CANCEL][ARREAR_LIST][ARREAR_LOST_LIST][ASTHMA_CLINIC][BATCH_RX_ORDER_WARD_02][BED_STATUS_UPDATE][BILL_ABORT_LIST][CANCEL_IPD_FINANCE_CLEARING][CAN', NULL, NULL, 'แพทย์', NULL, NULL, '142', '10', 'แพทย์', NULL, 'Y', 'N', '3', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Y', NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('48943', 'นพ.เดโชวัต  พรมดา', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A36ED40D611', '1b8a4d1c391dbd0b1549f59ab7b21409', '[][ACCESS_REPORT_FROM_MASTER][ACCOUNT_AR][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][APPOINTMENT_PENDING_][ARREAR_CANCEL][ARREAR_LIST][ARREAR_LOST_LIST][ASTHMA_CLINIC][BATCH_RX_ORDER_WARD_02][BED_STATUS_UPDATE][BILL_ABORT_LIST][CANCEL_IPD_FINANCE_CLEARING][CAN', NULL, NULL, 'แพทย์', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '143', '10', 'แพทย์', NULL, 'Y', 'N', '3', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Y', NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('honda', 'ทนพญ.ศิริพร ไพรเขต', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33EC48DB', '8c8a58fa97c205ff222de3685497742c', '[][EMR_VIEW][EndUser_Report][LAB1][LAB_DESIGN][LAB_EDIT][LAB_ONLINE_CLOUD_ENTRY_REPORT][LAB_ORDER_MANUAL][LAB_PRINT][LAB_SET_APPROVED][LABOR][LABORDER][OPD_LABORDER][PATIENT_ALLERGY_LIST][STAFF_LOCK_LAB_RESULT][SYS_LAB_REPORT][SYS_LABOUR_REPORT][VIEW_CLIN', NULL, NULL, 'นักเทคนิคการแพทย์', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '144', '10', 'LAB', NULL, 'Y', 'Y', '4', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1716', NULL, NULL, NULL, 'ทน.16181', NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('atapong', 'ทนพ.อัธพงษ์  ยลประสงค์', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E14BD6', '489d0396e6826eb0c1e611d82ca8b215', '[][EMR_VIEW][EndUser_Report][LAB1][LAB_DESIGN][LAB_EDIT][LAB_ONLINE_CLOUD_ENTRY_REPORT][LAB_ORDER_MANUAL][LAB_PRINT][LAB_SET_APPROVED][LABOR][LABORDER][OPD_LABORDER][PATIENT_ALLERGY_LIST][STAFF_LOCK_LAB_RESULT][SYS_LAB_REPORT][SYS_LABOUR_REPORT][VIEW_CLIN', NULL, NULL, 'นักเทคนิคการแพทย์', NULL, NULL, '145', '10', 'LAB', NULL, 'Y', 'Y', '4', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '247', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('honda2', 'ทนพญ.ศิริพร ไพรเขต', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33EC48DB', '8c8a58fa97c205ff222de3685497742c', '[][EMR_VIEW][EndUser_Report][LAB1][LAB_DESIGN][LAB_EDIT][LAB_ONLINE_CLOUD_ENTRY_REPORT][LAB_ORDER_MANUAL][LAB_PRINT][LAB_SET_APPROVED][LABOR][LABORDER][OPD_LABORDER][PATIENT_ALLERGY_LIST][STAFF_LOCK_LAB_RESULT][SYS_LAB_REPORT][SYS_LABOUR_REPORT][VIEW_CLIN', NULL, NULL, 'นักเทคนิคการแพทย์', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '144', '10', 'LAB', NULL, 'Y', 'Y', '4', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Y', NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, 'ทน.16181', NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('51587', 'พญ.วรัญชญา  สมสอง', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A37E44CDA15', '9a4a52a6f48b0052e978996782ef7939', '[][ACCESS_REPORT_FROM_MASTER][ACCOUNT_AR][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][APPOINTMENT_PENDING_][ARREAR_CANCEL][ARREAR_LIST][ARREAR_LOST_LIST][ASTHMA_CLINIC][BATCH_RX_ORDER_WARD_02][BED_STATUS_UPDATE][BILL_ABORT_LIST][CANCEL_IPD_FINANCE_CLEARING][CAN', NULL, NULL, 'แพทย์', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '146', '10', 'แพทย์', NULL, 'Y', 'N', '3', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Y', NULL, NULL, NULL, NULL, NULL, NULL, '1497', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('tanya', 'พญ.ธัญญา  พาณิชพันธุ์', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A1B3000B35BE9979D', '5b645a32e677572627f64fd72682daed', '[][ACCESS_REPORT_FROM_MASTER][ACCOUNT_AR][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][APPOINTMENT_PENDING_][ARREAR_CANCEL][ARREAR_LIST][ARREAR_LOST_LIST][ASTHMA_CLINIC][BATCH_RX_ORDER_WARD_02][BED_STATUS_UPDATE][BILL_ABORT_LIST][CANCEL_IPD_FINANCE_CLEARING][CAN', NULL, NULL, 'แพทย์', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '147', '10', 'แพทย์', NULL, 'Y', 'N', '3', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'N', NULL, NULL, NULL, NULL, NULL, NULL, '1463', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('angeean', 'พญ.พัชรนันท์  เล่งเวหาสถิตย์', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A30E04AD11095', '7f998f2880a9dbc4c4c2d8431d44372f', '[][ACCESS_REPORT_FROM_MASTER][ACCOUNT_AR][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][APPOINTMENT_PENDING_][ARREAR_CANCEL][ARREAR_LIST][ARREAR_LOST_LIST][ASTHMA_CLINIC][BATCH_RX_ORDER_WARD_02][BED_STATUS_UPDATE][BILL_ABORT_LIST][CANCEL_IPD_FINANCE_CLEARING][CAN', NULL, NULL, 'แพทย์', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '148', '10', 'แพทย์', NULL, 'Y', 'N', '3', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Y', NULL, NULL, NULL, NULL, NULL, NULL, '288', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('2806', 'โศภิตา  สมบูรณ์', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A30ED49D4', 'c0f971d8cd24364f2029fcb9ac7b71f5', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][APPOINTMENT][ARREAR_LOST_LIST][CHANGE_LOCKED_PTTYPE][CHECKUP_LIST][CLINIC][Death_Form][DELETE_IPD_DIAGNOSIS][DELETE_IPD_NURSE_OPER][DentalEntry][DO_HN_MERGE][DOCTOR][DOCTOR_DIAG_PRINT][DRUG_ALLERGY_ENTRY][Drug_Inf', NULL, NULL, 'ยาบาลวิชาชีพ', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '149', '10', 'ผู้ป่วยใน', NULL, 'Y', 'N', '10', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '10', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('anont', 'นายอนนท์  วิไลสอน', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A1FCE09100C1CCD5123C0', 'e807f1fcf82d132f9bb018ca6738a19f', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][ARREAR_LIST][CHECKUP_LIST][CLINIC][Death_Form][DELETE_IPD_NURSE_OPER][DentalEntry][DOCTOR][DOCTOR_DIAG_PRINT][DRUG_ALLERGY_ENTRY][DRUG_EVALUATION_PATIENT_VIEW][Drug_Information_Service][D', NULL, NULL, 'ผู้ช่วยเหลือคนไข้', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '150', '10', 'X-RAY', NULL, 'Y', 'N', '7', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '174', NULL, NULL, NULL, NULL, NULL, '5000', NULL);
+INSERT INTO `opduser` VALUES ('new', 'กฤษณา พันทะนี', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A31ED4DDB', '4f5a97cf06cf69028997db51d8726d28', '[][ARREAR_LIST][BILL_ABORT_LIST][DEBT_LIST][DELETE_FINANCE_RX][EMR_VIEW][EndUser_Report][FINANCE_CHANGE_PTTYPE][FINANCE_DEPOSIT_VIEW_LIST][FINANCE_REPORT][IPD_RX_DEBT_CANCEL][IPD_RX_ORDER_DELETE][IPD_RX_ORDER_DELETE_TRX][IPD_RX_ORDER_SAVE][IPD_RX_PRINT_ST', NULL, NULL, 'นักวิชาการเงินและบัญชี', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '151', NULL, 'การเงิน', NULL, 'Y', 'N', '13', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '86', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('fonja', 'ศรัญญา น้อยนิล', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E74AD6', '81dc9bdb52d04dc20036dbd8313ed055', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][ARREAR_LOST_LIST][CHANGE_LOCKED_PTTYPE][CHECKUP_LIST][CLINIC][Death_Form][DELETE_IPD_DIAGNOSIS][DELETE_IPD_NURSE_OPER][DentalEntry][DMHT_CLINIC][DO_HN_MERGE][DOCTOR][DOCTOR_DIAG_PRINT][DR', NULL, NULL, 'นักโภชนาการ', NULL, 'N', '152', '10', 'โภชนาการ', NULL, NULL, 'N', '9', NULL, '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A', NULL, 'Y', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '171', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('mat', 'น.ส.มทุรส จันทะเสน', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A32E048D2', '40569cf39d0ee1ada21d70ca198e780b', '[][ARREAR_CANCEL][ARREAR_LIST][EMR-PRINT-RxORDER][EMR_VIEW][EndUser_Report][FINANCE_CHANGE_PTTYPE][IPD_RX_ORDER_SAVE][IPD_TRX_ENTRY][OPD_CUSTOM_SEARCH][OPD_FINANCE_EDIT_RX][PRINT_OLD_DEBT_FORM][SYS_FINANCE_REPORT][View_EMR][L1][L2][L3][L4][BR1][SC1][OPD4]', NULL, NULL, 'จพ.การเงินและบัญชี', NULL, NULL, '153', NULL, NULL, NULL, NULL, 'N', '13', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('chomphu', 'น.ส. ชมภู่  ชัยนาม', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A36E04FD5', '6562c5c1f33db6e05a082a88cddab5ea', '[][ACCESS_REPORT_FROM_MASTER][APPOINTMENT][ARREAR_LOST_LIST][CHECKUP_LIST][CLINIC][Death_Form][DentalEntry][DOCTOR][Drug_Information_Service][DRUG_USE_EVALUATION][EMR_VIEW][EndUser_Report][ER1][FINANCE_REPORT][HELTH_MED_LIST][HHC-CLINIC][HHC_VISIT][INFORM', NULL, NULL, 'พนักงานทั่วไป', NULL, NULL, '154', NULL, 'เวชปฏิบัติชุมชน', NULL, 'Y', 'N', '6', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1035', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('51935', 'นพ.อนุสรณ์ หลักชัย', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A37E440D117', 'f02fd9753a6ec0e0cd54f0e475f240e3', '[][ACCESS_REPORT_FROM_MASTER][ACCOUNT_AR][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][APPOINTMENT_PENDING_][ARREAR_CANCEL][ARREAR_LIST][ARREAR_LOST_LIST][ASTHMA_CLINIC][BATCH_RX_ORDER_WARD_02][BED_STATUS_UPDATE][BILL_ABORT_LIST][CANCEL_IPD_FINANCE_CLEARING][CAN', NULL, NULL, 'แพทย์', NULL, NULL, '156', '10', 'แพทย์', NULL, 'Y', 'N', '3', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Y', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('tao', 'นายอนุชาติ ลีโคตร', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E74AD6', '81dc9bdb52d04dc20036dbd8313ed055', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][ARREAR_LOST_LIST][CHECKUP_LIST][CLINIC][Death_Form][DELETE_IPD_NURSE_OPER][DentalEntry][DOCTOR][DOCTOR_DIAG_PRINT][DRUG_ALLERGY_ENTRY][DRUG_EVALUATION_EDIT][Drug_Information_Service][DRUG', NULL, NULL, 'พนักงานบริการ', NULL, NULL, '157', NULL, NULL, NULL, NULL, 'N', '13', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '93', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('51582', 'พญ.วดี  ยี่เกาะ', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A37E44CDA10', 'ff6370826fc8b3361f45b8b8c3210524', '[][ACCESS_REPORT_FROM_MASTER][ACCOUNT_AR][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][APPOINTMENT_PENDING_][ARREAR_CANCEL][ARREAR_LIST][ARREAR_LOST_LIST][ASTHMA_CLINIC][BATCH_RX_ORDER_WARD_02][BED_STATUS_UPDATE][BILL_ABORT_LIST][CANCEL_IPD_FINANCE_CLEARING][CAN', NULL, NULL, 'แพทย์', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '158', '10', 'แพทย์', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Y', NULL, NULL, NULL, NULL, NULL, NULL, '7', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('joy', 'วรรัตน์  สมบัติ', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E74AD61797', 'e10adc3949ba59abbe56e057f20f883e', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][ARREAR_LOST_LIST][CHANGE_LOCKED_PTTYPE][CHECKUP_LIST][CLINIC][COPD_CLINIC][DATACENTER_BROWSER][Death_Form][DELETE_IPD_DIAGNOSIS][DELETE_IPD_NURSE_OPER][DentalEntry][DMHT_CLINIC][DO_HN_MER', NULL, NULL, 'พยาบาลวิชาชีพ', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '159', '10', 'พยาบาล', NULL, 'Y', 'N', '3', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '44', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('52299', 'พญ.ศศิชล กมลบูรณ์', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A37E74BDB1B', '353c89ab06f398fb527725745a8ea6de', '[][ACCESS_REPORT_FROM_MASTER][ACCOUNT_AR][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][APPOINTMENT_PENDING_][ARREAR_CANCEL][ARREAR_LIST][ARREAR_LOST_LIST][ASTHMA_CLINIC][BATCH_RX_ORDER_WARD_02][BED_STATUS_UPDATE][BILL_ABORT_LIST][CANCEL_IPD_FINANCE_CLEARING][CAN', NULL, NULL, 'แพทย์', NULL, NULL, '160', '10', 'แพทย์', NULL, 'Y', 'N', '3', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Y', NULL, NULL, NULL, NULL, NULL, NULL, '3', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('52732', 'พญ.สิทธยา บัวทอง', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171AF6C2C4398284D5F0', 'ec8ebfb0e4aa9b18928107d5eb3eca89', '[][ACCESS_REPORT_FROM_MASTER][ACCOUNT_AR][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][APPOINTMENT_PENDING_][ARREAR_CANCEL][ARREAR_LIST][ARREAR_LOST_LIST][ASTHMA_CLINIC][BATCH_RX_ORDER_WARD_02][BED_STATUS_UPDATE][BILL_ABORT_LIST][CANCEL_IPD_FINANCE_CLEARING][CAN', NULL, NULL, 'แพทย์', NULL, 'N', '161', '10', 'แพทย์', NULL, 'Y', 'N', '3', NULL, '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A', NULL, 'Y', NULL, NULL, NULL, NULL, NULL, 'Y', NULL, NULL, NULL, NULL, NULL, NULL, '120', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('37404', 'นพ.กิตติศักดิ์ ตั้งสัตยาธิษฐาน', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A31E24DD216', '7310aeb0b5a8acb4af8b688982029ffc', '[][ACCESS_REPORT_FROM_MASTER][ACCOUNT_AR][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][APPOINTMENT_PENDING_][ARREAR_CANCEL][ARREAR_LIST][ARREAR_LOST_LIST][ASTHMA_CLINIC][BATCH_RX_ORDER_WARD_02][BED_STATUS_UPDATE][BILL_ABORT_LIST][CANCEL_IPD_FINANCE_CLEARING][CAN', NULL, NULL, 'แพทย์', NULL, NULL, '162', '10', 'แพทย์', NULL, 'Y', 'N', '3', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Y', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('worawut', 'ภก.วรวุฒิ  สุวรรณิกะ', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A31E24AD012', 'f014a5a660e277e244ed7659db4e32f9', '[][ADMIN]', NULL, NULL, 'เภสชกร', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '163', '10', 'ผู้ดูแลระบบ', NULL, 'Y', 'N', '12', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '480', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('49883', 'นพ.ปุญญพัฒน์  ชีวเสถียรชัย', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A36EC41DA11', 'ca2417f024ebf900ba3949991f343e78', '[][ACCESS_REPORT_FROM_MASTER][ACCOUNT_AR][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][APPOINTMENT_PENDING_][ARREAR_CANCEL][ARREAR_LIST][ARREAR_LOST_LIST][ASTHMA_CLINIC][BATCH_RX_ORDER_WARD_02][BED_STATUS_UPDATE][BILL_ABORT_LIST][CANCEL_IPD_FINANCE_CLEARING][CAN', NULL, NULL, 'แพทย์', NULL, NULL, '165', '10', 'แพทย์', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Y', NULL, NULL, NULL, NULL, NULL, NULL, '564', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('53661', 'พญ.ปวิชญา  นามเสนา', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A37E64FD413', 'f3bee02d6df4d3fec3e3dcd87d7447e5', '[][ACCESS_REPORT_FROM_MASTER][ACCOUNT_AR][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][APPOINTMENT_PENDING_][ARREAR_CANCEL][ARREAR_LIST][ARREAR_LOST_LIST][ASTHMA_CLINIC][BATCH_RX_ORDER_WARD_02][BED_STATUS_UPDATE][BILL_ABORT_LIST][CANCEL_IPD_FINANCE_CLEARING][CAN', NULL, NULL, 'แพทย์', NULL, NULL, '164', '10', 'แพทย์', NULL, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '509', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('2312', 'น.ส. อาภัสนัน โฮงคำแก้ว', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A30E648D0', '69dafe8b58066478aea48f3d0f384820', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][APPOINTMENT][ARREAR_LOST_LIST][CHANGE_LOCKED_PTTYPE][CHECKUP_LIST][CLINIC][Death_Form][DELETE_IPD_DIAGNOSIS][DELETE_IPD_NURSE_OPER][DentalEntry][DO_HN_MERGE][DOCTOR][DOCTOR_DIAG_PRINT][DRUG_ALLERGY_ENTRY][Drug_Inf', NULL, NULL, 'พยาบาลวิชาชีพ', NULL, NULL, '166', '10', 'ผู้ป่วยใน', NULL, 'Y', 'N', '10', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '102', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('poopae', 'น.ส.ลุลินารถ  จันทร์ผิว', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A30E04AD7', '0747b9be4f90056c30eb5241f06bfe9b', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][ARREAR_LOST_LIST][CHANGE_LOCKED_PTTYPE][CHECKUP_LIST][CLINIC][COPD_CLINIC][DATACENTER_BROWSER][Death_Form][DELETE_IPD_DIAGNOSIS][DELETE_IPD_NURSE_OPER][DentalEntry][DMHT_CLINIC][DO_HN_MER', NULL, NULL, 'พยาบาลวิชาชีพ', NULL, NULL, '168', '10', 'พยาบาล', NULL, 'Y', 'N', '3', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '302', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('beer', 'น.ส.รัชนี  แสนณรงค์', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A30E04AD5', '40c48dab939a482f04dcecde07e27de6', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][ARREAR_LOST_LIST][CHANGE_LOCKED_PTTYPE][CHECKUP_LIST][CLINIC][COPD_CLINIC][DATACENTER_BROWSER][Death_Form][DELETE_IPD_DIAGNOSIS][DELETE_IPD_NURSE_OPER][DentalEntry][DMHT_CLINIC][DO_HN_MER', NULL, NULL, 'พยาบาลวิชาชีพ', NULL, NULL, '167', '10', 'พยาบาล', NULL, 'Y', 'N', '3', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '257', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('191', 'น.ส.รัตนภรณ์  จันทรเสนา', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33EC48', '0aa1883c6411f7873cb83dacb17b0afc', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][ARREAR_LOST_LIST][CHANGE_LOCKED_PTTYPE][CHECKUP_LIST][CLINIC][COPD_CLINIC][DATACENTER_BROWSER][Death_Form][DELETE_IPD_DIAGNOSIS][DELETE_IPD_NURSE_OPER][DentalEntry][DMHT_CLINIC][DO_HN_MER', NULL, NULL, 'พยาบาลวิชาชีพ', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '169', '10', 'พยาบาล', NULL, 'Y', 'N', '10', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '441', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('thitiwad', 'นพ.ฐิติวัชร เรืองเสาวพงศ์', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A37E74DDA14', '48b109f9bb69ce94aaddec5e574787eb', '[][ACCESS_REPORT_FROM_MASTER][ACCOUNT_AR][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][APPOINTMENT_PENDING_][ARREAR_CANCEL][ARREAR_LIST][ARREAR_LOST_LIST][ASTHMA_CLINIC][BATCH_RX_ORDER_WARD_02][BED_STATUS_UPDATE][BILL_ABORT_LIST][CANCEL_IPD_FINANCE_CLEARING][CAN', NULL, NULL, 'แพทย์', NULL, NULL, '171', '10', 'แพทย์', NULL, 'Y', 'N', '3', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Y', NULL, NULL, NULL, NULL, NULL, NULL, '2', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('a1212', 'ฐิตาภัทร์  ภูมั่ง', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A63E44BD310', 'eac44a7ecdc54fd6f8db52b5b226bfc4', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][ARREAR_LOST_LIST][CHECKUP_LIST][CLINIC][Death_Form][DELETE_IPD_NURSE_OPER][DentalEntry][DOCTOR][DOCTOR_DIAG_PRINT][DRUG_ALLERGY_ENTRY][DRUG_EVALUATION_EDIT][Drug_Information_Service][DRUG', NULL, NULL, 'จพ.ธุรการ', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '172', '10', 'เวชระเบียน', NULL, 'Y', 'N', '1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '400', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('ic4v', 'นางศรัญญา ศักดิ์อุดมกุล', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E74AD6', '81dc9bdb52d04dc20036dbd8313ed055', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][ARREAR_LOST_LIST][CHANGE_LOCKED_PTTYPE][CHECKUP_LIST][CLINIC][COPD_CLINIC][DATACENTER_BROWSER][Death_Form][DELETE_IPD_DIAGNOSIS][DELETE_IPD_NURSE_OPER][DentalEntry][DMHT_CLINIC][DO_HN_MER', NULL, NULL, 'พยาบาลวิชาชีพ', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', 'N', '173', '10', 'พยาบาล', NULL, 'Y', 'N', '3', NULL, '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A', NULL, 'Y', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '583', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('53072', 'พญ.ภัทรสิณี ลิขิตพันธ์พิสิฐ', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A37E649D510', '493ad6636b47c47a461bae51f580ecb6', '[][ACCESS_REPORT_FROM_MASTER][ACCOUNT_AR][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][APPOINTMENT_PENDING_][ARREAR_CANCEL][ARREAR_LIST][ARREAR_LOST_LIST][ASTHMA_CLINIC][BATCH_RX_ORDER_WARD_02][BED_STATUS_UPDATE][BILL_ABORT_LIST][CANCEL_IPD_FINANCE_CLEARING][CAN', NULL, NULL, 'แพทย์', NULL, NULL, '170', '10', 'แพทย์', NULL, 'Y', 'N', '3', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Y', NULL, NULL, NULL, NULL, NULL, NULL, '2', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('56775', 'นพ.พงสพัฒน์  พจน์พานิชพงศ์', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A37E34ED517', 'f2abd77319d0998a1ea917b9dbab1bd5', '[][ACCESS_REPORT_FROM_MASTER][ACCOUNT_AR][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][APPOINTMENT_PENDING_][ARREAR_CANCEL][ARREAR_LIST][ARREAR_LOST_LIST][ASTHMA_CLINIC][BATCH_RX_ORDER_WARD_02][BED_STATUS_UPDATE][BILL_ABORT_LIST][CANCEL_IPD_FINANCE_CLEARING][CAN', NULL, NULL, 'แพทย์', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '174', '10', 'แพทย์', NULL, 'Y', 'N', '3', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Y', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('fern', 'น.ส.ชุติกาญจน์ ภูหัตสวน', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A30E04ADB', '2aedcba61ca55ceb62d785c6b7f10a83', '[][ARREAR_LIST][BILL_ABORT_LIST][DEBT_LIST][DELETE_FINANCE_RX][EMR_VIEW][EndUser_Report][FINANCE_CHANGE_PTTYPE][FINANCE_DEPOSIT_VIEW_LIST][FINANCE_REPORT][IPD_RX_DEBT_CANCEL][IPD_RX_ORDER_DELETE][IPD_RX_ORDER_DELETE_TRX][IPD_RX_ORDER_SAVE][IPD_RX_PRINT_ST', NULL, NULL, 'พนักงานบริการ', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '175', NULL, 'การเงิน', NULL, 'Y', 'N', '13', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '31', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('care', 'น.ส.ฉัตรฤดี ฮ่มซ้าย', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A32E049D7', '2c404b2a96dd6e40ee170c3ed4951ee6', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][ARREAR_LOST_LIST][CHANGE_LOCKED_PTTYPE][CHECKUP_LIST][CLINIC][COPD_CLINIC][DATACENTER_BROWSER][Death_Form][DELETE_IPD_DIAGNOSIS][DELETE_IPD_NURSE_OPER][DentalEntry][DMHT_CLINIC][DO_HN_MER', NULL, NULL, 'พยาบาลวิชาชีพ', NULL, NULL, '176', '10', 'พยาบาล', NULL, 'Y', 'N', '3', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1562', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('nine', 'นายสมชาย คำเวียง', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A30E04AD5', '40c48dab939a482f04dcecde07e27de6', '[][ACCESS_REPORT_FROM_MASTER][APPOINTMENT][ARREAR_LOST_LIST][CHECKUP_LIST][CLINIC][Death_Form][DOCTOR][DRUG_ALLERGY_ENTRY][Drug_Information_Service][DRUG_USE_EVALUATION][EMR_VIEW][EndUser_Report][ER1][FINANCE_REPORT][HELTH_MED_LIST][INFORMATION_FRONT][INJ', NULL, NULL, 'พยาบาลวิชาชีพ', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '177', '10', 'อุบัติเหตุฉุกเฉิน', NULL, 'Y', 'N', '2', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '731', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('55191', 'นพ.วรภูมิ ตั้งใฝ่คุณธรรม', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A10AB894674CA8716', 'd3ae2d907d2fc2703ec053c6b0f87bc4', '[][ACCESS_REPORT_FROM_MASTER][ACCOUNT_AR][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][APPOINTMENT_PENDING_][ARREAR_CANCEL][ARREAR_LIST][ARREAR_LOST_LIST][ASTHMA_CLINIC][BATCH_RX_ORDER_WARD_02][BED_STATUS_UPDATE][BILL_ABORT_LIST][CANCEL_IPD_FINANCE_CLEARING][CAN', NULL, NULL, 'แพทย์', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', 'N', '178', '10', 'แพทย์', NULL, 'Y', 'N', '3', NULL, '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A', NULL, 'Y', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '66', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('nuchz', 'สุธาสินี  พิชัยกาล', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A32E349D01192', '7481e05ec8fff3b7450676c114838a1d', '[][ACCESS_REPORT_FROM_MASTER][APPOINTMENT][ARREAR_LOST_LIST][CHECKUP_LIST][CLINIC][Death_Form][DentalEntry][DOCTOR][Drug_Information_Service][DRUG_USE_EVALUATION][EMR_VIEW][EndUser_Report][ER1][FINANCE_REPORT][HELTH_MED_LIST][HHC-CLINIC][HHC_VISIT][INFORM', NULL, NULL, 'นักวิชาการสาธารณสุข', NULL, NULL, '179', '10', 'เวชปฏิบัติชุมชน', NULL, 'Y', 'N', '6', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '12', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('phoil', 'พลอยพรรณ์  พวงจันทร์', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E74AD6', '81dc9bdb52d04dc20036dbd8313ed055', '[][ARREAR_LIST][BILL_ABORT_LIST][CANCEL_IPD_FINANCE_CLEARING][CONFIRM_IPD_FINANCE_CLEARING][DEBT_LIST][DELETE_FINANCE_RX][EMR_VIEW][EndUser_Report][FINANCE_CHANGE_PTTYPE][FINANCE_DEPOSIT_VIEW_LIST][FINANCE_REPORT][IPD_RX_DEBT_CANCEL][IPD_RX_ORDER_DELETE][', NULL, NULL, 'จพ.การเงินและบัญชี', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '180', '10', 'การเงิน', NULL, 'Y', 'N', '13', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '288', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('nuch', 'น.ส.ปรียานุช ศรีไว', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A30E04AD5', '40c48dab939a482f04dcecde07e27de6', '[][ARREAR_LIST][BILL_ABORT_LIST][DEBT_LIST][DELETE_FINANCE_RX][EMR_VIEW][EndUser_Report][FINANCE_CHANGE_PTTYPE][FINANCE_DEPOSIT_VIEW_LIST][FINANCE_REPORT][IPD_RX_DEBT_CANCEL][IPD_RX_ORDER_DELETE][IPD_RX_ORDER_DELETE_TRX][IPD_RX_ORDER_SAVE][IPD_RX_PRINT_ST', NULL, NULL, 'นักวิชาการเงินและบัญชี', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '181', NULL, 'การเงิน', NULL, 'Y', 'N', '13', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '41', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('napat', 'นายณพัชนันท์ ศรีพันดอน', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171AE5CF3F91CA2CDC7CC67D8D42', '5805de6aca1c5b32681561f82466fd56', '[][EMR_VIEW][EndUser_Report][LAB1][LAB_DESIGN][LAB_EDIT][LAB_ONLINE_CLOUD_ENTRY_REPORT][LAB_ORDER_MANUAL][LAB_PRINT][LAB_SET_APPROVED][LABOR][LABORDER][OPD_LABORDER][PATIENT_ALLERGY_LIST][STAFF_LOCK_LAB_RESULT][SYS_LAB_REPORT][SYS_LABOUR_REPORT][VIEW_CLIN', NULL, NULL, 'นักวิทยาศาสตร์การแพทย์', NULL, 'N', '182', NULL, 'LAB', NULL, 'Y', 'Y', '4', NULL, '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A', NULL, 'Y', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('56889', 'พญ.ดวงกมล วรรณเลิศสกุล', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A32ED41DA', 'd4bd41e28be4069b5b61d2d7e47f4cfe', '[][ACCESS_REPORT_FROM_MASTER][ACCOUNT_AR][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][APPOINTMENT_PENDING_][ARREAR_CANCEL][ARREAR_LIST][ARREAR_LOST_LIST][ASTHMA_CLINIC][BATCH_RX_ORDER_WARD_02][BED_STATUS_UPDATE][BILL_ABORT_LIST][CANCEL_IPD_FINANCE_CLEARING][CAN', NULL, NULL, 'แพทย์', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '184', '10', 'แพทย์', NULL, 'Y', 'N', '3', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '373', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('airin', 'พญ.ไอริญจน์ ปิ่นแก้ว', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A32E44AD3', '5db5ae42bae950401219b2da9c583331', '[][ACCESS_REPORT_FROM_MASTER][ACCOUNT_AR][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][APPOINTMENT_PENDING_][ARREAR_CANCEL][ARREAR_LIST][ARREAR_LOST_LIST][ASTHMA_CLINIC][BATCH_RX_ORDER_WARD_02][BED_STATUS_UPDATE][BILL_ABORT_LIST][CANCEL_IPD_FINANCE_CLEARING][CAN', NULL, NULL, 'แพทย์', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', 'N', '183', '10', 'แพทย์', NULL, 'Y', 'N', '3', NULL, '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A', NULL, 'Y', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '121', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('audsawut', 'นพ.อรรศวรรต วลัญชพฤกษ์', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A690AC407CD8BF5F7', 'd6f0c45951cc78fdfec194437112747b', '[][ACCESS_REPORT_FROM_MASTER][ACCOUNT_AR][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][APPOINTMENT_PENDING_][ARREAR_CANCEL][ARREAR_LIST][ARREAR_LOST_LIST][ASTHMA_CLINIC][BATCH_RX_ORDER_WARD_02][BED_STATUS_UPDATE][BILL_ABORT_LIST][CANCEL_IPD_FINANCE_CLEARING][CAN', NULL, NULL, 'แพทย์', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '186', '10', 'แพทย์', NULL, 'Y', 'N', '3', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '537', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('Benjaporn', 'น.ส.เบญจพร ศรีละคร', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A32E049D41491', 'c40ebcdb62b1c3f5096d2f05524daf27', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][ARREAR_LOST_LIST][CHANGE_LOCKED_PTTYPE][CHECKUP_LIST][CLINIC][COPD_CLINIC][DATACENTER_BROWSER][Death_Form][DELETE_IPD_DIAGNOSIS][DELETE_IPD_NURSE_OPER][DentalEntry][DMHT_CLINIC][DO_HN_MER', NULL, NULL, 'พยาบาลวิชาชีพ', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '185', '10', 'พยาบาล', NULL, 'Y', 'N', '10', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '117', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('mameaw', 'น.ส.ศิริภัทร์ชญา อุตโรกุล', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A32E149DA', '840da3dfcc610a1b97764f9e95299c6f', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][ARREAR_LOST_LIST][CHANGE_LOCKED_PTTYPE][CHECKUP_LIST][CLINIC][COPD_CLINIC][DATACENTER_BROWSER][Death_Form][DELETE_IPD_DIAGNOSIS][DELETE_IPD_NURSE_OPER][DentalEntry][DMHT_CLINIC][DO_HN_MER', NULL, NULL, 'จพ.ทันตสาธารณสุขชำนาญงาน', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '187', NULL, 'พยาบาล', NULL, 'Y', 'N', '5', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '67', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('nop', 'นาย สมัคร พันชมภู', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A30E048DA', '6ef80bb237adf4b6f77d0700e1255907', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][APPOINTMENT][ARREAR_LOST_LIST][CHANGE_LOCKED_PTTYPE][CHECKUP_LIST][CLINIC][Death_Form][DELETE_IPD_DIAGNOSIS][DELETE_IPD_NURSE_OPER][DentalEntry][DO_HN_MERGE][DOCTOR][DRG_EXPORT][DRUG_ALLERGY_ENTRY][DRUG_COUNSELING', NULL, NULL, 'จพ.เภสัชกรรมชุมชน', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '188', '10', 'เภสัชกรรมชุมชน', NULL, 'Y', 'N', '12', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '34', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('tae', 'ธนพันธ์ มั่งมูล', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A3E1214DAEBE0DA83D8A7', '704151753ddc16125ad2e76429f93045', '[][ACCESS_REPORT_FROM_MASTER][ACCOUNT_AR][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][APPOINTMENT_PENDING_][ARREAR_CANCEL][ARREAR_LIST][ARREAR_LOST_LIST][ASTHMA_CLINIC][BATCH_RX_ORDER_WARD_02][BED_STATUS_UPDATE][BILL_ABORT_LIST][CANCEL_IPD_FINANCE_CLEARING][CAN', NULL, NULL, 'นวก.คอม', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '189', NULL, 'Administrator', NULL, 'Y', 'N', '1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '386', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('mo', 'ภญ.วราภรณ์ ปริปุรณะ', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E74AD6', '81dc9bdb52d04dc20036dbd8313ed055', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][APPOINTMENT][ARREAR_LOST_LIST][CHANGE_LOCKED_PTTYPE][CHECKUP_LIST][CLINIC][Death_Form][DELETE_IPD_DIAGNOSIS][DELETE_IPD_NURSE_OPER][DentalEntry][DO_HN_MERGE][DOCTOR][DRG_EXPORT][DRUG_ALLERGY_ENTRY][DRUG_COUNSELING', NULL, NULL, 'เภสัชกร', NULL, NULL, '190', '10', 'เภสัชกรรมชุมชน', NULL, 'Y', 'N', '12', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '250', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('mukmantana', 'มัณฑนา นารี', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A01A021F1B5045BA54983', '89b479f8c05e9b106897f2b9fbdc7553', '[][ARREAR_LIST][BILL_ABORT_LIST][DEBT_LIST][DELETE_FINANCE_RX][EMR_VIEW][EndUser_Report][FINANCE_CHANGE_PTTYPE][FINANCE_DEPOSIT_VIEW_LIST][FINANCE_REPORT][IPD_RX_DEBT_CANCEL][IPD_RX_ORDER_DELETE][IPD_RX_ORDER_DELETE_TRX][IPD_RX_ORDER_SAVE][IPD_RX_PRINT_ST', NULL, NULL, 'เจ้าพนักงานการเงินและบัญชี', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '191', '0', 'การเงิน', NULL, 'Y', 'N', '13', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('13331', 'ทรงกลด  สาเกตุ', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E74A', '202cb962ac59075b964b07152d234b70', '[][ACCESS_REPORT_FROM_MASTER][APPOINTMENT][ARREAR_LOST_LIST][CHECKUP_LIST][CLINIC][Death_Form][DentalEntry][DOCTOR][Drug_Information_Service][DRUG_USE_EVALUATION][EMR_VIEW][EndUser_Report][ER1][FINANCE_REPORT][HELTH_MED_LIST][HHC-CLINIC][HHC_VISIT][INFORM', NULL, NULL, 'นักวิชาการสาธารณสุข', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', NULL, '192', '10', 'เวชปฏิบัติชุมชน', NULL, 'Y', 'N', '6', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '251', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('note', 'นายฮโนชา โพธิ์ศรี', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A30E04BDA', '6be93f7a96fed60c477d30ae1de032fd', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][ARREAR_LOST_LIST][CHECKUP_LIST][CLINIC][Death_Form][DELETE_IPD_NURSE_OPER][DentalEntry][DOCTOR][DOCTOR_DIAG_PRINT][DRUG_ALLERGY_ENTRY][DRUG_EVALUATION_EDIT][Drug_Information_Service][DRUG', NULL, NULL, 'พนักงานช่วยเหลือคนไข้', NULL, NULL, '193', NULL, 'เวชระเบียน', NULL, 'Y', 'N', '1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('thamonpan', 'น.ส.ธมนพัณณ์  ภูดินดาน', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171AD2B691847EA0D7AB0332', '3ac205ba42a336554295d503d93109ed', '[][ARREAR_LIST][BILL_ABORT_LIST][DEBT_LIST][DELETE_FINANCE_RX][EMR_VIEW][EndUser_Report][FINANCE_CHANGE_PTTYPE][FINANCE_DEPOSIT_VIEW_LIST][FINANCE_REPORT][IPD_RX_DEBT_CANCEL][IPD_RX_ORDER_DELETE][IPD_RX_ORDER_DELETE_TRX][IPD_RX_ORDER_SAVE][IPD_RX_PRINT_ST', NULL, NULL, 'การเงินและการบัญชี', NULL, NULL, '194', NULL, 'การเงิน', NULL, 'Y', 'N', '13', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '5', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('56918', 'พญ.นลินี แข็งแอ', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A37E340D31A', 'bf365a3674531847a287c6874d79135b', '[][ACCESS_REPORT_FROM_MASTER][ACCOUNT_AR][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][APPOINTMENT_PENDING_][ARREAR_CANCEL][ARREAR_LIST][ARREAR_LOST_LIST][ASTHMA_CLINIC][BATCH_RX_ORDER_WARD_02][BED_STATUS_UPDATE][BILL_ABORT_LIST][CANCEL_IPD_FINANCE_CLEARING][CAN', NULL, NULL, 'แพทย์', NULL, NULL, '195', '10', 'แพทย์', NULL, NULL, 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `opduser` VALUES ('SSOP', 'ชัชวาลย์   ทองหอม', NULL, '75800F73FA80F935216B8CFBEDF77BFA', NULL, NULL, NULL, NULL, NULL, NULL, '998', NULL, NULL, NULL, NULL, 'Y', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
---
--- Table structure for table `system_font_size`
---
-
-CREATE TABLE `system_font_size` (
-  `font_key` char(32) NOT NULL,
-  `font_name` varchar(128) NOT NULL,
-  `font_size_text` text NOT NULL,
+-- ----------------------------
+-- Table structure for system_font_size
+-- ----------------------------
+DROP TABLE IF EXISTS `system_font_size`;
+CREATE TABLE `system_font_size`  (
+  `font_key` char(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `font_name` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `font_size_text` text CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `font_status` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
---
--- Dumping data for table `system_font_size`
---
+-- ----------------------------
+-- Records of system_font_size
+-- ----------------------------
+INSERT INTO `system_font_size` VALUES ('6c3ca25445248c1dff79d51ad9fa4082', '14px', 'font-size:14px;', 1);
+INSERT INTO `system_font_size` VALUES ('74af75636b4e933684d63b617c97f398', '24px', 'font-size:24px;', 1);
+INSERT INTO `system_font_size` VALUES ('bffeb9ae0d04ffc7affc3701f9858932', '22px', 'font-size:22px;', 1);
+INSERT INTO `system_font_size` VALUES ('dd7e28065e654467be0f9c16f3bd987d', '16px', 'font-size:16px;', 1);
+INSERT INTO `system_font_size` VALUES ('e215155479796a0bdcad2326ffca09c7', '18px', 'font-size:18px;', 1);
+INSERT INTO `system_font_size` VALUES ('ff9ec5b758824e67edcf5ecc7e635f6f', '20px', 'font-size:20px;', 1);
 
-INSERT INTO `system_font_size` (`font_key`, `font_name`, `font_size_text`, `font_status`) VALUES
-('6c3ca25445248c1dff79d51ad9fa4082', '14px', 'font-size:14px;', 1),
-('74af75636b4e933684d63b617c97f398', '24px', 'font-size:24px;', 1),
-('bffeb9ae0d04ffc7affc3701f9858932', '22px', 'font-size:22px;', 1),
-('dd7e28065e654467be0f9c16f3bd987d', '16px', 'font-size:16px;', 1),
-('e215155479796a0bdcad2326ffca09c7', '18px', 'font-size:18px;', 1),
-('ff9ec5b758824e67edcf5ecc7e635f6f', '20px', 'font-size:20px;', 1);
+-- ----------------------------
+-- Table structure for system_info
+-- ----------------------------
+DROP TABLE IF EXISTS `system_info`;
+CREATE TABLE `system_info`  (
+  `site_key` char(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `site_logo` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `site_favicon` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `time_zone` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `year_type` varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `year_format` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `booking_logo_en` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `booking_title_en` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `booking_note1_en` text CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `booking_note2_en` text CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `booking_logo_th` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `booking_title_th` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `booking_note1_th` text CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `booking_note2_th` text CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `reciept_logo_en` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `reciept_title_en` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `reciept_note1_en` text CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `reciept_note2_en` text CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `reciept_logo_th` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `reciept_title_th` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `reciept_note1_th` text CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `reciept_note2_th` text CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
--- --------------------------------------------------------
+-- ----------------------------
+-- Records of system_info
+-- ----------------------------
+INSERT INTO `system_info` VALUES ('8f411b77c389d5de467af8f2c0e91cda', 'logo.png', 'icon.png', 'Asia/Bangkok', 'BE', '3', 'logo.png', 'Booking Slip', 'Name..............................................<br/>Address..............................................................................<br/>Tel................................................................', '', 'logo.png', 'ใบจองห้องพัก', 'ชื่อ..............................................<br/>ที่อยู่..............................................................................<br/>โทร................................................................', '', 'logo.png', 'Reciept', 'Name..............................................<br/>Address..............................................................................<br/>Tel................................................................', '', 'logo.png', 'ใบเสร็จรับเงิน', 'ชื่อ..............................................<br/>ที่อยู่..............................................................................<br/>โทร................................................................', '');
 
---
--- Table structure for table `system_info`
---
-
-CREATE TABLE `system_info` (
-  `site_key` char(32) NOT NULL,
-  `site_logo` varchar(256) NOT NULL,
-  `site_favicon` varchar(256) NOT NULL,
-  `time_zone` varchar(128) NOT NULL,
-  `year_type` varchar(16) NOT NULL,
-  `year_format` varchar(32) NOT NULL,
-  `booking_logo_en` varchar(128) NOT NULL,
-  `booking_title_en` varchar(128) NOT NULL,
-  `booking_note1_en` text NOT NULL,
-  `booking_note2_en` text NOT NULL,
-  `booking_logo_th` varchar(128) NOT NULL,
-  `booking_title_th` varchar(128) NOT NULL,
-  `booking_note1_th` text NOT NULL,
-  `booking_note2_th` text NOT NULL,
-  `reciept_logo_en` varchar(128) NOT NULL,
-  `reciept_title_en` varchar(128) NOT NULL,
-  `reciept_note1_en` text NOT NULL,
-  `reciept_note2_en` text NOT NULL,
-  `reciept_logo_th` varchar(128) NOT NULL,
-  `reciept_title_th` varchar(128) NOT NULL,
-  `reciept_note1_th` text NOT NULL,
-  `reciept_note2_th` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `system_info`
---
-
-INSERT INTO `system_info` (`site_key`, `site_logo`, `site_favicon`, `time_zone`, `year_type`, `year_format`, `booking_logo_en`, `booking_title_en`, `booking_note1_en`, `booking_note2_en`, `booking_logo_th`, `booking_title_th`, `booking_note1_th`, `booking_note2_th`, `reciept_logo_en`, `reciept_title_en`, `reciept_note1_en`, `reciept_note2_en`, `reciept_logo_th`, `reciept_title_th`, `reciept_note1_th`, `reciept_note2_th`) VALUES
-('8f411b77c389d5de467af8f2c0e91cda', 'logo.png', 'icon.png', 'Asia/Bangkok', 'BE', '3', 'logo.png', 'Booking Slip', 'Name..............................................<br/>Address..............................................................................<br/>Tel................................................................', '', 'logo.png', 'ใบจองห้องพัก', 'ชื่อ..............................................<br/>ที่อยู่..............................................................................<br/>โทร................................................................', '', 'logo.png', 'Reciept', 'Name..............................................<br/>Address..............................................................................<br/>Tel................................................................', '', 'logo.png', 'ใบเสร็จรับเงิน', 'ชื่อ..............................................<br/>ที่อยู่..............................................................................<br/>โทร................................................................', '');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `user`
---
-
-CREATE TABLE `user` (
-  `user_key` char(32) NOT NULL,
-  `name` varchar(64) NOT NULL,
-  `lastname` varchar(64) NOT NULL,
-  `username` varchar(64) NOT NULL,
-  `password` varchar(32) NOT NULL,
-  `user_photo` varchar(128) NOT NULL DEFAULT 'noimg.jpg',
-  `user_class` tinyint(1) NOT NULL DEFAULT '1' COMMENT '1=user,2=admin,3=super admin',
-  `bed_view` varchar(64) NOT NULL DEFAULT 'box_view',
-  `user_language` varchar(8) NOT NULL DEFAULT 'th',
-  `system_font_size` varchar(32) NOT NULL DEFAULT 'dd7e28065e654467be0f9c16f3bd987d',
-  `email` varchar(128) NOT NULL,
+-- ----------------------------
+-- Table structure for user
+-- ----------------------------
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE `user`  (
+  `user_key` char(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `name` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `lastname` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `username` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `password` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `user_photo` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'noimg.jpg',
+  `user_class` tinyint(1) NOT NULL DEFAULT 1 COMMENT '1=user,2=admin,3=super admin',
+  `bed_view` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'box_view',
+  `user_language` varchar(8) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'th',
+  `system_font_size` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'dd7e28065e654467be0f9c16f3bd987d',
+  `email` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `user_status` tinyint(1) NOT NULL,
   `groups` tinyint(5) NOT NULL COMMENT 'กลุ่มงาน',
   `work_id` tinyint(5) NOT NULL COMMENT 'งาน'
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE = MyISAM CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
---
--- Dumping data for table `user`
---
+-- ----------------------------
+-- Records of user
+-- ----------------------------
+INSERT INTO `user` VALUES ('', 'Administer', '', 'admin', '21232f297a57a5a743894a0e4a801fc3', '8ae2bc51ce32050f62f3327309a06534.png', 3, 'box_view', 'th', 'e215155479796a0bdcad2326ffca09c7', 'amager084@gmail.com', 1, 1, 25);
+INSERT INTO `user` VALUES ('5c74165778e0a3b6b96f802d1290f005', 'LR', 'ห้องคลอด', 'lr11017', '269e8a392a2bdff0ee3b25fef4de8f51', 'noimg.jpg', 2, 'box_view', 'th', 'dd7e28065e654467be0f9c16f3bd987d', 'lr11017@gmail.com', 1, 2, 18);
+INSERT INTO `user` VALUES ('b79dfae9960af1a6b1fa1031d0d57af0', 'OPD', '', 'opd11017', '269e8a392a2bdff0ee3b25fef4de8f51', 'noimg.jpg', 2, 'box_view', 'th', 'dd7e28065e654467be0f9c16f3bd987d', 'opd11017@gmail.com', 1, 2, 5);
 
-INSERT INTO `user` (`user_key`, `name`, `lastname`, `username`, `password`, `user_photo`, `user_class`, `bed_view`, `user_language`, `system_font_size`, `email`, `user_status`, `groups`, `work_id`) VALUES
-('', 'ธนพันธ์', 'มั่งมูล', 'admin', '21232f297a57a5a743894a0e4a801fc3', '8ae2bc51ce32050f62f3327309a06534.png', 3, 'box_view', 'th', 'e215155479796a0bdcad2326ffca09c7', 'amager084@gmail.com', 1, 1, 25),
-('5c74165778e0a3b6b96f802d1290f005', 'LR', 'ห้องคลอด', 'lr11017', '269e8a392a2bdff0ee3b25fef4de8f51', 'noimg.jpg', 2, 'box_view', 'th', 'dd7e28065e654467be0f9c16f3bd987d', 'lr11017@gmail.com', 1, 2, 18),
-('b79dfae9960af1a6b1fa1031d0d57af0', 'OPD', '', 'opd11017', '269e8a392a2bdff0ee3b25fef4de8f51', 'noimg.jpg', 2, 'box_view', 'th', 'dd7e28065e654467be0f9c16f3bd987d', 'opd11017@gmail.com', 1, 2, 5);
+-- ----------------------------
+-- Table structure for user_online
+-- ----------------------------
+DROP TABLE IF EXISTS `user_online`;
+CREATE TABLE `user_online`  (
+  `osession` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '',
+  `user_key` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `otime` int(11) NOT NULL DEFAULT 0
+) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
 
--- --------------------------------------------------------
+-- ----------------------------
+-- Records of user_online
+-- ----------------------------
+INSERT INTO `user_online` VALUES ('54ph25acku5g6ljn83hnhlj9n3', '', 1559538355);
+INSERT INTO `user_online` VALUES ('9gtv8qnairkckdndc4copk0mk7', '5c74165778e0a3b6b96f802d1290f005', 1559538358);
 
---
--- Table structure for table `user_online`
---
-
-CREATE TABLE `user_online` (
-  `osession` varchar(128) CHARACTER SET utf8 NOT NULL DEFAULT '',
-  `user_key` varchar(32) CHARACTER SET utf8 NOT NULL,
-  `otime` int(11) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `user_online`
---
-
-INSERT INTO `user_online` (`osession`, `user_key`, `otime`) VALUES
-('j21eq1gh4u0kkhpj0bl1jbknk0', '', 1557486308);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `work_group`
---
-
-CREATE TABLE `work_group` (
+-- ----------------------------
+-- Table structure for work_group
+-- ----------------------------
+DROP TABLE IF EXISTS `work_group`;
+CREATE TABLE `work_group`  (
   `group_id` int(11) NOT NULL,
-  `group_name` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `group_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  PRIMARY KEY (`group_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
---
--- Dumping data for table `work_group`
---
+-- ----------------------------
+-- Records of work_group
+-- ----------------------------
+INSERT INTO `work_group` VALUES (1, 'บริหาร');
+INSERT INTO `work_group` VALUES (2, 'การพยาบาล');
 
-INSERT INTO `work_group` (`group_id`, `group_name`) VALUES
-(1, 'บริหาร'),
-(2, 'การพยาบาล');
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `autonumber`
---
-ALTER TABLE `autonumber`
-  ADD PRIMARY KEY (`finance_number`);
-
---
--- Indexes for table `backup_logs`
---
-ALTER TABLE `backup_logs`
-  ADD PRIMARY KEY (`backup_key`);
-
---
--- Indexes for table `card_info`
---
-ALTER TABLE `card_info`
-  ADD PRIMARY KEY (`card_key`);
-
---
--- Indexes for table `card_item`
---
-ALTER TABLE `card_item`
-  ADD PRIMARY KEY (`item_key`);
-
---
--- Indexes for table `card_status`
---
-ALTER TABLE `card_status`
-  ADD PRIMARY KEY (`cstatus_key`);
-
---
--- Indexes for table `card_type`
---
-ALTER TABLE `card_type`
-  ADD PRIMARY KEY (`ctype_key`);
-
---
--- Indexes for table `category`
---
-ALTER TABLE `category`
-  ADD PRIMARY KEY (`category_id`);
-
---
--- Indexes for table `department`
---
-ALTER TABLE `department`
-  ADD PRIMARY KEY (`department_id`);
-
---
--- Indexes for table `language`
---
-ALTER TABLE `language`
-  ADD PRIMARY KEY (`language_code`);
-
---
--- Indexes for table `list`
---
-ALTER TABLE `list`
-  ADD PRIMARY KEY (`cases`);
-
---
--- Indexes for table `menus`
---
-ALTER TABLE `menus`
-  ADD PRIMARY KEY (`menu_key`);
-
---
--- Indexes for table `work_group`
---
-ALTER TABLE `work_group`
-  ADD PRIMARY KEY (`group_id`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `category`
---
-ALTER TABLE `category`
-  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
---
--- AUTO_INCREMENT for table `department`
---
-ALTER TABLE `department`
-  MODIFY `department_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+SET FOREIGN_KEY_CHECKS = 1;
