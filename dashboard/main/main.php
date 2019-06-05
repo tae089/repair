@@ -111,8 +111,10 @@ if(isset($_POST['save_card'])){
 
     </div>
 </nav> -->
+
 <div class="row">
-    <div class="col-lg-3 col-md-6">
+<div class="col-lg-6 col-md-6">
+    <div class="col-lg-6 col-md-6">
         <div class="panel panel-default">
             <div class="panel-heading">
                 <div class="row">
@@ -121,7 +123,7 @@ if(isset($_POST['save_card'])){
                     </div>
                     <div class="col-xs-9 text-right">
                         <div class="huge">
-                            <?php @$getall = $getdata->my_sql_show_rows("card_info","card_status <> 'hidden'"); echo @number_format($getall);?>
+                            <?php @$getall = $getdata->my_sql_show_rows("card_info","card_status <> 'hidden' AND card_type='0'"); echo @number_format($getall);?>
                         </div>
                         <div>ใบสั่งซ่อม/เคลมทั้งหมด</div>
                     </div>
@@ -130,7 +132,7 @@ if(isset($_POST['save_card'])){
 
         </div>
     </div>
-    <div class="col-lg-3 col-md-6">
+    <div class="col-lg-6 col-md-6">
         <div class="panel panel-primary">
             <div class="panel-heading">
                 <div class="row">
@@ -139,7 +141,7 @@ if(isset($_POST['save_card'])){
                     </div>
                     <div class="col-xs-9 text-right">
                         <div class="huge">
-                            <?php @$gettoday = $getdata->my_sql_show_rows("card_info","card_status <> 'hidden' AND (card_insert LIKE '%".date("Y-m-d")."%')"); echo @number_format($gettoday);?>
+                            <?php @$gettoday = $getdata->my_sql_show_rows("card_info","card_status <> 'hidden' AND (card_insert LIKE '%".date("Y-m-d")."%') AND card_type='0'"); echo @number_format($gettoday);?>
                         </div>
                         <div>ใบสั่งซ่อม/เคลม วันนี้</div>
                     </div>
@@ -148,7 +150,7 @@ if(isset($_POST['save_card'])){
 
         </div>
     </div>
-    <div class="col-lg-6 col-md-12">
+    <div class="col-lg-12 col-md-12">
         <div class="panel panel-default">
             <div class="panel-heading">
                 รายการสั่งซ่อม/เคลม 10 อันดับล่าสุด
@@ -168,14 +170,14 @@ if(isset($_POST['save_card'])){
                     </thead>
                     <tbody>
                         <?php
-  if(addslashes($_GET['type']) != NULL){
-	   $getcard = $getdata->my_sql_select(NULL,"card_info","card_status = '".addslashes($_GET['type'])."' ORDER BY card_insert");
-  }else{
-	   $getcard = $getdata->my_sql_select(NULL,"card_info","card_status <> 'hidden'  AND  card_status <> '' ORDER BY card_insert DESC LIMIT 10");
-  }
- 
-  while($showcard = mysql_fetch_object($getcard)){
-  ?>
+                            if(addslashes($_GET['type']) != NULL){
+                                $getcard = $getdata->my_sql_select(NULL,"card_info","card_status = '".addslashes($_GET['type'])."' AND card_type='0' ORDER BY card_insert");
+                            }else{
+                                $getcard = $getdata->my_sql_select(NULL,"card_info","card_status <> 'hidden'  AND  card_status <> '' AND card_type='0' ORDER BY card_insert DESC LIMIT 10");
+                            }
+
+                            while($showcard = mysql_fetch_object($getcard)){
+                        ?>
                         <tr style="font-weight:bold;" id="<?php echo @$showcard->card_key;?>">
                             <td align="center"><a href="?q=<?php echo @$showcard->card_code;?>&p=search">
                                     <?php echo @$showcard->card_code;?></a></td>
@@ -192,8 +194,8 @@ if(isset($_POST['save_card'])){
                             </td>
                         </tr>
                         <?php
-  }
-  ?>
+                          }
+                        ?>
                     </tbody>
 
                 </table>
@@ -202,4 +204,195 @@ if(isset($_POST['save_card'])){
         </div>
     </div>
 
+    <div class="col-lg-12 col-md-12">
+      <div id="chart_repair"></div>
+      <script>
+    var options = {
+      chart: {
+        height: 350,
+        type: 'line',
+        zoom: {
+          enabled: false
+        }
+      },
+      dataLabels: {
+        enabled: false
+      },
+      stroke: {
+        curve: 'straight'
+      },
+      series: [
+        {
+          name: "คอมพิวเตอร์",
+          data: [10, 41, 35, 51, 49, 62, 69, 91, 148]
+        },
+        {
+          name: "ปริ้นเตอร์",
+          data: [8, 20, 10, 30, 12, 16, 45, 45, 77]
+        }
+      ],
+      title: {
+        text: 'ยอดซ่อมรายปี(ปัจจุบัน)',
+        align: 'left'
+      },
+      grid: {
+        row: {
+          colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
+          opacity: 0.5
+        },
+      },
+      xaxis: {
+        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+      }
+    }
+
+    var chart = new ApexCharts(
+      document.querySelector("#chart_repair"),
+      options
+    );
+
+    chart.render();
+
+  </script>
+    </div>
+</div>
+
+<div class="col-lg-6 col-md-6">
+    <div class="col-lg-6 col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="fa fa-edit fa-5x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <div class="huge">
+                            <?php @$getall = $getdata->my_sql_show_rows("card_info","card_status <> 'hidden' AND card_type='1'"); echo @number_format($getall);?>
+                        </div>
+                        <div>ใบสั่งซื้อ/ ทั้งหมด</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="col-lg-6 col-md-6">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="fa fa-tasks fa-5x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <div class="huge">
+                            <?php @$gettoday = $getdata->my_sql_show_rows("card_info","card_status <> 'hidden' AND (card_insert LIKE '%".date("Y-m-d")."%') AND card_type='1'"); echo @number_format($gettoday);?>
+                        </div>
+                        <div>ใบสั่งซื้อ/ วันนี้</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="col-lg-12 col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                รายการสั่งซื้อ 10 อันดับล่าสุด
+            </div>
+
+
+            <div class="table-responsive">
+                <table width="100%" border="0" class="table table-bordered">
+                    <thead>
+                        <tr style="font-weight:bold; color:#FFF; text-align:center; background:#ff7709;">
+                            <td width="18%">รหัส</td>
+                            <td width="27%">วันที่</td>
+                            <td width="35%">ชื่อผู้สั่งซื้อ</td>
+                            <td width="20%">กลุ่มงาน</td>
+                            <td width="20%">สถานะ</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                              if(addslashes($_GET['type']) != NULL){
+                            	   $getcard = $getdata->my_sql_select(NULL,"card_info","card_status = '".addslashes($_GET['type'])."' AND card_type='1' ORDER BY card_insert");
+                              }else{
+                            	   $getcard = $getdata->my_sql_select(NULL,"card_info","card_status <> 'hidden'  AND  card_status <> '' AND card_type='1' ORDER BY card_insert DESC LIMIT 10");
+                              }
+
+                              while($showcard = mysql_fetch_object($getcard)){
+                        ?>
+                        <tr style="font-weight:bold;" id="<?php echo @$showcard->card_key;?>">
+                            <td align="center"><a href="?q=<?php echo @$showcard->card_code;?>&p=search">
+                                    <?php echo @$showcard->card_code;?></a></td>
+
+                            <td align="center">
+                                <?php echo @dateTimeConvertor($showcard->card_insert);?>
+                            </td>
+                            <td>&nbsp;
+                                <?php echo @$showcard->card_customer_name.'&nbsp;&nbsp;&nbsp;'.$showcard->card_customer_lastname;?>
+                            </td>
+                            <td> <?php echo @getGroupWorking($showcard->card_customer_work_group);?> </td>
+                            <td align="center">
+                                <?php echo @cardStatus($showcard->card_status);?>
+                            </td>
+                        </tr>
+                        <?php
+                            }
+                        ?>
+                    </tbody>
+
+                </table>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-12 col-md-12">
+      <div id="chart_buy"></div>
+      <script>
+    var options = {
+      chart: {
+        height: 350,
+        type: 'line',
+        zoom: {
+          enabled: false
+        }
+      },
+      dataLabels: {
+        enabled: false
+      },
+      stroke: {
+        curve: 'straight'
+      },
+      series: [{
+        name: "Desktops",
+        data: [10, 41, 35, 51, 49, 62, 69, 91, 148]
+      }],
+      title: {
+        text: 'ยอดสั่งซื้อรายปี(ปัจจุบัน)',
+        align: 'left'
+      },
+      grid: {
+        row: {
+          colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
+          opacity: 0.5
+        },
+      },
+      xaxis: {
+        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+      }
+    }
+
+    var chart = new ApexCharts(
+      document.querySelector("#chart_buy"),
+      options
+    );
+
+    chart.render();
+
+  </script>
+    </div>
+
+</div>
 </div>

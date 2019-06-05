@@ -56,10 +56,10 @@ require("../core/online.core.php");
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
+    <!-- [if lt IE 9]
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.../js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+    [endif] -->
 
 </head>
 <?php
@@ -92,10 +92,10 @@ if(@$_SESSION['lang']!=NULL){
     <script src="../js/plugins/metisMenu/metisMenu.min.js"></script>
 
     <!-- Morris Charts JavaScript -->
-    
+
     <script src="../js/plugins/morris/raphael.min.js"></script>
     <script src="../js/plugins/morris/morris.min.js"></script>
-   
+
 
     <!-- Custom Theme JavaScript -->
     <script src="../js/sb-admin-2.js"></script>
@@ -103,7 +103,8 @@ if(@$_SESSION['lang']!=NULL){
   <script src="../js/bootstrap-colorpicker.js"></script>
     <script src="../js/latest/typeahead.bundle.js"></script>
     <script src="../js/standalone/selectize.js"></script>
-<?php  
+	<script src="https://cdn.jsdelivr.net/npm/apexcharts@latest"></script>
+<?php
 if(@addslashes($_GET['p']) == "cashier_nomember" || addslashes($_GET['p']) == "import" || addslashes($_GET['p']) == "cashier_member"){
 	$stime = 'onLoad="startDateTime();"';
 }
@@ -121,7 +122,7 @@ if(@addslashes($_GET['p']) == "cashier_nomember" || addslashes($_GET['p']) == "i
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.php"><img src="../media/logo/<?php echo @$system_info->site_logo;?>" height="27"  alt=""/></a>
+                <a class="navbar-brand" href="index.php"><img src="../media/logo/<?php echo @$system_info->site_logo;?>" height="30"  alt=""/><img src="../media/logo/logoo.png" height="25"  alt=""/></a>
             </div>
             <!-- /.navbar-header -->
 
@@ -134,7 +135,7 @@ if(@addslashes($_GET['p']) == "cashier_nomember" || addslashes($_GET['p']) == "i
 					  $getmenus = $getdata->my_sql_select(NULL,"menus","menu_status='1' AND menu_key=menu_upkey ORDER BY menu_sorting");
 					  while($showmenus = mysql_fetch_object($getmenus)){
 						  $cksub = $getdata->my_sql_show_rows("menus","menu_status='1' AND menu_key <> menu_upkey AND '".$showmenus->menu_key."' = menu_upkey");
-						  
+
 						  if($cksub != 0){
 							  $showm ='<li><a href="'.$showmenus->menu_link.'" ';
 							  if(@addslashes($_GET['p']) == $showmenus->menu_link){$showm .='class="active"';}
@@ -157,8 +158,8 @@ if(@addslashes($_GET['p']) == "cashier_nomember" || addslashes($_GET['p']) == "i
 						  }
 					  }
 					  ?>
-                        
-                    </ul> 
+
+                    </ul>
                     <div style="color:#CCC; text-align:center; padding-top:10px;">&copy;&nbsp;<?php echo @date("Y");?>&nbsp; By <a href="#" style="color:#CCC;">ศูนย์คอม โรงพยาบาลโนนสะอาด</a></div>
                 </div>
                 <!-- /.sidebar-collapse -->
@@ -177,7 +178,7 @@ if(@addslashes($_GET['p']) == "cashier_nomember" || addslashes($_GET['p']) == "i
                 }else{
                     require("main/main.php");
                 }
-	
+
     				?>
                     </div>
         </div>
@@ -212,7 +213,7 @@ if(@addslashes($_GET['p']) == "cashier_nomember" || addslashes($_GET['p']) == "i
  <script>
   var socket = io('//127.0.0.1:8080');
   $(document).ready(function(){
-   
+
         checkCardCount();
         checkCardCountBuy();
   });
@@ -221,7 +222,7 @@ if(@addslashes($_GET['p']) == "cashier_nomember" || addslashes($_GET['p']) == "i
         selector: "[data-toggle=tooltip]",
         container: "body"
     })
-	
+
 
     // popover demo
     $("[data-toggle=popover]")
@@ -269,7 +270,7 @@ if (i<10){
 <script language="javascript">
 var nowTemp = new Date();
 var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
- 
+
 var checkin = $('#dpd1').datepicker({
 	format: "yyyy-mm-dd",
   onRender: function(date) {
@@ -296,33 +297,33 @@ var checkout = $('#dpd2').datepicker({
 <script type="text/javascript">
   $(document).ready(function(){
     $('.combobox').combobox();
-    
-   
+
+
    socket.on('num_card', (res) => {
      console.log(res);
-    //  var audio = new Audio('../sound/sound_notitfy.mp3');
-    //  audio.play();
+     var audio = new Audio('../sound/sound1.mp3');
+     audio.play();
      checkCardCount();
       $('#card_count').effect("shake", {
             direction:'right',
             distance:20,
-            times:4 
+            times:4
          }, 1000);
     });
 
     socket.on('num_card_buy', (res) => {
      console.log(res);
-    //  var audio = new Audio('../sound/sound_notitfy.mp3');
-    //  audio.play();
+     var audio = new Audio('../sound/sound1.mp3');
+     audio.play();
      checkCardCountBuy();
       $('#card_count_buy').effect("shake", {
             direction:'right',
             distance:20,
-            times:4 
+            times:4
          }, 1000);
     });
   });
- 
+
 </script>
 <script>
     $(function() {
@@ -331,7 +332,7 @@ var checkout = $('#dpd2').datepicker({
 
 	function checkCardCount(){
 	 $.ajax({
-			async:false, 
+			async:false,
             url: 'function.php?type=show_card_count',
             data: {uclass:<?php echo $_SESSION['uclass'];?>,uwork_id:<?php echo $_SESSION['uwork_id'];?>},
             success: function(data) {
@@ -342,7 +343,7 @@ var checkout = $('#dpd2').datepicker({
 
     function checkCardCountBuy(){
 	 $.ajax({
-			async:false, 
+			async:false,
             url: 'function.php?type=show_card_count_buy',
             data: {uclass:<?php echo $_SESSION['uclass'];?>,uwork_id:<?php echo $_SESSION['uwork_id'];?>},
             success: function(data) {

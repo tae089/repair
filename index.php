@@ -76,7 +76,8 @@ if(@$_SESSION['lang']!=NULL){
             <div class="col-md-4 col-md-offset-4">
                 <div class="login-panel panel panel-default">
                     <div class="panel-heading" align="center">
-                    <img src="media/logo/<?php echo @$system_info->site_logo;?>" width="150" alt=""/> </div>
+                    <img src="media/logo/<?php echo @$system_info->site_logo;?>" width="65" alt=""/>
+                    <img src="media/logo/logoo.png" width="100" alt="" style="vertical-align: bottom;"/> </div>
                     <div class="panel-body">
                     <?php
                     if(@addslashes($_GET['c'])=='nouser'){
@@ -97,7 +98,7 @@ if(@$_SESSION['lang']!=NULL){
                             </fieldset>
                         </form>
                        
-                        <div style="color:#CCC; text-align:center; padding-top:10px;">&copy;&nbsp;<?php echo date("Y");?>&nbsp;Repair By Clear</div>
+                        <div style="color:#CCC; text-align:center; padding-top:10px;">&copy;&nbsp;<?php echo date("Y");?>&nbsp; By ศูนย์คอม โรงพยาบาลโนนสะอาด</div>
                     </div>
                     
                 </div>
