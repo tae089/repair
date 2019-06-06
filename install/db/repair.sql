@@ -11,7 +11,7 @@
  Target Server Version : 50713
  File Encoding         : 65001
 
- Date: 04/06/2019 11:48:04
+ Date: 06/06/2019 11:19:12
 */
 
 SET NAMES utf8mb4;
@@ -35,7 +35,7 @@ CREATE TABLE `autonumber`  (
 -- ----------------------------
 -- Records of autonumber
 -- ----------------------------
-INSERT INTO `autonumber` VALUES (0004, 0001, 0001, 0001, 2019, 06, 03);
+INSERT INTO `autonumber` VALUES (0005, 0001, 0001, 0001, 2019, 06, 06);
 
 -- ----------------------------
 -- Table structure for backup_logs
@@ -76,7 +76,8 @@ CREATE TABLE `card_info`  (
 INSERT INTO `card_info` VALUES ('50f137fad652bb23ac790884f30a3084', 'CTTUKH1', 'สุวดี', 'พลน้ำเที่ยง', 'โรงพยาบาลโนนสะอาด อ.โนนสะอาด จ.อุดรธานี 41240', '121', 18, 'ปกติ', '2019-06-10', '5c74165778e0a3b6b96f802d1290f005', '5cd813fcceeb00544c19201a93ca6529', '2019-06-03 10:43:33', 1);
 INSERT INTO `card_info` VALUES ('8c435b00d27955ec4d72e55642dd0f9d', 'CV5205GT', 'เกศราพร', 'ชาแก้ว', 'โรงพยาบาลโนนสะอาด อ.โนนสะอาด จ.อุดรธานี 41240', '121', 5, 'ปกติ', '0000-00-00', 'b79dfae9960af1a6b1fa1031d0d57af0', '89da7d193f3c67e4310f50cbb5b36b90', '2019-06-01 18:50:18', 1);
 INSERT INTO `card_info` VALUES ('94a5ca99342dd32e241bdb8eeeb96c79', 'CAHU28Z3', 'เกรียงไกร', 'อุตโรกุล', 'โรงพยาบาลโนนสะอาด อ.โนนสะอาด จ.อุดรธานี 41240', '112', 5, 'ปกติ', '2019-05-21', 'b79dfae9960af1a6b1fa1031d0d57af0', 'b1f4d8a6d50a01b4211fd877f7ae464f', '2019-05-20 14:17:25', 0);
-INSERT INTO `card_info` VALUES ('ccbc7539c3e4433e01857a6c2db2bdac', 'C75BG7WP', 'กนกวรรณ', 'อรรคนันท์', 'โรงพยาบาลโนนสะอาด อ.โนนสะอาด จ.อุดรธานี 41240', '125', 5, 'ปกติ', '0000-00-00', 'b79dfae9960af1a6b1fa1031d0d57af0', '89da7d193f3c67e4310f50cbb5b36b90', '2019-06-03 10:18:55', 1);
+INSERT INTO `card_info` VALUES ('b32037734d8c5b5e09a0142705a1e62a', 'CZMMAPG4', 'สุวดี', 'พลน้ำเที่ยง', 'โรงพยาบาลโนนสะอาด อ.โนนสะอาด จ.อุดรธานี 41240', '121', 18, 'ปกติ', '0000-00-00', '5c74165778e0a3b6b96f802d1290f005', '89da7d193f3c67e4310f50cbb5b36b90', '2019-06-06 01:39:40', 0);
+INSERT INTO `card_info` VALUES ('ccbc7539c3e4433e01857a6c2db2bdac', 'C75BG7WP', 'กนกวรรณ', 'อรรคนันท์', 'โรงพยาบาลโนนสะอาด อ.โนนสะอาด จ.อุดรธานี 41240', '125', 5, 'ปกติ', '0000-00-00', 'b79dfae9960af1a6b1fa1031d0d57af0', 'b1f4d8a6d50a01b4211fd877f7ae464f', '2019-06-03 10:18:55', 1);
 
 -- ----------------------------
 -- Table structure for card_item
@@ -100,6 +101,7 @@ CREATE TABLE `card_item`  (
 INSERT INTO `card_item` VALUES ('01f1c13682090f7391ba10fd004846e2', 'ccbc7539c3e4433e01857a6c2db2bdac', 19060002, 'Switching Hub CISCO SG250-08', 'อุปกรณ์เก่าพังแล้ว', 6, 3500, '2019-06-03 10:28:46');
 INSERT INTO `card_item` VALUES ('23a96a86e1f2b0e2911ad34b5b5f8eaf', '50f137fad652bb23ac790884f30a3084', 19060003, 'Hard disk 1TB SATA-III Seagate ', 'ตัวเดิมมีอาการเสีย ไม่สามารถใช้ได้', 7, 2500, '2019-06-03 10:49:26');
 INSERT INTO `card_item` VALUES ('3de8661d3942b992dcff8e35fed1ab2e', '94a5ca99342dd32e241bdb8eeeb96c79', 19050036, 'คอมพิวเตอร์', 'บอร์ดพังเสียหาย', 1, 0, '2019-05-20 14:17:47');
+INSERT INTO `card_item` VALUES ('6030f26e30a049013f6bef17b8acd018', 'b32037734d8c5b5e09a0142705a1e62a', 19060004, 'ปริ้นเตอร์', 'ปริ้นไม่ออก', 3, 0, '2019-06-06 01:40:15');
 INSERT INTO `card_item` VALUES ('e2e715f7dc160f0b52351085c11dac75', '8c435b00d27955ec4d72e55642dd0f9d', 19060001, 'แบตเตอรี UPS', 'แบตเสื่อมสภาพ', 5, 0, '2019-06-03 10:09:27');
 
 -- ----------------------------
@@ -122,11 +124,13 @@ CREATE TABLE `card_status`  (
 INSERT INTO `card_status` VALUES ('1049215c4c3fa71054d2ba5b324c0be2', '50f137fad652bb23ac790884f30a3084', '5cd813fcceeb00544c19201a93ca6529', '', '', '2019-06-03 11:43:49');
 INSERT INTO `card_status` VALUES ('221693dfae61e68b27d88c2097d858f5', '8c435b00d27955ec4d72e55642dd0f9d', '89da7d193f3c67e4310f50cbb5b36b90', 'ด่วนๆเลย ได้มั้ย', 'b79dfae9960af1a6b1fa1031d0d57af0', '2019-06-03 10:10:12');
 INSERT INTO `card_status` VALUES ('27a81a28f36af07c3d43a232b5e3e7db', '50f137fad652bb23ac790884f30a3084', '44d39a902c4dd1304cbd0080896e0008', '', '', '2019-06-03 11:43:29');
+INSERT INTO `card_status` VALUES ('2e131ca3a67a5bd43ceedf1639d4c0db', 'b32037734d8c5b5e09a0142705a1e62a', '89da7d193f3c67e4310f50cbb5b36b90', 'ขอด่วนค่ะ จะปริ้นงาน', '5c74165778e0a3b6b96f802d1290f005', '2019-06-06 01:40:38');
 INSERT INTO `card_status` VALUES ('57fd3835d044c43c05f06ad4cf0c3e62', '94a5ca99342dd32e241bdb8eeeb96c79', 'b1f4d8a6d50a01b4211fd877f7ae464f', 'โอเค', '', '2019-05-20 14:19:06');
 INSERT INTO `card_status` VALUES ('76aac8b9a7d8f91b349c48349c2eec56', '50f137fad652bb23ac790884f30a3084', '89da7d193f3c67e4310f50cbb5b36b90', 'รอเปลี่ยนอุปกรณ์อยู่ค่ะ', '5c74165778e0a3b6b96f802d1290f005', '2019-06-03 10:50:02');
 INSERT INTO `card_status` VALUES ('8b62654ff89d02176d1638d0ba2bc298', '94a5ca99342dd32e241bdb8eeeb96c79', '89da7d193f3c67e4310f50cbb5b36b90', 'ด่วน', 'b79dfae9960af1a6b1fa1031d0d57af0', '2019-05-20 14:18:11');
 INSERT INTO `card_status` VALUES ('a657908ccef52022d6e5f7d5232c94fb', 'ccbc7539c3e4433e01857a6c2db2bdac', '89da7d193f3c67e4310f50cbb5b36b90', 'ขอด่วนๆเลยนะ', 'b79dfae9960af1a6b1fa1031d0d57af0', '2019-06-03 10:29:09');
 INSERT INTO `card_status` VALUES ('a9f7faa456812731843385616b8f44c1', '50f137fad652bb23ac790884f30a3084', 'b1f4d8a6d50a01b4211fd877f7ae464f', 'โปรดรอ กำลังสั่งซื้อให้', '', '2019-06-03 10:51:51');
+INSERT INTO `card_status` VALUES ('bd993e8cad4969d84b3e0b24b2d938a1', 'ccbc7539c3e4433e01857a6c2db2bdac', 'b1f4d8a6d50a01b4211fd877f7ae464f', 'กำลังสั่งซื้อให้', '', '2019-06-06 01:42:53');
 
 -- ----------------------------
 -- Table structure for card_type
@@ -306,6 +310,7 @@ INSERT INTO `list` VALUES ('setting_products', 'setting', 'settings/setting_prod
 INSERT INTO `list` VALUES ('card_buys', 'card_create_buys', 'card/card_buys.php', 1);
 INSERT INTO `list` VALUES ('card_buys_all', 'card_create_buys', 'card/card_buys_all.php', 1);
 INSERT INTO `list` VALUES ('card_create_buy_detail', 'card_buys', 'card/card_create_buy_detail.php', 1);
+INSERT INTO `list` VALUES ('card_all_status_buys', 'card_buys_all', 'card/card_all_status_buys.php', 1);
 
 -- ----------------------------
 -- Table structure for logs
@@ -439,6 +444,18 @@ INSERT INTO `logs` VALUES ('ffb8989c5b6620e5', '2019-06-03 10:41:43', '::1', 'lr
 INSERT INTO `logs` VALUES ('c6f03312894c774f', '2019-06-03 10:53:14', '::1', 'admin ออกจากระบบ.', '');
 INSERT INTO `logs` VALUES ('cf627822536413cb', '2019-06-03 10:53:19', '::1', 'admin เข้าสู่ระบบ.', '');
 INSERT INTO `logs` VALUES ('37ef5a6ae8de33c8', '2019-06-04 00:24:24', '::1', 'lr11017 ออกจากระบบ.', '5c74165778e0a3b6b96f802d1290f005');
+INSERT INTO `logs` VALUES ('6339f99f81c90571', '2019-06-05 21:34:51', '::1', 'opd11017 เข้าสู่ระบบ.', 'b79dfae9960af1a6b1fa1031d0d57af0');
+INSERT INTO `logs` VALUES ('c8661e38bbb4db7b', '2019-06-05 21:35:36', '::1', 'admin เข้าสู่ระบบ.', '');
+INSERT INTO `logs` VALUES ('de18ec0bbf911aa2', '2019-06-05 22:16:57', '::1', 'opd11017 ออกจากระบบ.', 'b79dfae9960af1a6b1fa1031d0d57af0');
+INSERT INTO `logs` VALUES ('7e446ddaa4a22176', '2019-06-05 23:01:59', '::1', 'opd11017 เข้าสู่ระบบ.', 'b79dfae9960af1a6b1fa1031d0d57af0');
+INSERT INTO `logs` VALUES ('548138ce198317e5', '2019-06-05 23:24:50', '::1', 'opd11017 ออกจากระบบ.', 'b79dfae9960af1a6b1fa1031d0d57af0');
+INSERT INTO `logs` VALUES ('02fa43d896bb93d9', '2019-06-05 23:26:24', '::1', 'opd11017 เข้าสู่ระบบ.', 'b79dfae9960af1a6b1fa1031d0d57af0');
+INSERT INTO `logs` VALUES ('ceac32475c17c175', '2019-06-06 01:37:36', '::1', 'opd11017 ออกจากระบบ.', 'b79dfae9960af1a6b1fa1031d0d57af0');
+INSERT INTO `logs` VALUES ('93677274de51ef05', '2019-06-06 01:37:43', '::1', 'lr11017 เข้าสู่ระบบ.', '5c74165778e0a3b6b96f802d1290f005');
+INSERT INTO `logs` VALUES ('192981fed61670f1', '2019-06-06 01:41:14', '::1', 'lr11017 ออกจากระบบ.', '5c74165778e0a3b6b96f802d1290f005');
+INSERT INTO `logs` VALUES ('2a8db9907f016580', '2019-06-06 01:41:31', '::1', 'opd11017 เข้าสู่ระบบ.', 'b79dfae9960af1a6b1fa1031d0d57af0');
+INSERT INTO `logs` VALUES ('4e12fa74ac3307f8', '2019-06-06 01:50:09', '::1', 'admin ออกจากระบบ.', '');
+INSERT INTO `logs` VALUES ('135a722d857532c5', '2019-06-06 01:51:06', '::1', 'opd11017 ออกจากระบบ.', 'b79dfae9960af1a6b1fa1031d0d57af0');
 
 -- ----------------------------
 -- Table structure for menus
@@ -778,7 +795,7 @@ CREATE TABLE `system_info`  (
 -- ----------------------------
 -- Records of system_info
 -- ----------------------------
-INSERT INTO `system_info` VALUES ('8f411b77c389d5de467af8f2c0e91cda', 'logo.png', 'icon.png', 'Asia/Bangkok', 'BE', '3', 'logo.png', 'Booking Slip', 'Name..............................................<br/>Address..............................................................................<br/>Tel................................................................', '', 'logo.png', 'ใบจองห้องพัก', 'ชื่อ..............................................<br/>ที่อยู่..............................................................................<br/>โทร................................................................', '', 'logo.png', 'Reciept', 'Name..............................................<br/>Address..............................................................................<br/>Tel................................................................', '', 'logo.png', 'ใบเสร็จรับเงิน', 'ชื่อ..............................................<br/>ที่อยู่..............................................................................<br/>โทร................................................................', '');
+INSERT INTO `system_info` VALUES ('8f411b77c389d5de467af8f2c0e91cda', 'logo.png', 'tool.png', 'Asia/Bangkok', 'BE', '3', 'logo.png', 'Booking Slip', 'Name..............................................<br/>Address..............................................................................<br/>Tel................................................................', '', 'logo.png', 'ใบจองห้องพัก', 'ชื่อ..............................................<br/>ที่อยู่..............................................................................<br/>โทร................................................................', '', 'logo.png', 'Reciept', 'Name..............................................<br/>Address..............................................................................<br/>Tel................................................................', '', 'logo.png', 'ใบเสร็จรับเงิน', 'ชื่อ..............................................<br/>ที่อยู่..............................................................................<br/>โทร................................................................', '');
 
 -- ----------------------------
 -- Table structure for user
@@ -821,8 +838,8 @@ CREATE TABLE `user_online`  (
 -- ----------------------------
 -- Records of user_online
 -- ----------------------------
-INSERT INTO `user_online` VALUES ('54ph25acku5g6ljn83hnhlj9n3', '', 1559538355);
-INSERT INTO `user_online` VALUES ('9gtv8qnairkckdndc4copk0mk7', '5c74165778e0a3b6b96f802d1290f005', 1559538358);
+INSERT INTO `user_online` VALUES ('d2vcesr3iolr7jka4ogui9ro70', 'b79dfae9960af1a6b1fa1031d0d57af0', 1559760556);
+INSERT INTO `user_online` VALUES ('3kl120gvjavf6nkp9mfohauqh4', '', 1559760579);
 
 -- ----------------------------
 -- Table structure for work_group
