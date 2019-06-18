@@ -8,7 +8,7 @@ $connect = $getdata->my_sql_connect(DB_HOST,DB_USERNAME,DB_PASSWORD,DB_NAME);
 $getdata->my_sql_set_utf8();
 date_default_timezone_set('Asia/Bangkok');
 $card_detail = $getdata->my_sql_query(NULL,"card_info","card_key='".addslashes($_GET['key'])."'");
-
+$department = $getdata->my_sql_query(NULL,"department","department_id='".$card_detail->card_customer_work_group."'");
 // Include the main TCPDF library (search for installation path).
 require_once('../../tcpdf/tcpdf.php');
 
@@ -47,7 +47,7 @@ if (@file_exists(dirname(__FILE__).'/lang/eng.php')) {
 // ---------------------------------------------------------
 
 // set font
-$pdf->SetFont('times', '', 14);
+$pdf->SetFont('angsanaupc', '', 14);
 
 // add a page
 $pdf->AddPage();
@@ -67,12 +67,13 @@ $pdf->SetAutoPageBreak($auto_page_break, $bMargin);
 // set the starting point for the page content
 $pdf->setPageMark();
 
-$pdf->SetFont('times', '', 9);
+$pdf->SetFont('angsanaupc', '', 14);
 // set some text to print
 $YYY= date('Y')+543;
-$pdf->Text(173, 6, $YYY);
+$pdf->Text(173, 4, $YYY);
 
-$pdf->Text(0, 0, '');
+$pdf->SetFont('angsanaupc', '', 12);
+$pdf->Text(43, 17, $department->name);
 // ---------------------------------------------------------
 
 //Close and output PDF document
