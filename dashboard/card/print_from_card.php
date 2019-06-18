@@ -74,6 +74,16 @@ $pdf->Text(173, 4, $YYY);
 
 $pdf->SetFont('angsanaupc', '', 12);
 $pdf->Text(43, 17, $department->name);
+
+$pdf->Text(43, 30, 'พัสดุครุภัณฑ์คอมพิวเตอร์');
+$img_files = K_PATH_IMAGES.'Checkmark.png';
+if($card_detail->card_type==0){
+    $pdf->Image($img_files, 96, 45, 5, 5, '', '', '', false, 300, '', false, false, 0);
+}else{
+    $pdf->Image($img_files, 80, 45, 5, 5, '', '', '', false, 300, '', false, false, 0);
+}
+//$pdf->Image($img_files, 80, 45, 5, 5, '', '', '', false, 300, '', false, false, 0);
+//$pdf->Text(60, 45, $card_detail->card_type);
 // ---------------------------------------------------------
 
 //Close and output PDF document
