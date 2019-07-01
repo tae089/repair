@@ -55,12 +55,12 @@
           </div>
           <div class="form-group">
             <label for="card_note">หมายเหตุ</label>
-            <!-- <textarea name="card_note" id="card_note" class="form-control"></textarea> -->
-            <select name="card_note" id="card_note" class="form-control">
+            <textarea name="card_note" id="card_note" class="form-control"></textarea>
+            <!-- <select name="card_note" id="card_note" class="form-control">
               <option value="ปกติ">ปกติ</option>
               <option value="ด่วน">ด่วน</option>
               <option value="ด่วนมาก">ด่วนมาก</option>
-            </select>
+            </select> -->
           </div>
 
         </div>

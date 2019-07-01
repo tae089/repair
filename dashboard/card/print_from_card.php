@@ -82,8 +82,25 @@ if($card_detail->card_type==0){
 }else{
     $pdf->Image($img_files, 80, 45, 5, 5, '', '', '', false, 300, '', false, false, 0);
 }
-//$pdf->Image($img_files, 80, 45, 5, 5, '', '', '', false, 300, '', false, false, 0);
-//$pdf->Text(60, 45, $card_detail->card_type);
+
+$pdf->Text(48, 51, $department->name);
+
+$getitem = $getdata->my_sql_query(NULL,"card_item","card_key='".$key_card."'");
+$i=0;
+$k=65;
+var_dump($getitem);
+while($showitem = mysql_fetch_object($getitem)){
+    echo $showitem->item_name;
+}
+//foreach ($sql_item as $key => $item) {
+    //var_dump($item);
+    $pdf->Text(28, $k+$i, $item->item_name); 
+    $pdf->Text(115, $k+$i, $department->name);  
+    $pdf->Text(165, $k+$i, '1');  
+    if($item->item_price_aprox==0){ $price='ไม่ระบุ'; }else{ $price=$item->item_price_aprox;}
+    $pdf->Text(167, $k+$i, '/'.$price);
+    $i+5;
+//}
 // ---------------------------------------------------------
 
 //Close and output PDF document
