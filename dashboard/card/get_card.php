@@ -69,9 +69,12 @@ $getdata->my_sql_set_utf8();
           <a data-toggle="modal" data-target="#edit_status" data-whatever="<?php echo @$showcard->card_key;?>" class="btn btn-xs btn-info"
             title="เปลี่ยนสถานะ"><i class="fa fa-tag"></i></a>
           <?php } ?>
-          <a href="?p=card_all_status&key=<?php echo @$showcard->card_key;?>" class="btn btn-xs btn-success" title="ประวัติ"><i
-              class="fa fa-history"></i></a><a href="card/print_card.php?key=<?php echo @$showcard->card_key;?>" target="_blank"
-            class="btn btn-xs btn-warning" title="พิมพ์"><i class="fa fa-print"></i></a><a onClick="javascript:deleteCard('<?php echo @$showcard->card_key;?>');"
+          <a href="?p=card_all_status&key=<?php echo @$showcard->card_key;?>" class="btn btn-xs btn-success" title="ประวัติ"><i class="fa fa-history"></i></a>
+            <a href="card/print_card.php?key=<?php echo @$showcard->card_key;?>" target="_blank"
+            class="btn btn-xs btn-primary" title="พิมพ์ใบติดตาม"><i class="fa fa-qrcode"></i></a>
+            <a href="card/print_from_card.php?key=<?php echo @$showcard->card_key;?>" target="_blank"
+            class="btn btn-xs btn-warning" title="พิมพ์"><i class="fa fa-print"></i></a>
+            <a onClick="javascript:deleteCard('<?php echo @$showcard->card_key;?>');"
             title="ลบข้อมูล" class="btn btn-xs btn-danger"><i class="fa fa-times"></i></a></td>
       </tr>
       <?php

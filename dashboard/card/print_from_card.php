@@ -107,8 +107,10 @@ $pdf->writeHTMLCell($w, $h, 18.7, 65.7, $tbl, $border = 0, $ln = 0, $fill = fals
 
 
 $h_note ='<table style="width: 200px;" cellspacing=""><tr><td style="border: 1px solid #000000;">'.$card_detail->card_note.'</td></tr>';
-$pdf->writeHTMLCell(30, 25, 30, 100, $card_detail->card_note, $border = 1, $ln = 0, $fill = false, $reseth = true, $align = '', $autopadding = true );
+$pdf->writeHTMLCell(55, 25, 30, 100, $card_detail->card_note, $border = 0, $ln = 0, $fill = false, $reseth = true, $align = '', $autopadding = true );
 
+$pdf->SetFont('angsanaupc', '', 12);
+$pdf->Text(114, 100, $card_detail->card_customer_name.'  '.$card_detail->card_customer_lastname);
 
 // ---------------------------------------------------------
 
