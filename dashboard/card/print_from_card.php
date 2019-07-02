@@ -70,37 +70,46 @@ $pdf->setPageMark();
 $pdf->SetFont('angsanaupc', '', 14);
 // set some text to print
 $YYY= date('Y')+543;
-$pdf->Text(173, 4, $YYY);
+$pdf->Text(173, 5, $YYY);
 
 $pdf->SetFont('angsanaupc', '', 12);
-$pdf->Text(43, 17, $department->name);
+$pdf->Text(43, 18, $department->name);
 
-$pdf->Text(43, 30, 'พัสดุครุภัณฑ์คอมพิวเตอร์');
+$pdf->Text(43, 31, 'พัสดุครุภัณฑ์คอมพิวเตอร์');
 $img_files = K_PATH_IMAGES.'Checkmark.png';
 if($card_detail->card_type==0){
-    $pdf->Image($img_files, 96, 45, 5, 5, '', '', '', false, 300, '', false, false, 0);
+    $pdf->Image($img_files, 95.5, 45.5, 5, 5, '', '', '', false, 300, '', false, false, 0);
 }else{
-    $pdf->Image($img_files, 80, 45, 5, 5, '', '', '', false, 300, '', false, false, 0);
+    $pdf->Image($img_files, 80, 45.5, 5, 5, '', '', '', false, 300, '', false, false, 0);
 }
 
-$pdf->Text(48, 51, $department->name);
+$pdf->Text(48, 52, $department->name);
 
-$getitem = $getdata->my_sql_query(NULL,"card_item","card_key='".$key_card."'");
-$i=0;
-$k=65;
-var_dump($getitem);
+$getitem = $getdata->my_sql_select(NULL,"card_item","card_key='".$key_card."'");
+
+$tbl = '<table style="width: 638px;" cellspacing="0">';
+$i=1;
 while($showitem = mysql_fetch_object($getitem)){
-    echo $showitem->item_name;
-}
-//foreach ($sql_item as $key => $item) {
-    //var_dump($item);
-    $pdf->Text(28, $k+$i, $item->item_name); 
-    $pdf->Text(115, $k+$i, $department->name);  
-    $pdf->Text(165, $k+$i, '1');  
+    
     if($item->item_price_aprox==0){ $price='ไม่ระบุ'; }else{ $price=$item->item_price_aprox;}
-    $pdf->Text(167, $k+$i, '/'.$price);
-    $i+5;
-//}
+ 
+    $tbl .= '<tr>
+        <td style="border: 1px solid #000000; width: 27px; height: 20px;"> '.$i.'</td>
+        <td style="border: 1px solid #000000; width: 310px; height: 20px;"> '.$showitem->item_name.'</td>
+        <td style="border: 1px solid #000000; width: 153px; height: 20px;"> '.$department->name.'</td>
+        <td style="border: 1px solid #000000; width: 112px; height: 20px;"> 1 /'.$price.'</td>
+    </tr>';
+    $i++;
+
+}
+$tbl .= '</table>';
+$pdf->writeHTMLCell($w, $h, 18.7, 65.7, $tbl, $border = 0, $ln = 0, $fill = false, $reseth = true, $align = '', $autopadding = true );
+
+
+$h_note ='<table style="width: 200px;" cellspacing=""><tr><td style="border: 1px solid #000000;">'.$card_detail->card_note.'</td></tr>';
+$pdf->writeHTMLCell(30, 25, 30, 100, $card_detail->card_note, $border = 1, $ln = 0, $fill = false, $reseth = true, $align = '', $autopadding = true );
+
+
 // ---------------------------------------------------------
 
 //Close and output PDF document
