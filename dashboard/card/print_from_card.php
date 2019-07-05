@@ -9,6 +9,7 @@ $getdata->my_sql_set_utf8();
 date_default_timezone_set('Asia/Bangkok');
 $card_detail = $getdata->my_sql_query(NULL,"card_info","card_key='".addslashes($_GET['key'])."'");
 $department = $getdata->my_sql_query(NULL,"department","department_id='".$card_detail->card_customer_work_group."'");
+//$opduser = $getdata->my_sql_query(NULL,"opduser","name like ");
 // Include the main TCPDF library (search for installation path).
 require_once('../../tcpdf/tcpdf.php');
 
@@ -110,8 +111,10 @@ $h_note ='<table style="width: 200px;" cellspacing=""><tr><td style="border: 1px
 $pdf->writeHTMLCell(55, 25, 30, 100, $card_detail->card_note, $border = 0, $ln = 0, $fill = false, $reseth = true, $align = '', $autopadding = true );
 
 $pdf->SetFont('angsanaupc', '', 12);
-$pdf->Text(114, 100, $card_detail->card_customer_name.'  '.$card_detail->card_customer_lastname);
+$pdf->Text(115, 106, $card_detail->card_customer_name.'  '.$card_detail->card_customer_lastname);
 
+$pdf->SetFont('angsanaupc', '', 12);
+$pdf->Text(115, 106, $card_detail->card_customer_name);
 // ---------------------------------------------------------
 
 //Close and output PDF document
