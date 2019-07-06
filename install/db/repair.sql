@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50717
 File Encoding         : 65001
 
-Date: 2019-06-06 17:00:19
+Date: 2019-07-06 16:33:03
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -33,7 +33,7 @@ CREATE TABLE `autonumber` (
 -- ----------------------------
 -- Records of autonumber
 -- ----------------------------
-INSERT INTO `autonumber` VALUES ('0006', '0001', '0001', '0001', '2019', '06', '06');
+INSERT INTO `autonumber` VALUES ('0007', '0001', '0001', '0001', '2019', '07', '06');
 
 -- ----------------------------
 -- Table structure for backup_logs
@@ -69,18 +69,16 @@ CREATE TABLE `card_info` (
   `card_status` varchar(32) NOT NULL,
   `card_insert` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `card_type` tinyint(5) NOT NULL COMMENT 'ประเภท 0:ซ่อม 1::ซื้อ',
+  `user_hosxp` varchar(20) NOT NULL,
   PRIMARY KEY (`card_key`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of card_info
 -- ----------------------------
-INSERT INTO `card_info` VALUES ('50f137fad652bb23ac790884f30a3084', 'CTTUKH1', 'สุวดี', 'พลน้ำเที่ยง', 'โรงพยาบาลโนนสะอาด อ.โนนสะอาด จ.อุดรธานี 41240', '121', '18', 'ปกติ', '2019-06-10', '5c74165778e0a3b6b96f802d1290f005', '5cd813fcceeb00544c19201a93ca6529', '2019-06-03 10:43:33', '1');
-INSERT INTO `card_info` VALUES ('8c435b00d27955ec4d72e55642dd0f9d', 'CV5205GT', 'เกศราพร', 'ชาแก้ว', 'โรงพยาบาลโนนสะอาด อ.โนนสะอาด จ.อุดรธานี 41240', '121', '5', 'ปกติ', '0000-00-00', 'b79dfae9960af1a6b1fa1031d0d57af0', '89da7d193f3c67e4310f50cbb5b36b90', '2019-06-01 18:50:18', '1');
-INSERT INTO `card_info` VALUES ('94a5ca99342dd32e241bdb8eeeb96c79', 'CAHU28Z3', 'เกรียงไกร', 'อุตโรกุล', 'โรงพยาบาลโนนสะอาด อ.โนนสะอาด จ.อุดรธานี 41240', '112', '5', 'ปกติ', '2019-05-21', 'b79dfae9960af1a6b1fa1031d0d57af0', 'b1f4d8a6d50a01b4211fd877f7ae464f', '2019-05-20 14:17:25', '0');
-INSERT INTO `card_info` VALUES ('b32037734d8c5b5e09a0142705a1e62a', 'CZMMAPG4', 'สุวดี', 'พลน้ำเที่ยง', 'โรงพยาบาลโนนสะอาด อ.โนนสะอาด จ.อุดรธานี 41240', '121', '18', 'ปกติ', '0000-00-00', '5c74165778e0a3b6b96f802d1290f005', '89da7d193f3c67e4310f50cbb5b36b90', '2019-06-06 01:39:40', '0');
-INSERT INTO `card_info` VALUES ('c22d6de634121120fd6efbcc58917950', 'C86QNMRY', 'ผกามาศ', 'ตาวงศ์', 'โรงพยาบาลโนนสะอาด อ.โนนสะอาด จ.อุดรธานี 41240', '214', '13', 'ปกติ', '0000-00-00', '5a132cadb1825efe834c8ad2227019fe', '89da7d193f3c67e4310f50cbb5b36b90', '2019-06-06 14:02:49', '0');
-INSERT INTO `card_info` VALUES ('ccbc7539c3e4433e01857a6c2db2bdac', 'C75BG7WP', 'กนกวรรณ', 'อรรคนันท์', 'โรงพยาบาลโนนสะอาด อ.โนนสะอาด จ.อุดรธานี 41240', '125', '5', 'ปกติ', '0000-00-00', 'b79dfae9960af1a6b1fa1031d0d57af0', 'b1f4d8a6d50a01b4211fd877f7ae464f', '2019-06-03 10:18:55', '1');
+INSERT INTO `card_info` VALUES ('52a9da1752b66138f9827f5f08572536', 'CHXQ4RWQ', 'เบญจรัตน์', 'แสนบุตร', 'โรงพยาบาลโนนสะอาด อ.โนนสะอาด จ.อุดรธานี 41240', '140', '5', 'ฮาร์ดดิส อันเก่าเสีย', '0000-00-00', 'b79dfae9960af1a6b1fa1031d0d57af0', '89da7d193f3c67e4310f50cbb5b36b90', '2019-07-06 14:14:06', '1', 'benja');
+INSERT INTO `card_info` VALUES ('5d1a56fe820b9e3a185325b476737763', 'CCUKMI7Z', 'น.ส.สุวดี', 'พลน้ำเที่ยง', 'โรงพยาบาลโนนสะอาด อ.โนนสะอาด จ.อุดรธานี 41240', '127', '18', 'เครื่องสำรองไฟ ไม่เก็บไฟ เครื่องปริ้น ปริ้นไม่ได้ จึงขอส่งซ่อมด่วน', '0000-00-00', '5c74165778e0a3b6b96f802d1290f005', '89da7d193f3c67e4310f50cbb5b36b90', '2019-07-02 09:36:44', '0', 'vawa');
+INSERT INTO `card_info` VALUES ('8816c1f3b9e03d53f13471a472fba64b', 'CTPP11AX', 'วาสนา', 'แก้ววงษา', 'โรงพยาบาลโนนสะอาด อ.โนนสะอาด จ.อุดรธานี 41240', '110', '5', 'เทสๆๆๆ', '0000-00-00', 'b79dfae9960af1a6b1fa1031d0d57af0', '89da7d193f3c67e4310f50cbb5b36b90', '2019-07-06 12:06:33', '0', '2525');
 
 -- ----------------------------
 -- Table structure for card_item
@@ -93,6 +91,7 @@ CREATE TABLE `card_item` (
   `item_name` varchar(128) NOT NULL,
   `item_note` text NOT NULL,
   `item_category_type` tinyint(5) NOT NULL COMMENT 'ประเภทอุปกรณ์',
+  `item_amount` varchar(5) NOT NULL,
   `item_price_aprox` float NOT NULL,
   `item_insert` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`item_key`) USING BTREE
@@ -101,12 +100,11 @@ CREATE TABLE `card_item` (
 -- ----------------------------
 -- Records of card_item
 -- ----------------------------
-INSERT INTO `card_item` VALUES ('01f1c13682090f7391ba10fd004846e2', 'ccbc7539c3e4433e01857a6c2db2bdac', '19060002', 'Switching Hub CISCO SG250-08', 'อุปกรณ์เก่าพังแล้ว', '6', '3500', '2019-06-03 10:28:46');
-INSERT INTO `card_item` VALUES ('23a96a86e1f2b0e2911ad34b5b5f8eaf', '50f137fad652bb23ac790884f30a3084', '19060003', 'Hard disk 1TB SATA-III Seagate ', 'ตัวเดิมมีอาการเสีย ไม่สามารถใช้ได้', '7', '2500', '2019-06-03 10:49:26');
-INSERT INTO `card_item` VALUES ('3de8661d3942b992dcff8e35fed1ab2e', '94a5ca99342dd32e241bdb8eeeb96c79', '19050036', 'คอมพิวเตอร์', 'บอร์ดพังเสียหาย', '1', '0', '2019-05-20 14:17:47');
-INSERT INTO `card_item` VALUES ('5f391404f4dc36fba5facf3b26187d34', 'c22d6de634121120fd6efbcc58917950', '19060005', 'ปริ้นเตอร์', 'กระดาษติด ปริ้นไม่ได้', '3', '0', '2019-06-06 14:04:11');
-INSERT INTO `card_item` VALUES ('6030f26e30a049013f6bef17b8acd018', 'b32037734d8c5b5e09a0142705a1e62a', '19060004', 'ปริ้นเตอร์', 'ปริ้นไม่ออก', '3', '0', '2019-06-06 01:40:15');
-INSERT INTO `card_item` VALUES ('e2e715f7dc160f0b52351085c11dac75', '8c435b00d27955ec4d72e55642dd0f9d', '19060001', 'แบตเตอรี UPS', 'แบตเสื่อมสภาพ', '5', '0', '2019-06-03 10:09:27');
+INSERT INTO `card_item` VALUES ('1476047ab71e79f4391bff0cff0bc5f2', '5d1a56fe820b9e3a185325b476737763', '19070002', 'เครื่องปริ้น HP laster1020', 'กระดาษติด ปริ้นไม่ได้', '3', '1', '0', '2019-07-02 09:40:19');
+INSERT INTO `card_item` VALUES ('4557157ca4f8c541111d26937618d3ed', '52a9da1752b66138f9827f5f08572536', '19070006', '500 GB SATA-III WD Blue (32MB, 7200RPM)', 'ฮาร์ดดิสอันเก่าเสีย', '7', '2', '990', '2019-07-06 16:28:14');
+INSERT INTO `card_item` VALUES ('480275d6c6589d61c88aae06811d7b14', '8816c1f3b9e03d53f13471a472fba64b', '19070004', 'เครื่องปริ้น HP laster1020', 'กระดาษติด ปริ้นไม่ได้', '3', '1', '500', '2019-07-06 12:08:00');
+INSERT INTO `card_item` VALUES ('eb290d99af3ee61fc3845f0a944e25bb', '5d1a56fe820b9e3a185325b476737763', '19070001', 'เครื่องสำรองไฟ CBC', 'ไม่เก็บไฟ', '4', '5', '0', '2019-07-02 09:39:30');
+INSERT INTO `card_item` VALUES ('fc59ade12d6ca60a7e150f422105973d', '5d1a56fe820b9e3a185325b476737763', '19070003', 'เครื่องสำรองไฟ CBC', 'ไม่เก็บไฟ', '4', '3', '0', '2019-07-02 13:05:36');
 
 -- ----------------------------
 -- Table structure for card_status
@@ -125,6 +123,7 @@ CREATE TABLE `card_status` (
 -- ----------------------------
 -- Records of card_status
 -- ----------------------------
+INSERT INTO `card_status` VALUES ('089ef2cc3b62404f4951a8e767873f79', '8816c1f3b9e03d53f13471a472fba64b', '89da7d193f3c67e4310f50cbb5b36b90', 'เทสส', 'b79dfae9960af1a6b1fa1031d0d57af0', '2019-07-06 12:08:17');
 INSERT INTO `card_status` VALUES ('1049215c4c3fa71054d2ba5b324c0be2', '50f137fad652bb23ac790884f30a3084', '5cd813fcceeb00544c19201a93ca6529', '', '', '2019-06-03 11:43:49');
 INSERT INTO `card_status` VALUES ('221693dfae61e68b27d88c2097d858f5', '8c435b00d27955ec4d72e55642dd0f9d', '89da7d193f3c67e4310f50cbb5b36b90', 'ด่วนๆเลย ได้มั้ย', 'b79dfae9960af1a6b1fa1031d0d57af0', '2019-06-03 10:10:12');
 INSERT INTO `card_status` VALUES ('27a81a28f36af07c3d43a232b5e3e7db', '50f137fad652bb23ac790884f30a3084', '44d39a902c4dd1304cbd0080896e0008', '', '', '2019-06-03 11:43:29');
@@ -135,7 +134,9 @@ INSERT INTO `card_status` VALUES ('76aac8b9a7d8f91b349c48349c2eec56', '50f137fad
 INSERT INTO `card_status` VALUES ('8b62654ff89d02176d1638d0ba2bc298', '94a5ca99342dd32e241bdb8eeeb96c79', '89da7d193f3c67e4310f50cbb5b36b90', 'ด่วน', 'b79dfae9960af1a6b1fa1031d0d57af0', '2019-05-20 14:18:11');
 INSERT INTO `card_status` VALUES ('a657908ccef52022d6e5f7d5232c94fb', 'ccbc7539c3e4433e01857a6c2db2bdac', '89da7d193f3c67e4310f50cbb5b36b90', 'ขอด่วนๆเลยนะ', 'b79dfae9960af1a6b1fa1031d0d57af0', '2019-06-03 10:29:09');
 INSERT INTO `card_status` VALUES ('a9f7faa456812731843385616b8f44c1', '50f137fad652bb23ac790884f30a3084', 'b1f4d8a6d50a01b4211fd877f7ae464f', 'โปรดรอ กำลังสั่งซื้อให้', '', '2019-06-03 10:51:51');
+INSERT INTO `card_status` VALUES ('b9322d2e7a9c290db3375bf44df3c41a', '52a9da1752b66138f9827f5f08572536', '89da7d193f3c67e4310f50cbb5b36b90', 'เทสๆๆ', 'b79dfae9960af1a6b1fa1031d0d57af0', '2019-07-06 16:28:25');
 INSERT INTO `card_status` VALUES ('bd993e8cad4969d84b3e0b24b2d938a1', 'ccbc7539c3e4433e01857a6c2db2bdac', 'b1f4d8a6d50a01b4211fd877f7ae464f', 'กำลังสั่งซื้อให้', '', '2019-06-06 01:42:53');
+INSERT INTO `card_status` VALUES ('c56de5f5338df62635b0f9a439cb94fe', '5d1a56fe820b9e3a185325b476737763', '89da7d193f3c67e4310f50cbb5b36b90', 'ด่วนจ้า', '5c74165778e0a3b6b96f802d1290f005', '2019-07-02 09:41:50');
 
 -- ----------------------------
 -- Table structure for card_type
@@ -465,6 +466,20 @@ INSERT INTO `logs` VALUES ('f558cf6e71af9b56', '2019-06-06 13:59:54', '::1', 'op
 INSERT INTO `logs` VALUES ('d7b2e2d29e7ee9a0', '2019-06-06 14:00:15', '::1', 'er11017 เข้าสู่ระบบ.', '5a132cadb1825efe834c8ad2227019fe');
 INSERT INTO `logs` VALUES ('fb4fe62d61f6a6f3', '2019-06-06 16:58:51', '::1', 'er11017 ออกจากระบบ.', '5a132cadb1825efe834c8ad2227019fe');
 INSERT INTO `logs` VALUES ('6340c6248b410961', '2019-06-06 16:58:59', '::1', 'admin ออกจากระบบ.', '');
+INSERT INTO `logs` VALUES ('c3ea535be83e1817', '2019-06-18 14:09:22', '::1', 'admin เข้าสู่ระบบ.', '');
+INSERT INTO `logs` VALUES ('070a34960b579af2', '2019-06-18 18:08:49', '::1', 'admin ออกจากระบบ.', '');
+INSERT INTO `logs` VALUES ('e492a0a063f35874', '2019-07-01 14:51:22', '::1', 'admin เข้าสู่ระบบ.', '');
+INSERT INTO `logs` VALUES ('8f792abe684d4426', '2019-07-01 14:56:19', '::1', 'opd11017 เข้าสู่ระบบ.', 'b79dfae9960af1a6b1fa1031d0d57af0');
+INSERT INTO `logs` VALUES ('35561555a257cd44', '2019-07-01 16:42:12', '::1', 'opd11017 ออกจากระบบ.', 'b79dfae9960af1a6b1fa1031d0d57af0');
+INSERT INTO `logs` VALUES ('b6f613a08ed03648', '2019-07-01 16:43:32', '::1', 'admin ออกจากระบบ.', '');
+INSERT INTO `logs` VALUES ('0670bb8504d3940f', '2019-07-02 09:22:45', '::1', 'admin เข้าสู่ระบบ.', '');
+INSERT INTO `logs` VALUES ('9bb18611dc8f47a6', '2019-07-02 09:25:21', '::1', 'lr11017 เข้าสู่ระบบ.', '5c74165778e0a3b6b96f802d1290f005');
+INSERT INTO `logs` VALUES ('052849e30c041f34', '2019-07-02 17:59:50', '::1', 'lr11017 ออกจากระบบ.', '5c74165778e0a3b6b96f802d1290f005');
+INSERT INTO `logs` VALUES ('647c524a769dc871', '2019-07-02 18:02:35', '::1', 'admin ออกจากระบบ.', '');
+INSERT INTO `logs` VALUES ('398ec378b89f97fc', '2019-07-05 13:05:43', '::1', 'admin เข้าสู่ระบบ.', '');
+INSERT INTO `logs` VALUES ('7ef517775acaa04f', '2019-07-05 17:33:37', '::1', 'admin ออกจากระบบ.', '');
+INSERT INTO `logs` VALUES ('a9512a0c1f2b1d28', '2019-07-06 10:18:38', '::1', 'admin เข้าสู่ระบบ.', '');
+INSERT INTO `logs` VALUES ('203d5b2ba615f3d8', '2019-07-06 12:04:03', '::1', 'opd11017 เข้าสู่ระบบ.', 'b79dfae9960af1a6b1fa1031d0d57af0');
 
 -- ----------------------------
 -- Table structure for menus
@@ -675,7 +690,7 @@ INSERT INTO `opduser` VALUES ('tooktik', 'อัจฉรา ศรีสุข'
 INSERT INTO `opduser` VALUES ('tukta', 'จริยา บำรุงภักดี', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E74A', '202cb962ac59075b964b07152d234b70', '[][ACCESS_REPORT_FROM_MASTER][APPOINTMENT][ARREAR_LOST_LIST][CHECKUP_LIST][CLINIC][Death_Form][DOCTOR][DRUG_ALLERGY_ENTRY][Drug_Information_Service][DRUG_USE_EVALUATION][EMR_VIEW][EndUser_Report][ER1][FINANCE_REPORT][HELTH_MED_LIST][INFORMATION_FRONT][INJ', null, null, 'จพ.เวชกิจฉุกเฉิน', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', 'N', '039', '10', 'อุบัติเหตุฉุกเฉิน', null, 'Y', 'N', null, null, '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A', null, 'Y', null, null, null, null, null, null, null, null, null, null, null, null, '186', null, null, null, null, null, null, null);
 INSERT INTO `opduser` VALUES ('urairat', 'อุไรรัตน์  ถิตย์บุญครอง', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E34CD6', '9d2682367c3935defcb1f9e247a97c0d', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][ARREAR_LOST_LIST][CHANGE_LOCKED_PTTYPE][CHECKUP_LIST][CLINIC][COPD_CLINIC][DATACENTER_BROWSER][Death_Form][DELETE_IPD_DIAGNOSIS][DELETE_IPD_NURSE_OPER][DentalEntry][DMHT_CLINIC][DO_HN_MER', null, null, 'พยาบาลวิชาชีพ', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', null, '117', '10', 'พยาบาล', null, 'Y', 'N', '10', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, '436', null, null, null, null, null, null, null);
 INSERT INTO `opduser` VALUES ('v2546', 'วิฑูร คำโสภา', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A30E04BD7', '9407c826d8e3c07ad37cb2d13d1cb641', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][ARREAR_LOST_LIST][CHECKUP_LIST][CLINIC][Death_Form][DELETE_IPD_NURSE_OPER][DentalEntry][DOCTOR][DOCTOR_DIAG_PRINT][DRUG_ALLERGY_ENTRY][DRUG_EVALUATION_EDIT][Drug_Information_Service][DRUG', null, null, 'พนักงานทั่วไป', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', null, '128', '10', 'เวชระเบียน', null, 'Y', 'N', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, '147', null, null, null, null, null, null, null);
-INSERT INTO `opduser` VALUES ('vawa', 'สุวดี พลน้ำเที่ยง', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E74A', '202cb962ac59075b964b07152d234b70', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][ARREAR_LOST_LIST][CHANGE_LOCKED_PTTYPE][CHECKUP_LIST][CLINIC][COPD_CLINIC][DATACENTER_BROWSER][Death_Form][DELETE_IPD_DIAGNOSIS][DELETE_IPD_NURSE_OPER][DentalEntry][DMHT_CLINIC][DO_HN_MER', null, null, 'พยาบาลวิชาชีพ', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', null, '040', '10', 'พยาบาล', null, 'Y', 'N', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, '504', null, null, null, null, null, null, null);
+INSERT INTO `opduser` VALUES ('vawa', 'น.ส.สุวดี พลน้ำเที่ยง', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E74A', '202cb962ac59075b964b07152d234b70', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][AIDS_CLINIC][APPOINTMENT][ARREAR_LOST_LIST][CHANGE_LOCKED_PTTYPE][CHECKUP_LIST][CLINIC][COPD_CLINIC][DATACENTER_BROWSER][Death_Form][DELETE_IPD_DIAGNOSIS][DELETE_IPD_NURSE_OPER][DentalEntry][DMHT_CLINIC][DO_HN_MER', null, null, 'พยาบาลวิชาชีพ', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', null, '040', '10', 'พยาบาล', null, 'Y', 'N', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, '504', null, null, null, null, null, null, null);
 INSERT INTO `opduser` VALUES ('wan', 'สุมารี ชัยเดช', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E74A', '202cb962ac59075b964b07152d234b70', '[][DOCTOR][DRUG_ALLERGY_ENTRY][DRUG_USE_EVALUATION][EMR_VIEW][EndUser_Report][FINANCE_REPORT][HELTH_MED_LIST][INFORMATION_FRONT][IPD_CHART_STATUS_UPDATE][IPD_RX_ORDER_DELETE_TRX][IPD_RX_ORDER_SAVE][IPD_RX_PRINT_STICKER][IPD_SERVICE_CHARGE][IPD_SERVICE_CHA', null, null, 'จพ.สธ.แพทย์แผนไทย', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', null, '041', '10', 'แพทย์แผนไทย', null, 'Y', 'N', null, null, null, null, null, null, null, null, null, null, 'Y', null, null, null, null, null, null, '0', null, null, null, null, null, null, null);
 INSERT INTO `opduser` VALUES ('wimuti', 'ภก.วิมุติ อุทะกัง', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A33E74A', '202cb962ac59075b964b07152d234b70', '[][ACCESS_REPORT_FROM_MASTER][ADR_REPORT][APPOINTMENT][ARREAR_LOST_LIST][CHANGE_LOCKED_PTTYPE][CHECKUP_LIST][CLINIC][Death_Form][DELETE_IPD_DIAGNOSIS][DELETE_IPD_NURSE_OPER][DentalEntry][DO_HN_MERGE][DOCTOR][DRG_EXPORT][DRUG_ALLERGY_ENTRY][DRUG_COUNSELING', null, null, 'เภสัชกร', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', null, '042', '10', 'เภสัชกรรมชุมชน', null, 'Y', 'N', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, '998', null, null, null, null, null, null, null);
 INSERT INTO `opduser` VALUES ('wisanu', 'ทพ.วิษณุ  อาชาไกรสร', '70263585C348D64B832438A97AD99A408B8FA5F7B78635F121B38F6B39F5171A30E649DA', 'e58aea67b01fa747687f038dfde066f6', '[][ADMIN]', null, null, 'ทันตแพทย์', '/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACWAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQE', null, '085', '10', 'ผู้ดูแลระบบ', null, 'Y', 'N', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, '0', null, null, null, null, null, null, null);
@@ -848,8 +863,8 @@ CREATE TABLE `user_online` (
 -- ----------------------------
 -- Records of user_online
 -- ----------------------------
-INSERT INTO `user_online` VALUES ('q61t02af214le2j4mq8t2pi7c6', '5a132cadb1825efe834c8ad2227019fe', '1559804752');
-INSERT INTO `user_online` VALUES ('5d83so8qids9mf2nsccauk75v6', '', '1559804745');
+INSERT INTO `user_online` VALUES ('qm1tu5boau7m11m0bncb33s5u4', '', '1562405487');
+INSERT INTO `user_online` VALUES ('dkiqsca4hgq2nh7d8v13rvmmb2', 'b79dfae9960af1a6b1fa1031d0d57af0', '1562405308');
 
 -- ----------------------------
 -- Table structure for work_group

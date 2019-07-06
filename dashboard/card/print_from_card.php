@@ -9,7 +9,7 @@ $getdata->my_sql_set_utf8();
 date_default_timezone_set('Asia/Bangkok');
 $card_detail = $getdata->my_sql_query(NULL,"card_info","card_key='".addslashes($_GET['key'])."'");
 $department = $getdata->my_sql_query(NULL,"department","department_id='".$card_detail->card_customer_work_group."'");
-//$opduser = $getdata->my_sql_query(NULL,"opduser","name like ");
+$opduser = $getdata->my_sql_query(NULL,"opduser","loginname='".$card_detail->user_hosxp."'");
 // Include the main TCPDF library (search for installation path).
 require_once('../../tcpdf/tcpdf.php');
 
@@ -68,13 +68,17 @@ $pdf->SetAutoPageBreak($auto_page_break, $bMargin);
 // set the starting point for the page content
 $pdf->setPageMark();
 
-$pdf->SetFont('angsanaupc', '', 14);
+$pdf->SetFont('angsanaupc', 'B', 14);
 // set some text to print
 $YYY= date('Y')+543;
-$pdf->Text(173, 5, $YYY);
+$pdf->Text(173, 5.2, $YYY);
 
 $pdf->SetFont('angsanaupc', '', 12);
 $pdf->Text(43, 18, $department->name);
+
+$dates = explode(' ',$card_detail->card_insert);
+$pdf->Text(120, 18, $dates[0]);
+$pdf->Text(160, 18, $dates[1]);
 
 $pdf->Text(43, 31, 'พัสดุครุภัณฑ์คอมพิวเตอร์');
 $img_files = K_PATH_IMAGES.'Checkmark.png';
@@ -92,13 +96,17 @@ $tbl = '<table style="width: 638px;" cellspacing="0">';
 $i=1;
 while($showitem = mysql_fetch_object($getitem)){
     
-    if($item->item_price_aprox==0){ $price='ไม่ระบุ'; }else{ $price=$item->item_price_aprox;}
+    if($showitem->item_price_aprox==0){ 
+        $price='ไม่ระบุ'; 
+    }else{ 
+        $price=$showitem->item_price_aprox.' บาท';
+    }
  
     $tbl .= '<tr>
         <td style="border: 1px solid #000000; width: 27px; height: 20px;"> '.$i.'</td>
         <td style="border: 1px solid #000000; width: 310px; height: 20px;"> '.$showitem->item_name.'</td>
         <td style="border: 1px solid #000000; width: 153px; height: 20px;"> '.$department->name.'</td>
-        <td style="border: 1px solid #000000; width: 112px; height: 20px;"> 1 /'.$price.'</td>
+        <td style="border: 1px solid #000000; width: 112px; height: 20px;">  '.$showitem->item_amount.' / '.$price.'</td>
     </tr>';
     $i++;
 
@@ -114,7 +122,14 @@ $pdf->SetFont('angsanaupc', '', 12);
 $pdf->Text(115, 106, $card_detail->card_customer_name.'  '.$card_detail->card_customer_lastname);
 
 $pdf->SetFont('angsanaupc', '', 12);
-$pdf->Text(115, 106, $card_detail->card_customer_name);
+$pdf->Text(120, 113, $opduser->entryposition);
+
+$pdf->Image($img_files, 20, 134, 5, 5, '', '', '', false, 300, '', false, false, 0);
+
+$pdf->SetFont('angsanaupc', '', 12);
+$pdf->Text(65, 180, 'ธนพันธ์  มั่งมูล');
+$pdf->Text(62, 187, 'นายธนพันธ์  มั่งมูล');
+$pdf->Text(64.1, 194.7, date('d /      m      /  Y'));
 // ---------------------------------------------------------
 
 //Close and output PDF document

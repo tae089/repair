@@ -55,17 +55,18 @@
           </div>
           <div class="form-group">
             <label for="card_note">หมายเหตุ</label>
-            <!-- <textarea name="card_note" id="card_note" class="form-control"></textarea> -->
-            <select name="card_note" id="card_note" class="form-control">
+            <textarea name="card_note" id="card_note" class="form-control"></textarea>
+            <!-- <select name="card_note" id="card_note" class="form-control">
               <option value="ปกติ">ปกติ</option>
               <option value="ด่วน">ด่วน</option>
               <option value="ด่วนมาก">ด่วนมาก</option>
-            </select>
+            </select> -->
           </div>
 
         </div>
         <input type="hidden" name="user_key" id="user_key" class="form-control" value="<?php echo $_SESSION['ukey']; ?>" autocomplete="off">
         <input type="hidden" name="card_type" id="card_type" class="form-control" value="1" autocomplete="off">
+        <input type="hidden" name="user_hosxp" id="user_hosxp" class="form-control" value="">
         <div class="modal-footer">
           <div id="btn-footer">
             <button type="button" class="btn btn-default btn-sm" data-dismiss="modal"><i class="fa fa-times fa-fw"></i>
@@ -188,9 +189,11 @@
             //alert('Item "'+item.data('langname')+' ('+item.data('lang')+')" selected by '+(e.type == 'keydown' ? 'pressing enter' : 'mouse click')+'.');
             var names = item.data('langname');
             var sname = names.split(" ");
+            var nname = sname[1].split(",");
             console.log(sname);
             $('#card_customer_name').val(sname[0]);
-            $('#card_customer_lastname').val(sname[1]);
+            $('#card_customer_lastname').val(nname[0]);
+            $('#user_hosxp').val(nname[1]);
         }
       });
 

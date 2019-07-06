@@ -11,7 +11,7 @@ $getdata->my_sql_set_utf8();
 if(isset($_GET['search_user'])){
     $get_department=$getdata->my_sql_select(NULL,"opduser","name LIKE '%".$_GET['search_user']."%' ");
 	while($show_department = mysql_fetch_object($get_department)){
-		$data[] = $show_department->name;
+		$data[] = array($show_department->name, $show_department->loginname);
     }
 }else{
     $data = 'NULL';

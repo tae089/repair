@@ -30,7 +30,7 @@ if(isset($_POST['save_item'])){
 		}
 		
 		
-		$getdata->my_sql_insert("card_item","item_key='".$item_key."',card_key='".$card_detail->card_key."',item_number='".INumber()."',item_name='".addslashes(addslashes($_POST['item_name']))."',item_note='".addslashes(addslashes($_POST['item_note']))."',item_category_type=".$_POST['item_category_id'].",item_price_aprox='".@$price_aprox."'");
+		$getdata->my_sql_insert("card_item","item_key='".$item_key."',card_key='".$card_detail->card_key."',item_number='".INumber()."',item_name='".addslashes(addslashes($_POST['item_name']))."',item_note='".addslashes(addslashes($_POST['item_note']))."',item_category_type=".$_POST['item_category_id'].",item_amount='".$_POST['item_amount']."',item_price_aprox='".@$price_aprox."'");
 		updateItem();
 		$alert = '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>บันทึกข้อมูล สำเร็จ !</div>';
 	}else{
@@ -39,7 +39,7 @@ if(isset($_POST['save_item'])){
 }
 if(isset($_POST['save_edit_item'])){
 	if(addslashes($_POST['edit_item_name']) != NULL && addslashes($_POST['edit_item_note']) != NULL){
-		$getdata->my_sql_update("card_item","item_name='".addslashes($_POST['edit_item_name'])."',item_note='".addslashes($_POST['edit_item_note'])."',item_category_type=".$_POST['item_category_id'].",item_price_aprox='".@addslashes($_POST['edit_item_price_aprox'])."'","item_key='".addslashes($_POST['item_key'])."'");
+		$getdata->my_sql_update("card_item","item_name='".addslashes($_POST['edit_item_name'])."',item_note='".addslashes($_POST['edit_item_note'])."',item_category_type=".$_POST['item_category_id'].",item_amount='".@addslashes($_POST['item_amount'])."',item_price_aprox='".@addslashes($_POST['edit_item_price_aprox'])."'","item_key='".addslashes($_POST['item_key'])."'");
 		$alert = '<div class="alert alert-info alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>อัพเดทข้อมูล สำเร็จ !</div>';
 	}else{
 		$alert = '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>ข้อมูลไม่ถูกต้อง กรุณาระบุอีกครั้ง !</div>';
@@ -209,16 +209,19 @@ if(isset($_POST['save_edit_item'])){
                             ?>
                         </select>
                     </td>
+                    <td width="10%"><label for="item_amount">จำนวน</label>
+                        <input type="text" name="item_amount" id="item_amount" class="form-control"></td>
                     <td width="10%"><label for="item_price_aprox">ราคา</label>
                         <input type="text" name="item_price_aprox" id="item_price_aprox" class="form-control"></td>
                     <td width="8%"><button type="submit" name="save_item" id="save_item" class="btn btn-sm btn-success"><i
-                                class="fa fa-plus"></i> เพิ่มรายการ</button></td>
+                                class="fa fa-plus"></i> เพิ่ม</button></td>
                 </tr>
                 <tr style="font-weight:bold; color:#FFF; text-align:center;">
                     <td width="10%" bgcolor="#888888">หมายเลข</td>
                     <td width="23%" bgcolor="#888888">ชื่อรายการ</td>
                     <td bgcolor="#888888">สาเหตุที่สั่งซื้อ</td>
                     <td bgcolor="#888888">ประเภท</td>
+                    <td bgcolor="#888888">จำนวน</td>
                     <td bgcolor="#888888">ราคา</td>
                     <td bgcolor="#888888">จัดการ</td>
                 </tr>
@@ -236,6 +239,8 @@ if(isset($_POST['save_edit_item'])){
                             <?php echo @$showitem->item_note;?></strong></td>
                     <td><strong>
                             <?php echo @$get_type->category_name_th;?></strong></td>
+                    <td><strong>
+                            <?php echo @$showitem->item_amount;?></strong></td>       
                     <td align="right"><strong>
                             <?php echo @($showitem->item_price_aprox == 0)?'ไม่ระบุ':convertPoint2($showitem->item_price_aprox,2);?></strong></td>
                     <td align="center"><a data-toggle="modal" data-target="#edit_item" data-whatever="<?php echo @$showitem->item_key;?>"
