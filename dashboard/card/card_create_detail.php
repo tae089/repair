@@ -197,7 +197,7 @@ if(isset($_POST['save_edit_item'])){
                         <input type="text" name="item_name" id="item_name" class="form-control" autofocus></td>
                     <td width="44%"><label for="item_note">สาเหตุที่ส่งซ่อม/เคลม</label>
                         <input type="text" name="item_note" id="item_note" class="form-control"></td>
-                    <td width="15%">
+                    <td width="10%">
                         <label for="item_category_id">ประเภท</label>
                         <select name="item_category_id" id="item_category_id" class="form-control">
                             <option vlaue=""> กรุณาเลือก </option>
@@ -209,10 +209,12 @@ if(isset($_POST['save_edit_item'])){
                             ?>
                         </select>
                     </td>
+                    <td width="5%"><label for="item_amount">จำนวน</label>
+                        <input type="text" name="item_amount" id="item_amount" class="form-control"></td>
                     <td width="10%"><label for="item_price_aprox">ราคา</label>
                         <input type="text" name="item_price_aprox" id="item_price_aprox" class="form-control"></td>
                     <td width="8%"><button type="submit" name="save_item" id="save_item" class="btn btn-sm btn-success"><i
-                                class="fa fa-plus"></i> เพิ่มรายการ</button></td>
+                                class="fa fa-plus"></i> เพิ่ม</button></td>
                 </tr>
                 <tr style="font-weight:bold; color:#FFF; text-align:center;">
                     <td width="10%" bgcolor="#888888">หมายเลข</td>

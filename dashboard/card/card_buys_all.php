@@ -224,7 +224,7 @@ if(isset($_POST['save_card'])){
       }
       xmlhttp.open("GET", "function.php?type=delete_card&key=" + cardkey, true);
       xmlhttp.send();
-      socket.emit('num_card', {uclass:<?php echo $_SESSION['uclass'];?>,uwork_id:<?php echo $_SESSION['uwork_id'];?>});
+      socket.emit('num_card_buy', {uclass:<?php echo $_SESSION['uclass'];?>,uwork_id:<?php echo $_SESSION['uwork_id'];?>});
     }
   }
 
@@ -243,7 +243,7 @@ if(isset($_POST['save_card'])){
       }
       xmlhttp.open("GET", "function.php?type=hide_card&key=" + cardkey, true);
       xmlhttp.send();
-      socket.emit('num_card', {uclass:<?php echo $_SESSION['uclass'];?>,uwork_id:<?php echo $_SESSION['uwork_id'];?>});
+      socket.emit('num_card_buy', {uclass:<?php echo $_SESSION['uclass'];?>,uwork_id:<?php echo $_SESSION['uwork_id'];?>});
     }
   }
 
