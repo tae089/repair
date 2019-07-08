@@ -23,6 +23,15 @@
             <input type="text" name="card_code" id="card_code" value="<?php echo @RandomString(4,'C',7);?>" class="form-control"
               readonly>
           </div>
+          <div class="form-group">
+            <label for="title_types">ประเภทการส่งซ่อม/เคลม</label>
+            <select name="title_types" id="title_types" class="form-control">
+              <option value="">เลือก</option>
+              <option value="office">วัสดุอุปกรณ์สำนักงาน</option>
+              <option value="medical">วัสดุอุปกรณ์ทางการแพทย์</option>
+              <option value="com">วัสดุอุปกรณ์คอมพิวเตอร์</option>
+            </select>
+          </div>
           <div class="form-group row">
             <div class="col-md-6">
               <label for="card_customer_name">ชื่อผู้ส่งซ่อม</label>
