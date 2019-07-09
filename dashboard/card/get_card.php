@@ -16,18 +16,18 @@ $getdata->my_sql_set_utf8();
    
    if($getcard_count != 0){
   ?>
-<div class="table-responsive" style="overflow-x:auto;white-space: nowrap;">
-  <table width="100%" border="0" class="table table-bordered">
+ <div class="table-responsive" style="overflow-x:auto;white-space: nowrap;">
+  <table style="width:100%" class="table table-bordered display" id="card_repair">
     <thead>
       <tr style="font-weight:bold; color:#FFF; text-align:center; background:#ff7709;">
-        <td width="12%">รหัสส่งซ่อม/เคลม</td>
-        <td width="16%">วันที่</td>
-        <td width="26%">ชื่อผู้ส่งซ่อม/เคลม</td>
-        <td width="16%">กลุ่มงาน</td>
-        <td width="13%">หมายเลขโทรศัพท์</td>
-        <td width="15%">สถานะ</td>
-        <td width="15%">หมายเหตุ</td>
-        <td width="18%">จัดการ</td>
+        <th width="12%">รหัสส่งซ่อม/เคลม</th>
+        <th width="16%">วันที่</th>
+        <th width="26%">ชื่อผู้ส่งซ่อม/เคลม</th>
+        <th width="16%">กลุ่มงาน</th>
+        <th width="13%">ประเภทการส่งซ่อม/เคลม</th>
+        <th width="15%">สถานะ</th>
+        <th width="15%">หมายเหตุ</th>
+        <th width="18%">จัดการ</th>
       </tr>
     </thead>
     <tbody>
@@ -53,8 +53,17 @@ $getdata->my_sql_set_utf8();
           <?php echo @$showcard->card_customer_name.'&nbsp;&nbsp;&nbsp;'.$showcard->card_customer_lastname;?>
         </td>
         <td><?php echo @getGroupWorking($showcard->card_customer_work_group);?></td>
-        <td align="center">
-          <?php echo @$showcard->card_customer_phone;?>
+        <td>
+          <?php  
+          if($showcard->title_types=='office'){ 
+            $types='วัสดุอุปกรณ์สำนักงาน';
+          } elseif ($showcard->title_types=='medical') {
+            $types='วัสดุอุปกรณ์ทางการแพทย์';
+          }else {
+            $types='วัสดุอุปกรณ์คอมพิวเตอร์';
+          }
+            echo $types;
+          ?>
         </td>
         <td>
           <?php echo @cardStatus($showcard->card_status);?>
@@ -84,8 +93,15 @@ $getdata->my_sql_set_utf8();
   </table>
 
 </div>
+
 <?php
    }else{
 	   echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>ไม่พบข้อมูลใบสั่งซ่อม/เคลม</div>';
    }
 ?>
+<script  type="text/javascript">
+
+  $(document).ready(() => { 
+    $('#card_repair').DataTable();
+  });
+</script>

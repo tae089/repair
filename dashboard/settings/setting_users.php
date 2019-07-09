@@ -281,7 +281,7 @@ if(isset($_POST['save_user'])){
         <tbody>
           <?php
    $l=0;
-	   $getalluser  = $getdata->my_sql_select(NULL,"user","user_class='2' AND user_status <> '2' ORDER BY username");
+	   $getalluser  = $getdata->my_sql_select(NULL,"user","user_class <> '3' AND user_status <> '2' ORDER BY username");
 	   while($showalluser = mysql_fetch_object($getalluser)){
 		   $l++;
 		   $getonline = $getdata->my_sql_show_rows("user_online","user_key='".$showalluser->user_key."'");

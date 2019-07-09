@@ -19,7 +19,7 @@ $getdata->my_sql_set_utf8();
         <td width="16%">วันที่</td>
         <td width="28%">ชื่อผู้ส่งซ่อม/เคลม</td>
         <td width="16%">กลุ่มงาน</td>
-        <td width="13%">หมายเลขโทรศัพท์</td>
+        <td width="13%">ประเภทการส่งซ่อม/เคลม</td>
         <td width="16%">สถานะ</td>
         <td width="15%">จัดการ</td>
       </tr>
@@ -46,7 +46,16 @@ $getdata->my_sql_set_utf8();
             </td>
             <td><?php echo @getGroupWorking($showcard->card_customer_work_group);?></td>
             <td align="center">
-              <?php echo @$showcard->card_customer_phone;?>
+            <?php  
+              if($showcard->title_types=='office'){ 
+                $types='วัสดุอุปกรณ์สำนักงาน';
+              } elseif ($showcard->title_types=='medical') {
+                $types='วัสดุอุปกรณ์ทางการแพทย์';
+              }else {
+                $types='วัสดุอุปกรณ์คอมพิวเตอร์';
+              }
+              echo $types;
+          ?>
             </td>
             <td align="center">
               <?php echo @cardStatus($showcard->card_status);?>

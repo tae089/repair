@@ -175,6 +175,19 @@ if(isset($_POST['save_edit_item'])){
             </div>
         </div>
         <div class="row form-group">
+            <div class="col-md-3"><strong>ประเภทการส่งซ่อม/เคลม</strong></div>
+            <div class="col-md-3">
+                <?php 
+                    if($showcard->title_types=='office'){ 
+                        $types='วัสดุอุปกรณ์สำนักงาน';
+                    } elseif ($showcard->title_types=='medical') {
+                        $types='วัสดุอุปกรณ์ทางการแพทย์';
+                    }else {
+                        $types='วัสดุอุปกรณ์คอมพิวเตอร์';
+                    }
+                    echo $types;
+                ?>
+            </div>
             <div class="col-md-3"><strong>หมายเหตุ</strong></div>
             <div class="col-md-3">
                 <?php echo @$card_detail->card_note;?>
@@ -209,11 +222,11 @@ if(isset($_POST['save_edit_item'])){
                             ?>
                         </select>
                     </td>
-                    <td width="5%"><label for="item_amount">จำนวน</label>
+                    <td width="4%"><label for="item_amount">จำนวน</label>
                         <input type="text" name="item_amount" id="item_amount" class="form-control"></td>
-                    <td width="10%"><label for="item_price_aprox">ราคา</label>
+                    <td width="5%"><label for="item_price_aprox">ราคา</label>
                         <input type="text" name="item_price_aprox" id="item_price_aprox" class="form-control"></td>
-                    <td width="8%"><button type="submit" name="save_item" id="save_item" class="btn btn-sm btn-success"><i
+                    <td width="15%"><button type="submit" name="save_item" id="save_item" class="btn btn-sm btn-success"><i
                                 class="fa fa-plus"></i> เพิ่ม</button></td>
                 </tr>
                 <tr style="font-weight:bold; color:#FFF; text-align:center;">

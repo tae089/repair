@@ -53,7 +53,8 @@ require("../core/online.core.php");
 
      <!--Autocomlete -->
      <link href="../css/jquery.auto-complete.css" rel="stylesheet">
-     <link href="../css/jquery.dataTables.min.css" rel="stylesheet">
+     <link href="../css/dataTables.bootstrap.min.css" rel="stylesheet">
+     <!-- <link href="../css/jquery.dataTables.min.css" rel="stylesheet"> -->
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!-- [if lt IE 9]
@@ -83,6 +84,7 @@ if(@$_SESSION['lang']!=NULL){
     <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="../js/jquery.auto-complete.js"></script>
     <script src="../js/plugins/dataTables/jquery.dataTables.min.js"></script>
+    <script src="../js/plugins/dataTables/dataTables.bootstrap.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
     <script src="../js/bootstrap.min.js"></script>

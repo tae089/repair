@@ -184,7 +184,6 @@ if(isset($_POST['save_card'])){
           
         });          
       }); 
-
   });
 
   $('#edit_status').on('shown.bs.modal', function (event) {
@@ -254,5 +253,7 @@ if(isset($_POST['save_card'])){
         $('#detail_card').html(data);
       });
     }); 
+
+
 
 </script>
