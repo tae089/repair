@@ -102,6 +102,25 @@ $getdata->my_sql_set_utf8();
 <script  type="text/javascript">
 
   $(document).ready(() => { 
-    $('#card_repair').DataTable();
+    $('#card_repair').DataTable({
+      language: {
+        emptyTable: `ไม่มีข้อมูล`,
+        info: `แสดง _START_ ถึง _END_ จากทั้งหมด _TOTAL_`,
+        infoEmpty: `แสดง 0 ถึง 0 จากทั้งหมด 0`,
+        infoFiltered: `(กรองจากทั้งหมด _MAX_)`,
+        lengthMenu: `แสดง _MENU_ `,
+        loadingRecords: `กำลังโหลด `,
+        processing: `กำลังประมวลผล `,
+        paginate: {
+            first: `หน้าแรก `,
+            last: `หน้าสุดท้ าย `,
+            next: `ถัดไป `,
+            previous: `ก่อนหน้า `
+        },
+        search: `ค้นหา : `,
+        // searchPlaceholder: `ป้อนคำค้นหา`,
+        zeroRecords: `ไม่มีข้อมูล `,
+    }
+    });
   });
 </script>
