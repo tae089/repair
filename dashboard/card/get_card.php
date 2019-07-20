@@ -34,10 +34,12 @@ $getdata->my_sql_set_utf8();
       <?php
   if(addslashes($_GET['type']) != NULL && $_SESSION['uclass'] !=3){
 	   $getcard = $getdata->my_sql_select(NULL,"card_info","card_customer_work_group='".$_SESSION['uwork_id']."' AND card_status = '".addslashes($_GET['type'])."' AND card_type='0' ORDER BY card_insert");
-  } elseif ($_SESSION['uclass'] !=3){
-	   $getcard = $getdata->my_sql_select(NULL,"card_info","card_customer_work_group=".$_SESSION['uwork_id']." AND card_status <> 'hidden'  AND  card_status <> '' AND card_type='0' ORDER BY card_insert");
+  } elseif ($_SESSION['uclass'] ==2){
+     $getcard = $getdata->my_sql_select(NULL,"card_info","card_customer_work_group=".$_SESSION['uwork_id']." AND card_status <> 'hidden'  AND  card_status <> '' AND card_type='0' ORDER BY card_insert");
+  } elseif ($_SESSION['uclass'] == 33) {
+    $getcard = $getdata->my_sql_select(NULL,"card_info","card_status <> 'hidden'  AND  card_status <> '' AND card_type='0' AND title_types='office' ORDER BY card_insert");
   } else {
-    $getcard = $getdata->my_sql_select(NULL,"card_info","card_status <> 'hidden'  AND  card_status <> '' AND card_type='0' ORDER BY card_insert");
+    $getcard = $getdata->my_sql_select(NULL,"card_info","card_status <> 'hidden'  AND  card_status <> '' AND card_type='0' AND title_types='com' ORDER BY card_insert");
   }
  
   while($showcard = mysql_fetch_object($getcard)){
@@ -72,7 +74,7 @@ $getdata->my_sql_set_utf8();
           <?php echo @$showcard->card_note;?>
         </td>
         <td align="right">
-          <?php if($_SESSION['uclass']==3){ ?>
+          <?php if($_SESSION['uclass']==3 || $_SESSION['uclass']==33){ ?>
           <a class="btn btn-xs btn-default" title="ซ่อน" onClick="javascript:hideCard('<?php echo @$showcard->card_key;?>');"><i
               class="fa fa-ban"></i></a>
           <a data-toggle="modal" data-target="#edit_status" data-whatever="<?php echo @$showcard->card_key;?>" class="btn btn-xs btn-info"

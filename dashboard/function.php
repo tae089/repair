@@ -243,7 +243,9 @@ $getdata->my_sql_set_utf8();
 		break;
 	case "show_card_count" :
 		if(addslashes($_GET['uclass'])==3){
-			$card_count = $getdata->my_sql_show_rows("card_info","card_status <> '' AND card_status <> 'hidden' AND card_type='0'");
+			$card_count = $getdata->my_sql_show_rows("card_info","card_status <> '' AND card_status <> 'hidden' AND card_type='0' AND title_types='com'");
+		}elseif (addslashes($_GET['uclass'])==33) {
+			$card_count = $getdata->my_sql_show_rows("card_info","card_status <> '' AND card_status <> 'hidden' AND card_type='0' AND title_types='office'");
 		}else{
 			$card_count = $getdata->my_sql_show_rows("card_info","card_status <> '' AND card_status <> 'hidden' AND card_customer_work_group='".$_GET['uwork_id']."' AND card_type='0' ");
 		}

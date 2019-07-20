@@ -24,12 +24,19 @@
               readonly>
           </div>
           <div class="form-group">
+            <label for="sub_title_types">ประเภท</label>
+            <select name="sub_title_types" id="sub_title_types" class="form-control">
+              <option value="">เลือก</option>
+              <option value="1">วัสดุ</option>
+              <option value="2">ครุภัณฑ์</option>
+            </select>
+          </div>
+          <div class="form-group">
             <label for="title_types">ประเภทการส่งซ่อม/เคลม</label>
             <select name="title_types" id="title_types" class="form-control">
               <option value="">เลือก</option>
-              <option value="office">วัสดุอุปกรณ์สำนักงาน</option>
-              <option value="medical">วัสดุอุปกรณ์ทางการแพทย์</option>
-              <option value="com">วัสดุอุปกรณ์คอมพิวเตอร์</option>
+              <option value="office">สำนักงาน</option>
+              <option value="com">คอมพิวเตอร์</option>
             </select>
           </div>
           <div class="form-group row">

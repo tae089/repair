@@ -309,7 +309,7 @@ var checkout = $('#dpd2').datepicker({
       $('#card_count').effect("shake", {
             direction:'right',
             distance:20,
-            times:4
+            times:5
          }, 1000);
     });
 
@@ -321,7 +321,7 @@ var checkout = $('#dpd2').datepicker({
       $('#card_count_buy').effect("shake", {
             direction:'right',
             distance:20,
-            times:4
+            times:5
          }, 1000);
     });
   });
