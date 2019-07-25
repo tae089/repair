@@ -17,12 +17,12 @@ $getdata->my_sql_set_utf8();
    if($getcard_count != 0){
   ?>
 <div class="table-responsive" style="overflow-x:auto;white-space: nowrap;">
-  <table width="100%" border="0" class="table table-bordered">
+  <table width="100%" border="0" class="table table-bordered" id="card_repair_by">
     <thead>
       <tr style="font-weight:bold; color:#FFF; text-align:center; background:#ff7709;">
-        <td width="12%">รหัสส่งซ่อม/เคลม</td>
+        <td width="12%">รหัสซื้อ</td>
         <td width="16%">วันที่</td>
-        <td width="26%">ชื่อผู้ส่งซ่อม/เคลม</td>
+        <td width="26%">ชื่อผู้ขอซื้อ</td>
         <td width="16%">กลุ่มงาน</td>
         <td width="13%">หมายเลขโทรศัพท์</td>
         <td width="15%">สถานะ</td>
@@ -34,8 +34,12 @@ $getdata->my_sql_set_utf8();
       <?php
   if(addslashes($_GET['type']) != NULL && $_SESSION['uclass'] !=3){
 	   $getcard = $getdata->my_sql_select(NULL,"card_info","card_customer_work_group='".$_SESSION['uwork_id']."' AND card_status = '".addslashes($_GET['type'])."' AND card_type='1' ORDER BY card_insert");
-  } elseif ($_SESSION['uclass'] !=3){
-	   $getcard = $getdata->my_sql_select(NULL,"card_info","card_customer_work_group=".$_SESSION['uwork_id']." AND card_status <> 'hidden'  AND  card_status <> '' AND card_type='1' ORDER BY card_insert");
+  } elseif ($_SESSION['uclass'] ==2){
+     $getcard = $getdata->my_sql_select(NULL,"card_info","card_customer_work_group=".$_SESSION['uwork_id']." AND card_status <> 'hidden'  AND  card_status <> '' AND card_type='1' ORDER BY card_insert");
+  } elseif ($_SESSION['uclass'] == 33) {
+      $getcard = $getdata->my_sql_select(NULL,"card_info","card_status <> 'hidden'  AND  card_status <> '' AND card_type='1' AND title_types='office' ORDER BY card_insert");
+  } elseif ($_SESSION['uclass'] == 4) {
+      $getcard = $getdata->my_sql_select(NULL,"card_info","card_status='b1f4d8a6d50a01b4211fd877f7ae464f' AND card_type='1'  ORDER BY card_insert");
   } else {
     $getcard = $getdata->my_sql_select(NULL,"card_info","card_status <> 'hidden'  AND  card_status <> '' AND card_type='1' ORDER BY card_insert");
   }
@@ -88,3 +92,28 @@ $getdata->my_sql_set_utf8();
 	   echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>ไม่พบข้อมูลใบสั่งซ่อม/เคลม</div>';
    }
 ?>
+<script  type="text/javascript">
+
+$(document).ready(() => { 
+  $('#card_repair_by').DataTable({
+    language: {
+      emptyTable: `ไม่มีข้อมูล`,
+      info: `แสดง _START_ ถึง _END_ จากทั้งหมด _TOTAL_`,
+      infoEmpty: `แสดง 0 ถึง 0 จากทั้งหมด 0`,
+      infoFiltered: `(กรองจากทั้งหมด _MAX_)`,
+      lengthMenu: `แสดง _MENU_ `,
+      loadingRecords: `กำลังโหลด `,
+      processing: `กำลังประมวลผล `,
+      paginate: {
+          first: `หน้าแรก `,
+          last: `หน้าสุดท้ าย `,
+          next: `ถัดไป `,
+          previous: `ก่อนหน้า `
+      },
+      search: `ค้นหา : `,
+      // searchPlaceholder: `ป้อนคำค้นหา`,
+      zeroRecords: `ไม่มีข้อมูล `,
+  }
+  });
+});
+</script>
