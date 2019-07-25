@@ -110,7 +110,7 @@ if(isset($_POST['save_edit_item'])){
                             ?>
                         </select>
                     </div>
-                    <?php } elseif ($_SESSION['uclass'] == 2) {
+                    <?php } elseif ($_SESSION['uclass'] == 2 || $_SESSION['uclass'] == 33) {
                         echo '<input type="hidden" name="card_status" id="card_status" class="form-control" value="89da7d193f3c67e4310f50cbb5b36b90" autocomplete="off">';
                     } ?>
                     <div class="form-group">

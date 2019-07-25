@@ -244,9 +244,14 @@ $getdata->my_sql_set_utf8();
 	case "show_card_count" :
 		if(addslashes($_GET['uclass'])==3){
 			$card_count = $getdata->my_sql_show_rows("card_info","card_status <> '' AND card_status <> 'hidden' AND card_type='0' AND title_types='com'");
-		}elseif (addslashes($_GET['uclass'])==33) {
+
+		} elseif (addslashes($_GET['uclass'])==33) {
 			$card_count = $getdata->my_sql_show_rows("card_info","card_status <> '' AND card_status <> 'hidden' AND card_type='0' AND title_types='office'");
-		}else{
+
+		} elseif (addslashes($_GET['uclass'])==4) { 
+			$card_count = $getdata->my_sql_show_rows("card_info","ccard_status='c382e352e2e620a3c60a2cc7c6a7fa35' AND card_type='0' AND title_types='com'");
+
+		} else {
 			$card_count = $getdata->my_sql_show_rows("card_info","card_status <> '' AND card_status <> 'hidden' AND card_customer_work_group='".$_GET['uwork_id']."' AND card_type='0' ");
 		}
 	
@@ -257,7 +262,11 @@ $getdata->my_sql_set_utf8();
 	case "show_card_count_buy" :
 		if(addslashes($_GET['uclass'])==3){
 			$card_count = $getdata->my_sql_show_rows("card_info","card_status <> '' AND card_status <> 'hidden' AND card_status <> '4973069504e1be2a5bdcf7162ade8a16' AND card_status <> '5cd813fcceeb00544c19201a93ca6529' AND card_type='1'");
-		}else{
+
+		} elseif (addslashes($_GET['uclass'])==4) {
+			$card_count = $getdata->my_sql_show_rows("card_info","card_status='b1f4d8a6d50a01b4211fd877f7ae464f' AND card_type='1'");
+		
+		} else {
 			$card_count = $getdata->my_sql_show_rows("card_info","card_status <> '' AND card_status <> 'hidden' AND card_status <> '4973069504e1be2a5bdcf7162ade8a16' AND card_status <> '5cd813fcceeb00544c19201a93ca6529' AND card_customer_work_group='".$_GET['uwork_id']."' AND card_type='1' ");
 		}
 	

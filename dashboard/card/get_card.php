@@ -39,7 +39,7 @@ $getdata->my_sql_set_utf8();
   } elseif ($_SESSION['uclass'] == 33) {
     $getcard = $getdata->my_sql_select(NULL,"card_info","card_status <> 'hidden'  AND  card_status <> '' AND card_type='0' AND title_types='office' ORDER BY card_insert");
   } elseif ($_SESSION['uclass'] == 4) {
-    $getcard = $getdata->my_sql_select(NULL,"card_info","card_status='c382e352e2e620a3c60a2cc7c6a7fa35' AND card_type='1' AND title_types='com' ORDER BY card_insert");
+    $getcard = $getdata->my_sql_select(NULL,"card_info","card_status='c382e352e2e620a3c60a2cc7c6a7fa35' AND card_type='0' AND title_types='com' ORDER BY card_insert");
   } else {
     $getcard = $getdata->my_sql_select(NULL,"card_info","card_status <> 'hidden'  AND  card_status <> '' AND card_type='0' AND title_types='com' ORDER BY card_insert");
   }

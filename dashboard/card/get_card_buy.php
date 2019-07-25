@@ -35,10 +35,13 @@ $getdata->my_sql_set_utf8();
   if(addslashes($_GET['type']) != NULL && $_SESSION['uclass'] !=3){
 	   $getcard = $getdata->my_sql_select(NULL,"card_info","card_customer_work_group='".$_SESSION['uwork_id']."' AND card_status = '".addslashes($_GET['type'])."' AND card_type='1' ORDER BY card_insert");
   } elseif ($_SESSION['uclass'] ==2){
+    //ผู้ใช้งานทั่วไป
      $getcard = $getdata->my_sql_select(NULL,"card_info","card_customer_work_group=".$_SESSION['uwork_id']." AND card_status <> 'hidden'  AND  card_status <> '' AND card_type='1' ORDER BY card_insert");
   } elseif ($_SESSION['uclass'] == 33) {
+    //ช่อมบำรุง
       $getcard = $getdata->my_sql_select(NULL,"card_info","card_status <> 'hidden'  AND  card_status <> '' AND card_type='1' AND title_types='office' ORDER BY card_insert");
   } elseif ($_SESSION['uclass'] == 4) {
+    //user พัสดุ
       $getcard = $getdata->my_sql_select(NULL,"card_info","card_status='b1f4d8a6d50a01b4211fd877f7ae464f' AND card_type='1'  ORDER BY card_insert");
   } else {
     $getcard = $getdata->my_sql_select(NULL,"card_info","card_status <> 'hidden'  AND  card_status <> '' AND card_type='1' ORDER BY card_insert");
