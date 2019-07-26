@@ -31,7 +31,7 @@ if(addslashes($_GET['key']) == NULL){
     <div class="tab-pane fade in active" id="all_detail"><br />
         <div class="panel panel-primary">
             <div class="panel-heading">
-                รายละเอียดผู้ส่งซ่อม/เคลม<span class="pull-right">
+                รายละเอียดผู้ขอซื้อ<span class="pull-right">
                     <?php if($_SESSION['uclass']==3){ ?>
                     <a href="?p=card_create_detail&key=<?php echo @$card_detail->card_key;?>" class="btn btn-xs btn-default"><i
                             class="fa fa-edit"></i> แก้ไข</a>
@@ -39,7 +39,7 @@ if(addslashes($_GET['key']) == NULL){
             </div>
             <div class="panel-body">
                 <div class="row form-group">
-                    <div class="col-md-3"><strong>รหัสการส่งซ่อม/เคลม</strong></div>
+                    <div class="col-md-3"><strong>รหัสซื้อ</strong></div>
                     <div class="col-md-3">
                         <?php echo @$card_detail->card_code;?>
                     </div>
@@ -49,7 +49,7 @@ if(addslashes($_GET['key']) == NULL){
                     </div>
                 </div>
                 <div class="row form-group">
-                    <div class="col-md-3"><strong>ชื่อผู้ส่งซ่อม</strong></div>
+                    <div class="col-md-3"><strong>ชื่อผู้ขอซื้อ</strong></div>
                     <div class="col-md-3">
                         <?php echo @$card_detail->card_customer_name.'&nbsp;&nbsp;&nbsp;'.$card_detail->card_customer_lastname;?>
                     </div>
@@ -93,7 +93,7 @@ if(addslashes($_GET['key']) == NULL){
                             <tr style="font-weight:bold; color:#FFF; background:#888888; text-align:center;">
                                 <td width="11%">หมายเลข</td>
                                 <td width="26%">ชื่อรายการ</td>
-                                <td width="35%">สาเหตุที่ส่งซ่อม/เคลม</td>
+                                <td width="35%">สาเหตุที่ขอซื้อ</td>
                                 <td width="15%">ประเภท</td>
                                 <td width="20%">ราคาโดยประมาณ</td>
                             </tr>

@@ -42,7 +42,8 @@ $getdata->my_sql_set_utf8();
       $getcard = $getdata->my_sql_select(NULL,"card_info","card_status <> 'hidden'  AND  card_status <> '' AND card_type='1' AND title_types='office' ORDER BY card_insert");
   } elseif ($_SESSION['uclass'] == 4) {
     //user พัสดุ
-      $getcard = $getdata->my_sql_select(NULL,"card_info","card_status='b1f4d8a6d50a01b4211fd877f7ae464f' AND card_type='1'  ORDER BY card_insert");
+      $getcard = $getdata->my_sql_select(NULL,"card_info","card_status IN ('b1f4d8a6d50a01b4211fd877f7ae464f','c382e352e2e620a3c60a2cc7c6a7fa35',
+      '44d39a902c4dd1304cbd0080896e0008') AND card_type='1'  ORDER BY card_insert");
   } else {
     $getcard = $getdata->my_sql_select(NULL,"card_info","card_status <> 'hidden'  AND  card_status <> '' AND card_type='1' ORDER BY card_insert");
   }
@@ -75,7 +76,10 @@ $getdata->my_sql_set_utf8();
               class="fa fa-ban"></i></a>
           <a data-toggle="modal" data-target="#edit_status" data-whatever="<?php echo @$showcard->card_key;?>" class="btn btn-xs btn-info"
             title="เปลี่ยนสถานะ"><i class="fa fa-tag"></i></a>
-          <?php } ?>
+          <?php } elseif ($_SESSION['uclass']==4) {?>
+            <a data-toggle="modal" data-target="#edit_status" data-whatever="<?php echo @$showcard->card_key;?>" class="btn btn-xs btn-info"
+            title="เปลี่ยนสถานะ"><i class="fa fa-tag"></i></a>
+          <?php }?>
           <a href="?p=card_all_status_buys&key=<?php echo @$showcard->card_key;?>" class="btn btn-xs btn-success" title="ประวัติ"><i
               class="fa fa-history"></i></a>
           <a href="card/print_card.php?key=<?php echo @$showcard->card_key;?>" target="_blank" class="btn btn-xs btn-primary" title="พิมพ์ใบติดตาม"><i class="fa fa-qrcode"></i></a>

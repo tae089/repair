@@ -22,7 +22,7 @@ if(@$_SESSION['lang']!=NULL){
 	$_SESSION['lang'] = 'th';
 
 }
-$getnow_status = $getdata->my_sql_query("card_status","card_info","card_key='".addslashes($_GET['key'])."'");
+$getnow_status = $getdata->my_sql_query("card_status, card_type","card_info","card_key='".addslashes($_GET['key'])."'");
 ?>
 
 <div class="modal-body">
@@ -42,11 +42,12 @@ $getnow_status = $getdata->my_sql_query("card_status","card_info","card_key='".a
 		</select>
 	</div>
 	<?php if ($_SESSION['uclass'] ==3 || $_SESSION['uclass'] ==33) { ?>
+	<?php if ($getnow_status->card_type == 0){ ?>
 	<div class="form-group">
 		<label for="card_done_aprox">วันที่คาดว่าจะแล้วเสร็จ</label>
 		<input type="text" name="card_done_aprox" id="card_done_aprox" class="form-control">
 	</div>
-	<?php } ?>
+	<?php } } ?>
 	<div class="form-group">
 		<label for="card_status_note">หมายเหตุสถานะ</label>
 		<textarea name="card_status_note" id="card_status_note" class="form-control"></textarea>

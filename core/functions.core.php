@@ -427,11 +427,11 @@ function cardStatus($card_status){
 	$getall_status=$getdata->my_sql_select(NULL,"card_type","ctype_status='1'");
 	while($showall_status = mysql_fetch_object($getall_status)){
 		if($card_status == $showall_status->ctype_key){
-			return '<span class="label" style="background:'.$showall_status->ctype_color.'">'.$showall_status->ctype_name.'</span>';
+			return '<div style="background:'.$showall_status->ctype_color.'; display: inline; padding: .2em .6em .3em;font-weight: 700;color: #ffff;line-height: 1;text-align: center;white-space: nowrap;vertical-align: baseline;border-radius: .25em; ">'.$showall_status->ctype_name.'</div>';
 		}else if($card_status == ''){
-			return '<span class="label  label-default" >ข้อมูลไม่สมบูรณ์</span>';
+			return '<div style="background:#777; display: inline; padding: .2em .6em .3em;font-weight: 700;color: #ffff;line-height: 1;text-align: center;white-space: nowrap;vertical-align: baseline;border-radius: .25em; ">ข้อมูลไม่สมบูรณ์</div>';
 		}else if($card_status == 'hidden'){
-			return '<span class="label  label-danger" >ข้อมูลถูกซ่อน</span>';
+			return '<div style="background:#d9534f; display: inline; padding: .2em .6em .3em;font-weight: 700;color: #ffff;line-height: 1;text-align: center;white-space: nowrap;vertical-align: baseline;border-radius: .25em; " >ข้อมูลถูกซ่อน</div>';
 		}
 	}
 }

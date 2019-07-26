@@ -13,7 +13,8 @@ if(addslashes($_POST['card_done_aprox']) != NULL){
     $card_done_aprox = '0000-00-00';
 }
 //echo  $_SESSION['ukey']; die();
-if(isset($_POST['card_done_aprox'])){
+// if(isset($_POST['card_done_aprox'])){
+//     echo 'true';
 	$getdata->my_sql_update("card_info","card_done_aprox='".$card_done_aprox."',card_status='".addslashes($_POST['card_status'])."'","card_key='".addslashes($_POST['card_key'])."'");
 	$cstatus_key=md5(addslashes($_POST['card_status']).time("now"));
     $getdata->my_sql_insert("card_status","cstatus_key='".$cstatus_key."',card_key='".addslashes($_POST['card_key'])."',card_status='".addslashes($_POST['card_status'])."',card_status_note='".addslashes($_POST['card_status_note'])."',user_key='".$_SESSION['ukey']."'");
@@ -29,12 +30,12 @@ if(isset($_POST['card_done_aprox'])){
          );
     }
     
-}else{
-    $data = array(
-        'satuts' => false,
-        'message' => '<img src="./../img/loading.gif" width="30px;" height="30px;"> <span>ข้อมูลไม่ถูกต้อง กรุณาระบุอีกครั้ง !</span>'
-     );
-}
+// }else{
+//     $data = array(
+//         'satuts' => false,
+//         'message' => '<img src="./../img/loading.gif" width="30px;" height="30px;"> <span>ข้อมูลไม่ถูกต้อง กรุณาระบุอีกครั้ง !</span>'
+//      );
+// }
 
 echo json_encode($data ,true);
 ?>
