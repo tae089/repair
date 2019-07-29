@@ -3,6 +3,7 @@
 require("../../core/config.core.php");
 require("../../core/connect.core.php");
 require("../../core/functions.core.php");
+
 $getdata = new clear_db();
 $connect = $getdata->my_sql_connect(DB_HOST,DB_USERNAME,DB_PASSWORD,DB_NAME);
 $getdata->my_sql_set_utf8();
@@ -39,4 +40,5 @@ if(isset($_POST)){
 }
 
 echo json_encode($data ,true); 
+echo notifyLineMessage();
 ?>

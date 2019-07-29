@@ -171,7 +171,7 @@ if(isset($_POST['save_card'])){
               $('#btn-footer').show();
               $('#processes').empty();
 			        $('#form_new_status').resetForm();
-			        socket.emit('show_card', 'Show data Card');
+			        socket.emit('num_card_buy', 'Count data Card');
             }, 3000);
             
                 
