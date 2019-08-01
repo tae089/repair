@@ -21,23 +21,24 @@ if(addslashes($_POST['card_done_aprox']) != NULL){
     $getdata->my_sql_insert("card_status","cstatus_key='".$cstatus_key."',card_key='".addslashes($_POST['card_key'])."',card_status='".addslashes($_POST['card_status'])."',card_status_note='".addslashes($_POST['card_status_note'])."',user_key='".$_SESSION['ukey']."'");
 
     //แจ้งเตือนข้อความเข้า LINE
-    $card = $getdata->my_sql_select(NULL,"card_info","card_key='".$_POST['card_key']."'");
-    while($showcard = mysql_fetch_object($card)){
+    $card = $getdata->my_sql_select(NULL,"card_info","card_key='".addslashes($_POST['card_key'])."'");
+    // while($showcard = mysql_fetch_object($card)){
     
-        $workgroup = $getdata->my_sql_query(NULL,"department","department_id='".$showcard->card_customer_work_group."'"); 
-        //$card_stauts = $getdata->my_sql_query(NULL,"card_status","card_key=");
-        $satuts_name = $getdata->my_sql_query(NULL,"card_type","ctype_key='".$showcard->card_status."'");
-        $satuts_type = ($showcard->card_type==1)? 'ที่ขอซื้อ': 'ที่ขอซ่อม';
-        $code = $showcard->card_code;
-    }
-    $mgs ="".$workgroup->name." แจ้งรายการ".$satuts_type." รหัส ".$code." สถานะ".$satuts_name." คลิกดูรายละเอียด::".$link;
-
+    //     $workgroup = $getdata->my_sql_query(NULL,"department","department_id='".$showcard->card_customer_work_group."'"); 
+    //     $satuts_name = $getdata->my_sql_query(NULL,"card_type","ctype_key='".$showcard->card_status."'");
+    //     $satuts_type = ($showcard->card_type==1)? 'ที่ขอซื้อ': 'ที่ขอซ่อม';
+    //     $code = $showcard->card_code;
+    // }
+    // $mgs ="".$workgroup->name." แจ้งรายการ".$satuts_type." รหัส ".$code." สถานะ".$satuts_name." คลิกดูรายละเอียด::".$link;
+    var_dump($getdata);
     if ($getdata) {
+        echo '1';
         $data = array(
             'satuts' => true,
             'message' => '<h4 class="text-success"><img src="./../img/loading.gif" width="30px;" height="30px;"> <b>กำลังบันทึกกรุณารอสักครู่...</b></h4>'
          );
     } else {
+        echo '2';
         $data= array(
             'satuts' => false,
             'message' => '<img src="./../img/loading.gif" width="30px;" height="30px;"> <span>ข้อมูลไม่ถูกต้อง กรุณาระบุอีกครั้ง !</span>'
@@ -51,6 +52,6 @@ if(addslashes($_POST['card_done_aprox']) != NULL){
 //      );
 // }
 
-echo json_encode($data ,true);
+//echo json_encode($data ,true);
 //notifyLineMessage($mgs);
 ?>

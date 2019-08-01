@@ -160,27 +160,27 @@ if(isset($_POST['save_card'])){
         console.log("DATA:"+queryString);
         
         $.post('card/save_new_status.php', queryString, (response) => {
-          var obj = JSON.parse(response);
-          console.log(obj.message);   
-          if(obj.satuts===true){
-            $('#btn-footer').hide();
-            $('#processes').empty();
-            $('#processes').append(obj.message);
-            setTimeout(() => { 
-              $('#edit_status').modal('hide');
-              $('#btn-footer').show();
-              $('#processes').empty();
-			        $('#form_new_status').resetForm();
-			        socket.emit('num_card_buy', 'Count data Card');
-            }, 3000);
+          //var obj = JSON.parse(response);
+          console.log(response);   
+          // if(obj.satuts===true){
+          //   $('#btn-footer').hide();
+          //   $('#processes').empty();
+          //   $('#processes').append(obj.message);
+          //   setTimeout(() => { 
+          //     $('#edit_status').modal('hide');
+          //     $('#btn-footer').show();
+          //     $('#processes').empty();
+			    //     $('#form_new_status').resetForm();
+			    //     socket.emit('num_card_buy', 'Count data Card');
+          //   }, 3000);
             
                 
-          }else{
-            setTimeout(() => { 
-              $('#processes').empty();
-              $('#processes').append(obj.message);
-            }, 3000);
-          }
+          // }else{
+          //   setTimeout(() => { 
+          //     $('#processes').empty();
+          //     $('#processes').append(obj.message);
+          //   }, 3000);
+          // }
           
         });          
       }); 
