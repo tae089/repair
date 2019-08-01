@@ -465,13 +465,13 @@ function getGroupWorking($department_id)
 }
 
 
-function notifyLineMessage()
+function notifyLineMessage($msg)
 {
 	ini_set('display_errors', 1);
 	ini_set('display_startup_errors', 1);
 	error_reporting(E_ALL);
 	$sToken = "T7C1v7PNx0u1Fxqane59kMYWIhPn4ZKStyebyvlrZkn"; //ใส่Token ที่copy เอาไว้
-	$sMessage = "มีรายการใหม่มา"; //ข้อความที่ต้องการส่ง สูงสุด 1000 ตัวอักษร
+	$sMessage = $msg; //ข้อความที่ต้องการส่ง สูงสุด 1000 ตัวอักษร
 	
 	$chOne = curl_init(); 
 	curl_setopt( $chOne, CURLOPT_URL, "https://notify-api.line.me/api/notify"); 
