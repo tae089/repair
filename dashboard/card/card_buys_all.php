@@ -142,7 +142,8 @@ if(isset($_POST['save_card'])){
   </div>
 </nav>
 <div id="detail_card"></div>
-<script src="http://malsup.github.com/jquery.form.js"></script>
+<!-- <script src="http://malsup.github.com/jquery.form.js"></script> -->
+<script src="../js/jquery.form.js"></script>
 <script src='//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js'></script>
 <script  type="text/javascript">
   var socket = io('//127.0.0.1:8080');

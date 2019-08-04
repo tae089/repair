@@ -24,9 +24,10 @@ $getdata->my_sql_set_utf8();
         <th width="16%">วันที่</th>
         <th width="26%">ชื่อผู้ส่งซ่อม/เคลม</th>
         <th width="16%">กลุ่มงาน</th>
+        <th width="13%">หมายเลขโทรศัพท์</th>
         <th width="13%">ประเภทการส่งซ่อม/เคลม</th>
-        <th width="15%">สถานะ</th>
         <th width="15%">หมายเหตุ</th>
+        <th width="15%">สถานะ</th>
         <th width="18%">จัดการ</th>
       </tr>
     </thead>
@@ -56,18 +57,15 @@ $getdata->my_sql_set_utf8();
         <td>
           <?php echo @$showcard->card_customer_name.'&nbsp;&nbsp;&nbsp;'.$showcard->card_customer_lastname;?>
         </td>
-        <td><?php echo @getGroupWorking($showcard->card_customer_work_group);?></td>
+        <td align="center">
+          <?php echo @$showcard->card_customer_phone;?>
+        </td>
         <td>
-          <?php  
-          if($showcard->title_types=='office'){ 
-            $types='วัสดุอุปกรณ์สำนักงาน';
-          } elseif ($showcard->title_types=='medical') {
-            $types='วัสดุอุปกรณ์ทางการแพทย์';
-          }else {
-            $types='วัสดุอุปกรณ์คอมพิวเตอร์';
-          }
-            echo $types;
-          ?>
+          <?php echo @getGroupWorking($showcard->card_customer_work_group);?>
+        </td>
+        <td>
+          <?php  echo($showcard->sub_title_types=='1')? 'วัสดุ' : 'ครุภัณฑ์';?>
+          <?php  echo ($showcard->title_types=='office')? 'สำนักงาน' : 'คอมพิวเตอร์';?>
         </td>
         <td>
           <?php echo @cardStatus($showcard->card_status);?>
@@ -124,7 +122,8 @@ $getdata->my_sql_set_utf8();
         search: `ค้นหา : `,
         // searchPlaceholder: `ป้อนคำค้นหา`,
         zeroRecords: `ไม่มีข้อมูล `,
-    }
+    },
+    "order": [[ 1, "asc" ]]
     });
   });
 </script>

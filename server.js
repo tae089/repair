@@ -34,11 +34,11 @@ io.on('connection', (socket) => {
 
     socket.on('num_card_buy', (message) => {
         if (message.uclass == 3) {
-            sql = "select * from card_info where card_status <> '' AND card_status <> 'hidden' AND card_status IN ('89da7d193f3c67e4310f50cbb5b36b90','4973069504e1be2a5bdcf7162ade8a16','5cd813fcceeb00544c19201a93ca6529')";
+            sql = "select * from card_info where card_status <> '' AND card_status <> 'hidden' AND card_status IN ('89da7d193f3c67e4310f50cbb5b36b90','4973069504e1be2a5bdcf7162ade8a16','5cd813fcceeb00544c19201a93ca6529') AND title_types='com'";
         } else if (message.uclass == 4) {
-            sql = "select * from card_info where card_status = 'b1f4d8a6d50a01b4211fd877f7ae464f' AND card_type = '1'";
+            sql = "select * from card_info where card_status IN ('89da7d193f3c67e4310f50cbb5b36b90','b1f4d8a6d50a01b4211fd877f7ae464f') AND card_type = '1'";
         } else {
-            sql = "select * from card_info where card_status <> '' AND card_status <> 'hidden' AND card_status<>'4973069504e1be2a5bdcf7162ade8a16' AND card_type='1' AND card_customer_work_group='" + message.uwork_id + "' ";
+            sql = "select * from card_info where card_status <> '' AND card_status <> 'hidden' AND card_status IN ('b1f4d8a6d50a01b4211fd877f7ae464f','5cd813fcceeb00544c19201a93ca6529') AND card_type='1' AND card_customer_work_group='" + message.uwork_id + "' ";
         }
         connection.query(sql, function(err, rows, fields) {
             if (err) throw err

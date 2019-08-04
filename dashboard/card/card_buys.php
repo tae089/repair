@@ -32,7 +32,7 @@
             </select>
           </div>
           <div class="form-group">
-            <label for="title_types">ประเภทการส่งซ่อม/เคลม</label>
+            <label for="title_types">ประเภทการสั่งซื้อ</label>
             <select name="title_types" id="title_types" class="form-control">
               <option value="">เลือก</option>
               <option value="office">สำนักงาน</option>
