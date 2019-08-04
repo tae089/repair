@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50717
 File Encoding         : 65001
 
-Date: 2019-07-30 17:26:04
+Date: 2019-08-04 19:57:46
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -33,7 +33,7 @@ CREATE TABLE `autonumber` (
 -- ----------------------------
 -- Records of autonumber
 -- ----------------------------
-INSERT INTO `autonumber` VALUES ('0026', '0001', '0001', '0001', '2019', '07', '30');
+INSERT INTO `autonumber` VALUES ('0003', '0001', '0001', '0001', '2019', '08', '03');
 
 -- ----------------------------
 -- Table structure for backup_logs
@@ -78,10 +78,11 @@ CREATE TABLE `card_info` (
 -- ----------------------------
 -- Records of card_info
 -- ----------------------------
+INSERT INTO `card_info` VALUES ('42aeed7e2fcd57272e38514c145c0888', 'COFQ6K2Y', 'วาสนา', 'แก้ววงษา', 'โรงพยาบาลโนนสะอาด อ.โนนสะอาด จ.อุดรธานี 41240', '238', '6', 'ขอซื้อเมาส์ใหม่ อันเก่ากดแล้วมันค้าง', '0000-00-00', 'c6a7ac1cba80f96b808dc8b7061ccc9b', 'cc10bdc47b9d2c7be7e30bf601b0d1c7', '2019-07-31 10:13:02', '1', '2525', 'com', '1');
 INSERT INTO `card_info` VALUES ('aac08e4bb2ae92b8550f9dd256cc7eb5', 'CBL59TB2', 'เกรียงไกร', 'อุตโรกุล', 'โรงพยาบาลโนนสะอาด อ.โนนสะอาด จ.อุดรธานี 41240', '238', '6', 'พัดลมเปิดแล้ว ไม่หมุ่น', '2019-07-25', 'c6a7ac1cba80f96b808dc8b7061ccc9b', 'b1f4d8a6d50a01b4211fd877f7ae464f', '2019-07-20 16:51:45', '0', '1829', 'office', '1');
 INSERT INTO `card_info` VALUES ('c00331521a4ee125cc9baf431305c533', 'CTAAMI3', 'วาสนา', 'แก้ววงษา', 'โรงพยาบาลโนนสะอาด อ.โนนสะอาด จ.อุดรธานี 41240', '238', '6', 'ขอซื้อคีย์บอดใหม่ อันเก่ากดแล้วมันค้าง', '0000-00-00', 'c6a7ac1cba80f96b808dc8b7061ccc9b', 'cc10bdc47b9d2c7be7e30bf601b0d1c7', '2019-07-29 00:08:13', '1', '2525', 'com', '1');
-INSERT INTO `card_info` VALUES ('c435fdb7bff0f6bf4b071b4fc6dba970', 'C9NBMDV', 'วาสนา', 'แก้ววงษา', 'โรงพยาบาลโนนสะอาด อ.โนนสะอาด จ.อุดรธานี 41240', '238', '6', 'ขอซื้อเมาส์ใหม่ อันเก่ากดแล้วมันค้าง', '0000-00-00', 'c6a7ac1cba80f96b808dc8b7061ccc9b', '89da7d193f3c67e4310f50cbb5b36b90', '2019-07-30 13:06:31', '1', '2525', 'com', '1');
 INSERT INTO `card_info` VALUES ('f6ce32ed0dc22ed04a3b5c067ea88650', 'CSWP0QUI', 'วาสนา', 'แก้ววงษา', 'โรงพยาบาลโนนสะอาด อ.โนนสะอาด จ.อุดรธานี 41240', '238', '6', 'ฮาร์ดดิสตัวเก่ามันมีเสียงแปลกๆ', '0000-00-00', 'c6a7ac1cba80f96b808dc8b7061ccc9b', 'cc10bdc47b9d2c7be7e30bf601b0d1c7', '2019-07-24 23:23:09', '1', '2525', 'com', '1');
+INSERT INTO `card_info` VALUES ('f8cceb0b48e38b810f168471c5b8c11d', 'CJL3UY67', 'วาสนา', 'แก้ววงษา', 'โรงพยาบาลโนนสะอาด อ.โนนสะอาด จ.อุดรธานี 41240', '238', '6', 'ขอซื้อหมึกปริ้นเตอร์ canon มันหมดแล้ว', '0000-00-00', 'c6a7ac1cba80f96b808dc8b7061ccc9b', '89da7d193f3c67e4310f50cbb5b36b90', '2019-08-03 15:09:33', '1', '2525', 'office', '1');
 
 -- ----------------------------
 -- Table structure for card_item
@@ -103,8 +104,9 @@ CREATE TABLE `card_item` (
 -- ----------------------------
 -- Records of card_item
 -- ----------------------------
+INSERT INTO `card_item` VALUES ('3be0c1f46e433816dd9806140916e222', 'f8cceb0b48e38b810f168471c5b8c11d', '19080002', 'หมึกปริ้นเตอร์ cannon', 'หมึกหมดแล้ว', '9', '2', '0', '2019-08-03 15:10:03');
+INSERT INTO `card_item` VALUES ('688604b711d157042b1996af35eb175a', '42aeed7e2fcd57272e38514c145c0888', '19070028', 'เมาส์', 'อันเก่ากดแล้วมันค้าง', '5', '1', '300', '2019-07-31 10:14:51');
 INSERT INTO `card_item` VALUES ('a4fec5d4629f28e8578471590be61138', 'c00331521a4ee125cc9baf431305c533', '19070009', 'คีย์บอร์ด', 'กดแล้วมันค้าง ', '5', '1', '0', '2019-07-29 00:08:49');
-INSERT INTO `card_item` VALUES ('a6e4d5deeccd9c9cd22af9a86ff71282', 'c435fdb7bff0f6bf4b071b4fc6dba970', '19070025', 'เมาส์', 'อันเก่ากดแล้วมันค้าง', '7', '1', '300', '2019-07-30 13:06:55');
 INSERT INTO `card_item` VALUES ('c224e08dac3e2c38b3ab1dd8340fd36c', 'f6ce32ed0dc22ed04a3b5c067ea88650', '19070007', 'ฮาร์ดดิส SATA 1TB', 'ฮาร์ดดิสตัวเก่ามันมีเสียงแปลกๆ ', '7', '1', '2190', '2019-07-24 23:26:57');
 INSERT INTO `card_item` VALUES ('fbb80b44b3c031ffa8e5f4f9f59d6213', 'aac08e4bb2ae92b8550f9dd256cc7eb5', '19070006', 'พัดลม', 'ไม่หมุ่น', '9', '1', '0', '2019-07-20 16:52:14');
 
@@ -126,14 +128,19 @@ CREATE TABLE `card_status` (
 -- Records of card_status
 -- ----------------------------
 INSERT INTO `card_status` VALUES ('09c6c245134626e0a70ae8d4af36b8e5', 'c00331521a4ee125cc9baf431305c533', '44d39a902c4dd1304cbd0080896e0008', 'รอตรวจรับรายการ', 'ef9bb5206750faf872e290846383c6c4', '2019-07-29 08:28:36');
+INSERT INTO `card_status` VALUES ('33fd6e5962dd70a0ea519d03dae6f579', '42aeed7e2fcd57272e38514c145c0888', 'cc10bdc47b9d2c7be7e30bf601b0d1c7', 'จ่ายของให้ IPD แล้ว', '', '2019-08-03 14:35:47');
+INSERT INTO `card_status` VALUES ('3520978969e119ac5955d98dc04eda52', '42aeed7e2fcd57272e38514c145c0888', '89da7d193f3c67e4310f50cbb5b36b90', 'ขอซื้อเมาส์ใหม่ อันเก่ากดแล้วมันค้าง', 'c6a7ac1cba80f96b808dc8b7061ccc9b', '2019-07-31 10:15:10');
 INSERT INTO `card_status` VALUES ('496e2dc605a11a66680144718ddaa3e5', 'f6ce32ed0dc22ed04a3b5c067ea88650', 'b1f4d8a6d50a01b4211fd877f7ae464f', 'กำลังดำเนินการจัดซื้อให้คับ', '', '2019-07-25 15:12:09');
 INSERT INTO `card_status` VALUES ('4b8949d0ea8ce8475df4abc28246d84b', 'f6ce32ed0dc22ed04a3b5c067ea88650', '89da7d193f3c67e4310f50cbb5b36b90', 'ฮาร์ดดิสตัวเก่ามันมีเสียงแปลกๆ น่าจะเสีย', 'c6a7ac1cba80f96b808dc8b7061ccc9b', '2019-07-25 14:40:35');
-INSERT INTO `card_status` VALUES ('6387d19de0bfd115703e741a0ba82c7b', 'c435fdb7bff0f6bf4b071b4fc6dba970', '89da7d193f3c67e4310f50cbb5b36b90', 'ขอซื้อเมาส์ใหม่ อันเก่ากดแล้วมันค้าง', 'c6a7ac1cba80f96b808dc8b7061ccc9b', '2019-07-30 13:07:14');
+INSERT INTO `card_status` VALUES ('6c522b8571a3c1a52e205c2bf206e3c6', 'f8cceb0b48e38b810f168471c5b8c11d', '89da7d193f3c67e4310f50cbb5b36b90', 'ขอซื้อหมึกปริ้นเตอร์ canon มันหมดแล้ว', 'c6a7ac1cba80f96b808dc8b7061ccc9b', '2019-08-03 15:10:09');
+INSERT INTO `card_status` VALUES ('a7f3e609f8164d8a569b591ab0cd417d', '42aeed7e2fcd57272e38514c145c0888', '44d39a902c4dd1304cbd0080896e0008', 'รอตรวจรับจากกรรมการ', 'ef9bb5206750faf872e290846383c6c4', '2019-08-03 14:23:26');
 INSERT INTO `card_status` VALUES ('a8ce759c5c7e4b5860f62390d1e8a0f2', 'c00331521a4ee125cc9baf431305c533', 'cc10bdc47b9d2c7be7e30bf601b0d1c7', 'จ่ายแล้ว', '', '2019-07-29 09:23:14');
+INSERT INTO `card_status` VALUES ('aaeb78d84d425ad9d65e0506b4b844d6', '42aeed7e2fcd57272e38514c145c0888', 'b1f4d8a6d50a01b4211fd877f7ae464f', 'กำลังดำเนินการซื้อให้คับ', '', '2019-08-03 13:30:59');
 INSERT INTO `card_status` VALUES ('b034ee30ff4089ea0056091d4ce37621', 'aac08e4bb2ae92b8550f9dd256cc7eb5', '89da7d193f3c67e4310f50cbb5b36b90', 'มาดูหน่อยคับ ช่าง', 'c6a7ac1cba80f96b808dc8b7061ccc9b', '2019-07-20 16:52:42');
 INSERT INTO `card_status` VALUES ('b72fd3552d6790adf10c89a69f8ae2c2', 'f6ce32ed0dc22ed04a3b5c067ea88650', 'cc10bdc47b9d2c7be7e30bf601b0d1c7', 'จ่ายรายการเรียบแล้ว', '', '2019-07-29 08:39:20');
 INSERT INTO `card_status` VALUES ('c3122cebb57ad0fcf921c9eb24fc9ea8', 'c00331521a4ee125cc9baf431305c533', '89da7d193f3c67e4310f50cbb5b36b90', 'กดแล้วมันค้าง', 'c6a7ac1cba80f96b808dc8b7061ccc9b', '2019-07-29 00:09:03');
 INSERT INTO `card_status` VALUES ('c470eeddfb8a2c632bb641112dd15b59', 'c00331521a4ee125cc9baf431305c533', '5cd813fcceeb00544c19201a93ca6529', 'เบิกของได้คับ', 'ef9bb5206750faf872e290846383c6c4', '2019-07-29 08:34:23');
+INSERT INTO `card_status` VALUES ('ce03b9218050d4f487a269d3242baa1a', '42aeed7e2fcd57272e38514c145c0888', '5cd813fcceeb00544c19201a93ca6529', 'ของมาแล้ว มารับได้คับ', 'ef9bb5206750faf872e290846383c6c4', '2019-08-03 14:31:27');
 INSERT INTO `card_status` VALUES ('d51920ae6a1dcc5677c9e2e0c2d9b4ef', 'c00331521a4ee125cc9baf431305c533', 'b1f4d8a6d50a01b4211fd877f7ae464f', 'ดำเนินการซื้อ', '', '2019-07-29 08:21:55');
 INSERT INTO `card_status` VALUES ('d96fe0644319e6fda3a780067803c5a8', 'f6ce32ed0dc22ed04a3b5c067ea88650', '44d39a902c4dd1304cbd0080896e0008', 'รอกรรมการ ตรวจรับ', 'ef9bb5206750faf872e290846383c6c4', '2019-07-28 22:54:15');
 INSERT INTO `card_status` VALUES ('dd5805c945d8f64866e8de36de9ce364', 'f6ce32ed0dc22ed04a3b5c067ea88650', '5cd813fcceeb00544c19201a93ca6529', 'มาเบิกได้เลย', 'ef9bb5206750faf872e290846383c6c4', '2019-07-28 23:29:17');
@@ -223,7 +230,7 @@ INSERT INTO `department` VALUES ('12', 'ห้องแล็บ', '2');
 INSERT INTO `department` VALUES ('13', 'อุบัติเหตุฉุกเฉิน ER', '2');
 INSERT INTO `department` VALUES ('14', 'งานประกัน UC', '2');
 INSERT INTO `department` VALUES ('15', 'งานระบาด', '2');
-INSERT INTO `department` VALUES ('16', 'x-ray', '2');
+INSERT INTO `department` VALUES ('16', 'X-Ray', '2');
 INSERT INTO `department` VALUES ('17', 'PCU', '2');
 INSERT INTO `department` VALUES ('18', 'ห้องคลอด OR/LR', '2');
 INSERT INTO `department` VALUES ('19', 'แพทย์แผนไทย', '2');
@@ -232,7 +239,7 @@ INSERT INTO `department` VALUES ('21', 'กายภาพ', '2');
 INSERT INTO `department` VALUES ('22', 'โภชนาการ', '2');
 INSERT INTO `department` VALUES ('23', 'ซ่อมบำรุง', '1');
 INSERT INTO `department` VALUES ('24', 'ซับพลาย', '2');
-INSERT INTO `department` VALUES ('25', 'งาน it', '1');
+INSERT INTO `department` VALUES ('25', 'งาน IT', '1');
 INSERT INTO `department` VALUES ('26', 'งานแผน', '1');
 INSERT INTO `department` VALUES ('27', 'งาน NCD', '2');
 INSERT INTO `department` VALUES ('28', 'งาน TB COPD ASTHMA', '2');
@@ -537,6 +544,34 @@ INSERT INTO `logs` VALUES ('122ae87cd078c277', '2019-07-30 11:21:48', '::1', 'ip
 INSERT INTO `logs` VALUES ('b9cf8222367d8ccb', '2019-07-30 11:46:07', '::1', 'tech11017 เข้าสู่ระบบ.', '6fda2fe2803181cf3f7bbda98efad913');
 INSERT INTO `logs` VALUES ('ff5bd42f9ab1a63e', '2019-07-30 11:47:22', '::1', 'tech11017 ออกจากระบบ.', '6fda2fe2803181cf3f7bbda98efad913');
 INSERT INTO `logs` VALUES ('223ae96aa385be2e', '2019-07-30 11:47:38', '::1', 'ipd11017 เข้าสู่ระบบ.', 'c6a7ac1cba80f96b808dc8b7061ccc9b');
+INSERT INTO `logs` VALUES ('43c9bc88e378e1b9', '2019-07-30 17:26:07', '::1', 'ipd11017 ออกจากระบบ.', 'c6a7ac1cba80f96b808dc8b7061ccc9b');
+INSERT INTO `logs` VALUES ('d9043f7293c7f494', '2019-07-30 17:27:00', '::1', 'admin ออกจากระบบ.', '');
+INSERT INTO `logs` VALUES ('e6298f3c952062d3', '2019-07-31 09:25:49', '::1', 'admin เข้าสู่ระบบ.', '');
+INSERT INTO `logs` VALUES ('eb13938270973e31', '2019-07-31 09:26:26', '::1', 'ipd11017 เข้าสู่ระบบ.', 'c6a7ac1cba80f96b808dc8b7061ccc9b');
+INSERT INTO `logs` VALUES ('f56dc7829932485e', '2019-07-31 17:25:18', '::1', 'admin ออกจากระบบ.', '');
+INSERT INTO `logs` VALUES ('bcd7ef52ea188a80', '2019-07-31 17:25:31', '::1', 'ipd11017 ออกจากระบบ.', 'c6a7ac1cba80f96b808dc8b7061ccc9b');
+INSERT INTO `logs` VALUES ('517cd913427e87f1', '2019-08-01 11:59:51', '::1', 'admin เข้าสู่ระบบ.', '');
+INSERT INTO `logs` VALUES ('ed3a598523ca9273', '2019-08-01 12:01:18', '::1', 'm11017 เข้าสู่ระบบ.', 'ef9bb5206750faf872e290846383c6c4');
+INSERT INTO `logs` VALUES ('f187d03a8a6e65ed', '2019-08-01 17:21:49', '::1', 'admin ออกจากระบบ.', '');
+INSERT INTO `logs` VALUES ('59659ec9ed9255e5', '2019-08-01 17:25:30', '::1', 'm11017 ออกจากระบบ.', 'ef9bb5206750faf872e290846383c6c4');
+INSERT INTO `logs` VALUES ('034dc981071150f7', '2019-08-03 09:35:47', '::1', 'admin เข้าสู่ระบบ.', '');
+INSERT INTO `logs` VALUES ('bca264d461b3468d', '2019-08-03 10:10:13', '::1', 'ipd11017 เข้าสู่ระบบ.', 'c6a7ac1cba80f96b808dc8b7061ccc9b');
+INSERT INTO `logs` VALUES ('746abfb0295607db', '2019-08-03 14:16:36', '::1', 'ipd11017 ออกจากระบบ.', 'c6a7ac1cba80f96b808dc8b7061ccc9b');
+INSERT INTO `logs` VALUES ('6f06fcc86f586d29', '2019-08-03 14:16:43', '::1', 'm11017 เข้าสู่ระบบ.', 'ef9bb5206750faf872e290846383c6c4');
+INSERT INTO `logs` VALUES ('521b3308227f6965', '2019-08-03 14:24:02', '::1', 'm11017 ออกจากระบบ.', 'ef9bb5206750faf872e290846383c6c4');
+INSERT INTO `logs` VALUES ('1be1e0d59e5db1c7', '2019-08-03 14:24:16', '::1', 'ipd11017 เข้าสู่ระบบ.', 'c6a7ac1cba80f96b808dc8b7061ccc9b');
+INSERT INTO `logs` VALUES ('91d4e7f2d5308f39', '2019-08-03 14:26:19', '::1', 'ipd11017 ออกจากระบบ.', 'c6a7ac1cba80f96b808dc8b7061ccc9b');
+INSERT INTO `logs` VALUES ('3d4856ba23954a4d', '2019-08-03 14:30:00', '::1', 'admin ออกจากระบบ.', '');
+INSERT INTO `logs` VALUES ('f57b6070c5f262fb', '2019-08-03 14:30:15', '::1', 'm11017 เข้าสู่ระบบ.', 'ef9bb5206750faf872e290846383c6c4');
+INSERT INTO `logs` VALUES ('a5437aec70659ec9', '2019-08-03 14:30:29', '::1', 'm11017 ออกจากระบบ.', 'ef9bb5206750faf872e290846383c6c4');
+INSERT INTO `logs` VALUES ('fa32169405ea578d', '2019-08-03 14:30:35', '::1', 'admin เข้าสู่ระบบ.', '');
+INSERT INTO `logs` VALUES ('cf24a8284a999edd', '2019-08-03 14:30:42', '::1', 'm11017 เข้าสู่ระบบ.', 'ef9bb5206750faf872e290846383c6c4');
+INSERT INTO `logs` VALUES ('f99aa0a8786ef594', '2019-08-03 14:34:35', '::1', 'm11017 ออกจากระบบ.', 'ef9bb5206750faf872e290846383c6c4');
+INSERT INTO `logs` VALUES ('985cf859707158f1', '2019-08-03 14:34:58', '::1', 'ipd11017 เข้าสู่ระบบ.', 'c6a7ac1cba80f96b808dc8b7061ccc9b');
+INSERT INTO `logs` VALUES ('06cacd56a32238bf', '2019-08-03 15:10:24', '::1', 'admin ออกจากระบบ.', '');
+INSERT INTO `logs` VALUES ('2843a4a6fc400d26', '2019-08-03 15:10:38', '::1', 'm11017 เข้าสู่ระบบ.', 'ef9bb5206750faf872e290846383c6c4');
+INSERT INTO `logs` VALUES ('a46d9d7881a59d2a', '2019-08-03 15:50:24', '::1', 'm11017 ออกจากระบบ.', 'ef9bb5206750faf872e290846383c6c4');
+INSERT INTO `logs` VALUES ('db799a452a286305', '2019-08-03 15:50:48', '::1', 'ipd11017 ออกจากระบบ.', 'c6a7ac1cba80f96b808dc8b7061ccc9b');
 
 -- ----------------------------
 -- Table structure for menus
@@ -923,8 +958,8 @@ CREATE TABLE `user_online` (
 -- ----------------------------
 -- Records of user_online
 -- ----------------------------
-INSERT INTO `user_online` VALUES ('o7lc1lalc4fgcrq7rc5mqfehl1', '', '1564475404');
-INSERT INTO `user_online` VALUES ('10r2vv7l2ln09cttnhc3vinj06', 'c6a7ac1cba80f96b808dc8b7061ccc9b', '1564475404');
+INSERT INTO `user_online` VALUES ('4rakko8tb87fshndmsjqmaoqk3', 'c6a7ac1cba80f96b808dc8b7061ccc9b', '1564819813');
+INSERT INTO `user_online` VALUES ('09am9sqf48cqao2bqv6t6jrub5', 'ef9bb5206750faf872e290846383c6c4', '1564819842');
 
 -- ----------------------------
 -- Table structure for work_group

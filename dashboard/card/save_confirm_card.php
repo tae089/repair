@@ -3,7 +3,7 @@
 require("../../core/config.core.php");
 require("../../core/connect.core.php");
 require("../../core/functions.core.php");
-$link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . $_SERVER['HTTP_HOST']."/repair"; 
+$link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . $_SERVER['HTTP_HOST']."/repair/card.php?key="; 
 $getdata = new clear_db();
 $connect = $getdata->my_sql_connect(DB_HOST,DB_USERNAME,DB_PASSWORD,DB_NAME);
 $getdata->my_sql_set_utf8();
@@ -29,7 +29,7 @@ if(isset($_POST)){
         $code = $showcard->card_code;
     }
     
-    $mgs ="".$workgroup->name." แจ้งรายการ".$satuts_name." รหัส ".$code." คลิกดูรายละเอียด::".$link;
+    $mgs ="".$workgroup->name." แจ้งรายการ".$satuts_name." รหัส ".$code." คลิกดูรายละเอียด::".$link.$code;
     
     if($getdata){
         $data = array(

@@ -82,7 +82,7 @@ if(addslashes($_GET['key']) == NULL){
 
                 </div>
                 <div class="row form-group">
-                    <div class="col-md-3"><strong>เจ้าหน้าที่</strong></div>
+                    <div class="col-md-3"><strong>หน่วยงาน</strong></div>
                     <div class="col-md-3">
                         <?php $getuserx = $getdata->my_sql_query("name,lastname","user","user_key='".$card_detail->user_key."'"); echo $getuserx->name.'&nbsp;&nbsp;&nbsp;&nbsp;'.$getuserx->lastname;?>
                     </div>

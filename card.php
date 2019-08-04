@@ -40,13 +40,18 @@ $card_detail = $getdata->my_sql_query(NULL,"card_info","card_code='".addslashes(
 <body>
   <center>
     <img src="media/logo/<?php echo @$system_info->site_logo;?>" width="100" alt="" /> </div>
-  </center><br />
+    <br/>
+    <a href="/repair">เข้าสู่ระบบ</a>
+  </center>
+  <br />
+  
   <ul class="nav nav-tabs">
     <li class="active"><a href="#all_status" data-toggle="tab">ประวัติการอัพเดทสถานะ</a>
     </li>
-    <li><a href="#all_detail" data-toggle="tab">รายละเอียดใบสั่งซ่อม/เคลม</a>
+    <li>
+    <a href="#all_detail" data-toggle="tab">รายละเอียด</a>
     </li>
-
+    
 
   </ul>
 
@@ -72,14 +77,14 @@ $card_detail = $getdata->my_sql_query(NULL,"card_info","card_code='".addslashes(
               <td align="center">
                 <?php echo @dateTimeConvertor($showcard_status->cstatus_insert);?>
               </td>
-              <td align="center">
+              <td>
                 <?php echo @cardStatus($showcard_status->card_status);?>
               </td>
               <td>&nbsp;
                 <?php echo @$showcard_status->card_status_note;?>
               </td>
-              <td align="center">
-                <?php $getusery = $getdata->my_sql_query("name,lastname","user","user_key='".$showcard_status->user_key."'"); echo $getusery->name.'&nbsp;&nbsp;&nbsp;&nbsp;'.$getusery->lastname;?>
+              <td>
+                <?php $getusery = $getdata->my_sql_query("name,lastname","user","user_key='".$showcard_status->user_key."'"); echo $getusery->name.'&nbsp;&nbsp;'.$getusery->lastname;?>
               </td>
             </tr>
             <?php
@@ -95,84 +100,98 @@ $card_detail = $getdata->my_sql_query(NULL,"card_info","card_code='".addslashes(
     <div class="tab-pane fade " id="all_detail"><br />
       <div class="panel panel-primary">
         <div class="panel-heading">
-          รายละเอียดผู้ส่งซ่อม/เคลม
+          รายละเอียด<?php echo ($card_detail->card_type==1)? 'ที่ขอซื้อ': 'ที่ขอซ่อม'; ?>
         </div>
         <div class="panel-body">
           <div class="row form-group">
-            <div class="col-md-3"><strong>รหัสการส่งซ่อม/เคลม</strong></div>
+            <div class="col-md-3"><strong>รหัส<?php echo ($card_detail->card_type==1)? 'ซื้อ': 'การส่งซ่อม/เคลม'; ?></strong></div>
             <div class="col-md-3">
-              <?php echo @$card_detail->card_code;?>
+                <?php echo @$card_detail->card_code;?>
             </div>
             <div class="col-md-3"><strong>วันที่</strong></div>
             <div class="col-md-3">
-              <?php echo @dateTimeConvertor($card_detail->card_insert);?>
+                <?php echo @dateTimeConvertor($card_detail->card_insert);?>
             </div>
           </div>
           <div class="row form-group">
-            <div class="col-md-3"><strong>ชื่อผู้ส่งซ่อม</strong></div>
-            <div class="col-md-3">
-              <?php echo @$card_detail->card_customer_name.'&nbsp;&nbsp;&nbsp;'.$card_detail->card_customer_lastname;?>
-            </div>
-            <div class="col-md-3"><strong>หมายเลขโทรศัพท์</strong></div>
-            <div class="col-md-3">
-              <?php echo @$card_detail->card_customer_phone;?>
-            </div>
+              <div class="col-md-3"><strong>ชื่อผู้ขอซื้อ</strong></div>
+              <div class="col-md-3">
+                  <?php echo @$card_detail->card_customer_name.'&nbsp;&nbsp;&nbsp;'.$card_detail->card_customer_lastname;?>
+              </div>
+              <div class="col-md-3"><strong>กลุ่มงาน</strong></div>
+              <div class="col-md-3">
+                  <?php  
+                      $department_data = $getdata->my_sql_query($field,"department","department_id=".$card_detail->card_customer_work_group.""); 
+                      echo @$department_data->name;
+                  ?>
+              </div>
+          </div>
+          <div class="row form-group">
+              <div class="col-md-3"><strong>ที่อยู่</strong></div>
+              <div class="col-md-3">
+                  <?php echo @$card_detail->card_customer_address;?>
+              </div>
+              <div class="col-md-3"><strong>หมายเลขโทรศัพท์</strong></div>
+              <div class="col-md-3">
+                  <?php echo @$card_detail->card_customer_phone;?>
+              </div>
+          </div>
+          <div class="row form-group">
+              <div class="col-md-3"><strong>วันที่คาดว่าจะแล้วเสร็จ</strong></div>
+              <div class="col-md-3" style="color:#00BB32"><strong>
+                      <?php echo @($card_detail->card_done_aprox != '0000-00-00')?dateConvertor($card_detail->card_done_aprox):'ไม่ระบุ';?></strong></div>
+              <div class="col-md-3"><strong>หมายเหตุ</strong></div>
+              <div class="col-md-3">
+                  <?php echo @$card_detail->card_note;?>
+              </div>
 
           </div>
           <div class="row form-group">
-            <div class="col-md-3"><strong>ที่อยู่</strong></div>
-            <div class="col-md-3">
-              <?php echo @$card_detail->card_customer_address;?>
-            </div>
-            <div class="col-md-3"><strong>อีเมล</strong></div>
-            <div class="col-md-3">
-              <?php echo @$card_detail->card_customer_email;?>
-            </div>
-          </div>
-          <div class="row form-group">
-            <div class="col-md-3"><strong>วันที่คาดว่าจะแล้วเสร็จ</strong></div>
-            <div class="col-md-3" style="color:#00BB32"><strong>
-                <?php echo @($card_detail->card_done_aprox != '0000-00-00')?dateConvertor($card_detail->card_done_aprox):'ไม่ระบุ';?></strong></div>
-            <div class="col-md-3"><strong>เจ้าหน้าที่</strong></div>
-            <div class="col-md-3">
-              <?php $getuserx = $getdata->my_sql_query("name,lastname","user","user_key='".$card_detail->user_key."'"); echo $getuserx->name.'&nbsp;&nbsp;&nbsp;&nbsp;'.$getuserx->lastname;?>
-            </div>
+              <div class="col-md-3"><strong>หน่วยงาน</strong></div>
+              <div class="col-md-3">
+                  <?php $getuserx = $getdata->my_sql_query("name,lastname","user","user_key='".$card_detail->user_key."'"); echo $getuserx->name.'&nbsp;&nbsp;&nbsp;&nbsp;'.$getuserx->lastname;?>
+              </div>
           </div>
           <div class="table-responsive">
-            <table width="100%" class="table table-bordered">
-              <thead>
-                <tr style="font-weight:bold; color:#FFF; background:#888888; text-align:center;">
-                  <td width="11%">หมายเลข</td>
-                  <td width="26%">ชื่อรายการ</td>
-                  <td width="43%">สาเหตุที่ส่งซ่อม/เคลม</td>
-                  <td width="20%">ราคาโดยประมาณ</td>
-                </tr>
-              </thead>
-              <tbody>
-                <?php 
-	$getitem = $getdata->my_sql_select(NULL,"card_item","card_key='".$card_detail->card_key."' ORDER BY item_insert");
-	while($showitem = mysql_fetch_object($getitem)){
-	?>
-                <tr id="<?php echo @$showitem->item_key;?>">
-                  <td align="center" bgcolor="#EFEFEF">
-                    <?php echo @$showitem->item_number;?>
-                  </td>
-                  <td>
-                    <?php echo @$showitem->item_name;?>
-                  </td>
-                  <td style="color:#970002;">
-                    <?php echo @$showitem->item_note;?>
-                  </td>
-                  <td align="right">
-                    <?php echo @($showitem->item_price_aprox == 0)?'ไม่ระบุ':convertPoint2($showitem->item_price_aprox,2);?>
-                  </td>
+          <table width="100%" class="table table-bordered">
+                        <thead>
+                            <tr style="font-weight:bold; color:#FFF; background:#888888; text-align:center;">
+                                <td width="11%">หมายเลข</td>
+                                <td width="26%">ชื่อรายการ</td>
+                                <td width="35%">สาเหตุที่ขอซื้อ</td>
+                                <td width="15%">ประเภท</td>
+                                <td width="20%">ราคาโดยประมาณ</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php 
+	                            $getitem = $getdata->my_sql_select(NULL,"card_item","card_key='".$card_detail->card_key."' ORDER BY item_insert");
+	                            while($showitem = mysql_fetch_object($getitem)){
+                                $get_type = $getdata->my_sql_query($field,"category","category_id=".$showitem->item_category_type."");
+	                        ?>
+                            <tr id="<?php echo @$showitem->item_key;?>">
+                                <td align="center" bgcolor="#EFEFEF">
+                                    <?php echo @$showitem->item_number;?>
+                                </td>
+                                <td>
+                                    <?php echo @$showitem->item_name;?>
+                                </td>
+                                <td style="color:#970002;">
+                                    <?php echo @$showitem->item_note;?>
+                                </td>
+                                <td>
+                                    <?php echo @$get_type->category_name_th;?>
+                                </td>
+                                <td align="right">
+                                    <?php echo @($showitem->item_price_aprox == 0)?'ไม่ระบุ':convertPoint2($showitem->item_price_aprox,2);?>
+                                </td>
 
-                </tr>
-                <?php
+                            </tr>
+                            <?php
 	}
 	?>
-              </tbody>
-            </table>
+                        </tbody>
+                    </table>
           </div>
         </div>
       </div>
