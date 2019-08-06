@@ -43,7 +43,7 @@ $getdata->my_sql_set_utf8();
       $getcard = $getdata->my_sql_select(NULL,"card_info","card_status <> 'hidden'  AND  card_status <> '' card_customer_work_group=".$_SESSION['uwork_id']." AND card_type='1' AND title_types='office' ORDER BY card_insert DESC");
   } elseif ($_SESSION['uclass'] == 4) {
     //user พัสดุ
-      $getcard = $getdata->my_sql_select(NULL,"card_info","card_status IN ('89da7d193f3c67e4310f50cbb5b36b90','b1f4d8a6d50a01b4211fd877f7ae464f','c382e352e2e620a3c60a2cc7c6a7fa35','44d39a902c4dd1304cbd0080896e0008','5cd813fcceeb00544c19201a93ca6529') AND card_type='1' AND title_types='office'   ORDER BY card_insert DESC");
+      $getcard = $getdata->my_sql_select(NULL,"card_info","card_status IN ('89da7d193f3c67e4310f50cbb5b36b90','1ab320e61b53ff60c3cc5e635f2045f5','b1f4d8a6d50a01b4211fd877f7ae464f','c382e352e2e620a3c60a2cc7c6a7fa35','44d39a902c4dd1304cbd0080896e0008','5cd813fcceeb00544c19201a93ca6529') AND card_type='1'   ORDER BY card_insert DESC");
   } else {
     // admin IT
     $getcard = $getdata->my_sql_select(NULL,"card_info","card_status <> 'hidden'  AND  card_status <> '' AND card_type='1' ORDER BY card_insert DESC");
