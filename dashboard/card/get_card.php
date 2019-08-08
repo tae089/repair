@@ -26,8 +26,8 @@ $getdata->my_sql_set_utf8();
         <th width="16%">กลุ่มงาน</th>
         <th width="13%">หมายเลขโทรศัพท์</th>
         <th width="13%">ประเภทการส่งซ่อม/เคลม</th>
-        <th width="15%">หมายเหตุ</th>
         <th width="15%">สถานะ</th>
+        <th width="15%">หมายเหตุ</th>
         <th width="18%">จัดการ</th>
       </tr>
     </thead>
