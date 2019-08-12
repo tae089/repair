@@ -203,7 +203,9 @@ if(isset($_POST['save_card'])){
             </div>
         </div>
     </div>
-
+    <?php 
+    //$getcount = $getdata->my_sql_select();
+    ?>
     <div class="col-lg-12 col-md-12">
       <div id="chart_repair"></div>
       <script>

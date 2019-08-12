@@ -172,7 +172,8 @@ if(isset($_POST['save_card'])){
               $('#btn-footer').show();
               $('#processes').empty();
 			        $('#form_new_status').resetForm();
-			        socket.emit('show_card', 'Show data Card');
+              socket.emit('show_card', 'Show data Card');
+              socket.emit('num_card', {uclass:<?php echo $_SESSION['uclass'];?>,uwork_id:<?php echo $_SESSION['uwork_id'];?>});
             }, 3000);
             
                 

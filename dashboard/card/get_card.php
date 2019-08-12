@@ -77,10 +77,12 @@ $getdata->my_sql_set_utf8();
           <?php if($_SESSION['uclass']==3 || $_SESSION['uclass']==33){ ?>
           <a class="btn btn-xs btn-default" title="ซ่อน" onClick="javascript:hideCard('<?php echo @$showcard->card_key;?>');"><i
               class="fa fa-ban"></i></a>
+          <?php } elseif ($_SESSION['uclass']==4) { ?>
           <a data-toggle="modal" data-target="#edit_status" data-whatever="<?php echo @$showcard->card_key;?>" class="btn btn-xs btn-info"
             title="เปลี่ยนสถานะ"><i class="fa fa-tag"></i></a>
           <?php } ?>
           <a href="?p=card_all_status&key=<?php echo @$showcard->card_key;?>" class="btn btn-xs btn-success" title="ประวัติ"><i class="fa fa-history"></i></a>
+         
             <a href="card/print_card.php?key=<?php echo @$showcard->card_key;?>" target="_blank" class="btn btn-xs btn-primary" title="พิมพ์ใบติดตาม"><i class="fa fa-qrcode"></i></a>
             <a href="card/print_from_card.php?key=<?php echo @$showcard->card_key;?>" target="_blank"
             class="btn btn-xs btn-warning" title="พิมพ์"><i class="fa fa-print"></i></a>
