@@ -496,4 +496,20 @@ function notifyLineMessage($msg)
 	curl_close( $chOne );   
 }
 
+function checkMonth($months)
+{
+	$mon_arr = array('10','11','12','01','02','03','04','05','06','07','08','09');
+	if (count($months)) {
+		foreach ($mon_arr as $value) {
+			$ex_month = explode('-',$months);
+			if($ex_month[1]==$value){
+				$arr;
+			}
+			$arr;
+		}
+	}else{
+
+	}
+}
+
 ?>

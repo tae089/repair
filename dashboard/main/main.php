@@ -204,11 +204,19 @@ if(isset($_POST['save_card'])){
         </div>
     </div>
     <?php 
-    //$getcount = $getdata->my_sql_select();
+    $newYear = date("Y")+543;
+    $lastYear    = date("Y")-1; 
+    $currentYear = date("Y");
+    $getCountRepairComputer = $getdata->my_sql_query("DATE_FORMAT(cn.card_insert,'%Y-%m') AS years_months , ca.category_name_th,COUNT(*) AS num, cn.card_type","card_info cn LEFT JOIN card_item ci ON ci.card_key=cn.card_key LEFT JOIN category ca ON ca.category_id=ci.item_category_type","cn.card_insert BETWEEN '".$lastYear."-10-01' AND '".$currentYear."-09-30' AND ci.item_category_type='1' AND cn.card_type='0'
+    GROUP BY DATE_FORMAT(cn.card_insert,'%Y-%m')");
+    var_dump($getCountRepairComputer); 
+    
+    $arrCom = array('name' => 'คอมพิวเตอร์', 'data' => array());
     ?>
     <div class="col-lg-12 col-md-12">
       <div id="chart_repair"></div>
       <script>
+      let tilte_repair ='ยอดซ่อมรายเดือน ปี <?php echo $newYear;?>';
     var options = {
       chart: {
         height: 350,
@@ -226,15 +234,15 @@ if(isset($_POST['save_card'])){
       series: [
         {
           name: "คอมพิวเตอร์",
-          data: [10, 41, 35, 51, 49, 62, 69, 91, 148]
+          data: [10, 41, 35, 51, 49, 62, 69]
         },
         {
           name: "ปริ้นเตอร์",
-          data: [8, 20, 10, 30, 12, 16, 45, 45, 77]
+          data: [8, 20, 10, 30, 12, 16, 45, 45]
         }
       ],
       title: {
-        text: 'ยอดซ่อมรายปี(ปัจจุบัน)',
+        text: tilte_repair,
         align: 'left'
       },
       grid: {
@@ -244,7 +252,7 @@ if(isset($_POST['save_card'])){
         },
       },
       xaxis: {
-        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+        categories: ['ต.ค.', 'พ.ย.', 'ธ.ค.', 'ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.','ก.ค.','ส.ค.','ก.ย.'],
       }
     }
 
@@ -351,8 +359,14 @@ if(isset($_POST['save_card'])){
     </div>
 
     <div class="col-lg-12 col-md-12">
+    <?php
+          $getCountBuyComputer = $getdata->my_sql_query("DATE_FORMAT(cn.card_insert,'%Y-%m') AS years_months , ca.category_name_th,COUNT(*) AS num, cn.card_type","card_info cn LEFT JOIN card_item ci ON ci.card_key=cn.card_key LEFT JOIN category ca ON ca.category_id=ci.item_category_type","cn.card_insert BETWEEN '".$lastYear."-10-01' AND '".$currentYear."-09-30' AND ci.item_category_type='1' AND cn.card_type='1'
+          GROUP BY DATE_FORMAT(cn.card_insert,'%Y-%m')");
+          //var_dump($getCountBuyComputer); 
+      ?>
       <div id="chart_buy"></div>
       <script>
+      let title_buys   ='ยอดสั่งซื้อรายเดือน ปี <?php echo $newYear;?>';
     var options = {
       chart: {
         height: 350,
@@ -369,10 +383,10 @@ if(isset($_POST['save_card'])){
       },
       series: [{
         name: "Desktops",
-        data: [10, 41, 35, 51, 49, 62, 69, 91, 148]
+        data: [10, 41, 35, 51, 49, 62, 69, 91, 148, 100, 54, 32]
       }],
       title: {
-        text: 'ยอดสั่งซื้อรายปี(ปัจจุบัน)',
+        text: title_buys,
         align: 'left'
       },
       grid: {
@@ -382,7 +396,7 @@ if(isset($_POST['save_card'])){
         },
       },
       xaxis: {
-        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+        categories: ['ต.ค.', 'พ.ย.', 'ธ.ค.', 'ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.','ก.ค.','ส.ค.','ก.ย.'],
       }
     }
 
