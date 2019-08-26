@@ -364,18 +364,24 @@ if(isset($_POST['save_card'])){
         include 'report_buy_com.php';
         include 'report_buy_notebook.php'; 
         include 'report_buy_printer.php'; 
+        include 'report_buy_ups.php'; 
+        include 'report_buy_accessories.php'; 
 
         $arr_com = array($com_num10, $com_num11, $com_num12, $com_num1, $com_num2, $com_num3, $com_num4, $com_num5, $com_num6, $com_num7, $com_num8, $com_num9);
-        $arr_note = array($not_num10, $not_num11, $not_num2, $not_num1, $not_num2, $not_num3, $not_num4, $not_num5, $not_num6, $not_num7, $not_num8, $not_num9);   
-        $arr_printer = array($printer_num10, $printer_num11, $printer_num2, $printer_num1, $printer_num2, $printer_num3, $printer_num4, $printer_num5, $printer_num6, $printer_num7, $printert_num8, $printer_num9);
+        $arr_note = array($note_num10, $note_num11, $note_num2, $note_num1, $note_num2, $note_num3, $note_num4, $note_num5, $note_num6, $note_num7, $note_num8, $note_num9);   
+        $arr_printer = array($printer_num10, $printer_num11, $printer_num2, $printer_num1, $printer_num2, $printer_num3, $printer_num4, $printer_num5, $printer_num6, $printer_num7, $printer_num8, $printer_num9);
+        $arr_ups = array($Ups_num10, $Ups_num11, $Ups_num12, $Ups_num1, $Ups_num2, $Ups_num3, $Ups_num4, $Ups_num5, $Ups_num6, $Ups_num7, $Ups_num8, $Ups_num9);
+        $arr_acce = array($Accessories_num10, $Accessories_num11, $Accessories_num12, $Accessories_num1, $Accessories_num2, $Accessories_num3, $Accessories_num4, $Accessories_num5, $Accessories_num6, $Accessories_num7, $Accessories_num8, $Accessories_num9);
 
 
         $arrdata = array(
             array('name' => 'คอมพิวเตอร์', 'data' => $arr_com),
             array('name' => 'โน๊ตบุ๊ค', 'data' => $arr_note),
-            array('name' => 'ปริ้นเตอร์', 'data' => $arr_printer)
+            array('name' => 'ปริ้นเตอร์', 'data' => $arr_printer),
+            array('name' => 'เครื่องสำรองไฟ', 'data' => $arr_ups),
+            array('name' => 'อุปกรณ์ต่อพ่วง', 'data' => $arr_acce)
         );
-   // print_r($arrdata);
+   //print_r($arrdata);
     ?>
     <div id="chart_buy"></div>
       <script>

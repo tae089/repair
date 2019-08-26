@@ -4,11 +4,11 @@ $computer10 = $getdata->my_sql_select("DATE_FORMAT(cn.card_insert,'%Y-%m') AS ye
 
 while($showdata10 = mysql_fetch_object($computer10)){
   //var_dump($showdata);
-  $com_num10     = $showdata10->num;
+  $com_num10  = $showdata10->num;
 }
 
 //Computer11
-$computer11 = $getdata->my_sql_select("DATE_FORMAT(cn.card_insert,'%Y-%m') AS years_months , ca.category_name_th, COUNT(*) AS num, cn.card_type","card_info cn LEFT JOIN card_item ci ON ci.card_key=cn.card_key LEFT JOIN category ca ON ca.category_id=ci.item_category_type","cn.card_insert BETWEEN '".$lastYear."-11-01' AND '".$lastYear."-11-30' AND ci.item_category_type='1' AND cn.card_type='1'");
+$computer11 = $getdata->my_sql_select("DATE_FORMAT(cn.card_insert,'%Y-%m') AS years_months , ca.category_name_th, COUNT(*) AS num, cn.card_type","card_info cn LEFT JOIN card_item ci ON ci.card_key=cn.card_key LEFT JOIN category ca ON ca.category_id=ci.item_category_type","cn.card_insert BETWEEN '(".$lastYear."-11-01)' AND '(".$lastYear."-11-30)' AND ci.item_category_type='1' AND cn.card_type='1'");
        
 while($showdata11 = mysql_fetch_object($computer11)){
   $com_num11 = $showdata11->num;

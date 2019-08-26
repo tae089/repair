@@ -1,10 +1,10 @@
 <?php
 //Notebook1  
-$notebook10 = $getdata->my_sql_select("DATE_FORMAT(cn.card_insert,'%Y-%m') AS years_months , ca.category_name_th,COUNT(*) AS num, cn.card_type","card_info cn LEFT JOIN card_item ci ON ci.card_key=cn.card_key LEFT JOIN category ca ON ca.category_id=ci.item_category_type","cn.card_insert BETWEEN '".$lastYear."-10-01' AND '".$lastYear."-10-31' AND ci.item_category_type='2' AND cn.card_type='1'");
+$notebook10 = $getdata->my_sql_select("DATE_FORMAT(cn.card_insert,'%Y-%m') AS years_months , ca.category_name_th,COUNT(*) AS num, cn.card_type","card_info cn LEFT JOIN card_item ci ON ci.card_key=cn.card_key LEFT JOIN category ca ON ca.category_id=ci.item_category_type","cn.card_insert BETWEEN '(".$lastYear."-10-01)' AND '(".$lastYear."-10-31)' AND ci.item_category_type='2' AND cn.card_type='1'");
 
 while($showdata10 = mysql_fetch_object($notebook10)){
   //var_dump($showdata);
-  $note_num10     = $showdata10->num;
+  $note_num10  = $showdata10->num;
 }
 
 //notebook11
