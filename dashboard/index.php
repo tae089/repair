@@ -101,11 +101,12 @@ if(@$_SESSION['lang']!=NULL){
 
     <!-- Custom Theme JavaScript -->
     <script src="../js/sb-admin-2.js"></script>
- <script src="../js/bootstrap-combobox.js"></script>
-  <script src="../js/bootstrap-colorpicker.js"></script>
+    <script src="../js/bootstrap-combobox.js"></script>
+    <script src="../js/bootstrap-colorpicker.js"></>
     <script src="../js/latest/typeahead.bundle.js"></script>
     <script src="../js/standalone/selectize.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/apexcharts@latest"></script>
+	  <script src="https://cdn.jsdelivr.net/npm/apexcharts@latest"></script>
+    <script src="../js/standalone/selectize.js"></script>
 <?php
 if(@addslashes($_GET['p']) == "cashier_nomember" || addslashes($_GET['p']) == "import" || addslashes($_GET['p']) == "cashier_member"){
 	$stime = 'onLoad="startDateTime();"';

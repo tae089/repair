@@ -234,7 +234,7 @@ if(isset($_POST['save_card'])){
       series: [
         {
           name: "คอมพิวเตอร์",
-          data: [10, 41, 35, 51, 49, 62, 69]
+          data: ["10", "41", "35", "51", "49", "62", "69"]
         },
         {
           name: "ปริ้นเตอร์",
@@ -252,6 +252,7 @@ if(isset($_POST['save_card'])){
         },
       },
       xaxis: {
+        type: 'category',         
         categories: ['ต.ค.', 'พ.ย.', 'ธ.ค.', 'ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.','ก.ค.','ส.ค.','ก.ย.'],
       }
     }
@@ -359,53 +360,74 @@ if(isset($_POST['save_card'])){
     </div>
 
     <div class="col-lg-12 col-md-12">
-    <?php
-          $getCountBuyComputer = $getdata->my_sql_query("DATE_FORMAT(cn.card_insert,'%Y-%m') AS years_months , ca.category_name_th,COUNT(*) AS num, cn.card_type","card_info cn LEFT JOIN card_item ci ON ci.card_key=cn.card_key LEFT JOIN category ca ON ca.category_id=ci.item_category_type","cn.card_insert BETWEEN '".$lastYear."-10-01' AND '".$currentYear."-09-30' AND ci.item_category_type='1' AND cn.card_type='1'
-          GROUP BY DATE_FORMAT(cn.card_insert,'%Y-%m')");
-          //var_dump($getCountBuyComputer); 
-      ?>
-      <div id="chart_buy"></div>
+    <?php 
+        include 'report_buy_com.php';
+        include 'report_buy_notebook.php'; 
+        include 'report_buy_printer.php'; 
+
+        $arr_com = array($com_num10, $com_num11, $com_num12, $com_num1, $com_num2, $com_num3, $com_num4, $com_num5, $com_num6, $com_num7, $com_num8, $com_num9);
+        $arr_note = array($not_num10, $not_num11, $not_num2, $not_num1, $not_num2, $not_num3, $not_num4, $not_num5, $not_num6, $not_num7, $not_num8, $not_num9);   
+        $arr_printer = array($printer_num10, $printer_num11, $printer_num2, $printer_num1, $printer_num2, $printer_num3, $printer_num4, $printer_num5, $printer_num6, $printer_num7, $printert_num8, $printer_num9);
+
+
+        $arrdata = array(
+            array('name' => 'คอมพิวเตอร์', 'data' => $arr_com),
+            array('name' => 'โน๊ตบุ๊ค', 'data' => $arr_note),
+            array('name' => 'ปริ้นเตอร์', 'data' => $arr_printer)
+        );
+   // print_r($arrdata);
+    ?>
+    <div id="chart_buy"></div>
       <script>
       let title_buys   ='ยอดสั่งซื้อรายเดือน ปี <?php echo $newYear;?>';
-    var options = {
-      chart: {
-        height: 350,
-        type: 'line',
-        zoom: {
-          enabled: false
-        }
-      },
-      dataLabels: {
-        enabled: false
-      },
-      stroke: {
-        curve: 'straight'
-      },
-      series: [{
-        name: "Desktops",
-        data: [10, 41, 35, 51, 49, 62, 69, 91, 148, 100, 54, 32]
-      }],
-      title: {
-        text: title_buys,
-        align: 'left'
-      },
-      grid: {
-        row: {
-          colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
-          opacity: 0.5
+        var options = {
+        chart: {
+            height: 350,
+            type: 'line',
+            zoom: {
+            enabled: false
+            }
         },
-      },
-      xaxis: {
-        categories: ['ต.ค.', 'พ.ย.', 'ธ.ค.', 'ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.','ก.ค.','ส.ค.','ก.ย.'],
-      }
-    }
+        dataLabels: {
+            enabled: false
+        },
+        stroke: {
+            show: true,
+            curve: 'straight',
+            //lineCap: 'butt',
+            //colors: undefined,
+            width: 3,
+            //dashArray: 0, 
+        },
+        // markers: {
+        //     size: 4,
+        //     hover: {
+        //         size: 6
+        //     }
+        // },
+        series: <?php echo json_encode($arrdata);  ?>,
+        title: {
+            text: title_buys,
+            align: 'left'
+        },
+        grid: {
+            row: {
+            colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
+            opacity: 0.5
+            },
+        },
+        xaxis: {
+            type: 'category',
+            categories: ['ต.ค.', 'พ.ย.', 'ธ.ค.', 'ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.','ก.ค.','ส.ค.','ก.ย.'],
+        }
+        }
 
-    var chart = new ApexCharts(
-      document.querySelector("#chart_buy"),
-      options
-    );
+        var chart = new ApexCharts(
+        document.querySelector("#chart_buy"),
+        options
+        );
 
-    chart.render();
+        chart.render();
 
   </script>
     </div>
