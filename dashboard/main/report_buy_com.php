@@ -29,7 +29,7 @@ while($showdata1 = mysql_fetch_object($computer1)){
 }
 
 //Computer2
-$computer2 = $getdata->my_sql_select("DATE_FORMAT(cn.card_insert,'%Y-%m') AS years_months , ca.category_name_th,COUNT(*) AS num, cn.card_type","card_info cn LEFT JOIN card_item ci ON ci.card_key=cn.card_key LEFT JOIN category ca ON ca.category_id=ci.item_category_type","cn.card_insert BETWEEN '".$currentYear."-02-01' AND '".$currentYear."-02-28' AND ci.item_category_type='1' AND cn.card_type='1'");
+$computer2 = $getdata->my_sql_select("DATE_FORMAT(cn.card_insert,'%Y-%m') AS years_months , ca.category_name_th,COUNT(*) AS num, cn.card_type","card_info cn LEFT JOIN card_item ci ON ci.card_key=cn.card_key LEFT JOIN category ca ON ca.category_id=ci.item_category_type","cn.card_insert BETWEEN '".$currentYear."-02-01' AND '".$currentYear."-02-29' AND ci.item_category_type='1' AND cn.card_type='1'");
        
 while($showdata2 = mysql_fetch_object($computer2)){
   $com_num2 = $showdata2->num;
