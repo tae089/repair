@@ -204,15 +204,15 @@ if(isset($_POST['save_edit_item'])){
 
     <form id="form1" name="form1" method="post">
         <div class="table-responsive">
-            <table width="100%" class="table table-bordered">
+            <table width="100%" class="table table-bordered" style="overflow-x:auto;white-space: nowrap;">
                 <tr>
                     <td colspan="2"><label for="item_package_code">รหัสพัสดุ</label>
                         <input type="text" name="item_package_code" id="item_package_code" class="form-control" autofocus>
                     </td>
-                    <td colspan="2"><label for="item_sn_code">รหัส SN</label>
+                    <td><label for="item_sn_code">รหัส SN</label>
                         <input type="text" name="item_sn_code" id="item_sn_code" class="form-control" autofocus>
                     </td>
-                    <td colspan="2"><label for="item_name">ชื่อรายการ</label>
+                    <td><label for="item_name">ชื่อรายการ</label>
                         <input type="text" name="item_name" id="item_name" class="form-control" autofocus>
                     </td>
                     <td width="44%"><label for="item_note">สาเหตุที่ส่งซ่อม/เคลม</label>
