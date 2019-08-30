@@ -179,9 +179,9 @@ if(isset($_POST['save_card'])){
                             while($showcard = mysql_fetch_object($getcard)){
                         ?>
                         <tr style="font-weight:bold;" id="<?php echo @$showcard->card_key;?>">
-                            <td align="center"><a href="?q=<?php echo @$showcard->card_code;?>&p=search">
-                                    <?php echo @$showcard->card_code;?></a></td>
-
+                            <!-- <td align="center"><a href="?q=<?php echo @$showcard->card_code;?>&p=search">
+                                    <?php echo @$showcard->card_code;?></a></td> -->
+                            <td align="center"><?php echo @$showcard->card_code;?></td>    
                             <td align="center">
                                 <?php echo @dateTimeConvertor($showcard->card_insert);?>
                             </td>
@@ -202,69 +202,6 @@ if(isset($_POST['save_card'])){
 
             </div>
         </div>
-    </div>
-    <?php 
-    $newYear = date("Y")+543;
-    $lastYear    = date("Y")-1; 
-    $currentYear = date("Y");
-    $getCountRepairComputer = $getdata->my_sql_query("DATE_FORMAT(cn.card_insert,'%Y-%m') AS years_months , ca.category_name_th,COUNT(*) AS num, cn.card_type","card_info cn LEFT JOIN card_item ci ON ci.card_key=cn.card_key LEFT JOIN category ca ON ca.category_id=ci.item_category_type","cn.card_insert BETWEEN '".$lastYear."-10-01' AND '".$currentYear."-09-30' AND ci.item_category_type='1' AND cn.card_type='0'
-    GROUP BY DATE_FORMAT(cn.card_insert,'%Y-%m')");
-    var_dump($getCountRepairComputer); 
-    
-    $arrCom = array('name' => 'คอมพิวเตอร์', 'data' => array());
-    ?>
-    <div class="col-lg-12 col-md-12">
-      <div id="chart_repair"></div>
-      <script>
-      let tilte_repair ='ยอดซ่อมรายเดือน ปี <?php echo $newYear;?>';
-    var options = {
-      chart: {
-        height: 350,
-        type: 'line',
-        zoom: {
-          enabled: false
-        }
-      },
-      dataLabels: {
-        enabled: false
-      },
-      stroke: {
-        curve: 'straight'
-      },
-      series: [
-        {
-          name: "คอมพิวเตอร์",
-          data: ["10", "41", "35", "51", "49", "62", "69"]
-        },
-        {
-          name: "ปริ้นเตอร์",
-          data: [8, 20, 10, 30, 12, 16, 45, 45]
-        }
-      ],
-      title: {
-        text: tilte_repair,
-        align: 'left'
-      },
-      grid: {
-        row: {
-          colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
-          opacity: 0.5
-        },
-      },
-      xaxis: {
-        type: 'category',         
-        categories: ['ต.ค.', 'พ.ย.', 'ธ.ค.', 'ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.','ก.ค.','ส.ค.','ก.ย.'],
-      }
-    }
-
-    var chart = new ApexCharts(
-      document.querySelector("#chart_repair"),
-      options
-    );
-
-    chart.render();
-
-  </script>
     </div>
 </div>
 
@@ -334,9 +271,9 @@ if(isset($_POST['save_card'])){
                               while($showcard = mysql_fetch_object($getcard)){
                         ?>
                         <tr style="font-weight:bold;" id="<?php echo @$showcard->card_key;?>">
-                            <td align="center"><a href="?q=<?php echo @$showcard->card_code;?>&p=search">
-                                    <?php echo @$showcard->card_code;?></a></td>
-
+                            <!-- <td align="center"><a href="?q=<?php echo @$showcard->card_code;?>&p=search">
+                                    <?php echo @$showcard->card_code;?></a></td> -->
+                            <td align="center"><?php echo @$showcard->card_code;?></td>
                             <td align="center">
                                 <?php echo @dateTimeConvertor($showcard->card_insert);?>
                             </td>
@@ -359,27 +296,82 @@ if(isset($_POST['save_card'])){
         </div>
     </div>
 
-    <div class="col-lg-12 col-md-12">
-    <?php 
-        include 'report_buy_com.php';
-        include 'report_buy_notebook.php'; 
-        include 'report_buy_printer.php'; 
-        include 'report_buy_ups.php'; 
-        include 'report_buy_accessories.php'; 
+    
+</div>
+<?php 
+    $newYear = date("Y")+543;
+    $lastYear    = date("Y")-1; 
+    $currentYear = date("Y");
+    
+    include 'report_repair_all.php';
+    $arr_repair = array($repair_num10, $repair_num11, $repair_num12, $repair_num1, $repair_num2, $repair_num3, $repair_num4, $repair_num5, $repair_num6, $repair_num7, $repair_num8, $repair_num9);
 
-        $arr_com = array($com_num10, $com_num11, $com_num12, $com_num1, $com_num2, $com_num3, $com_num4, $com_num5, $com_num6, $com_num7, $com_num8, $com_num9);
-        $arr_note = array($note_num10, $note_num11, $note_num2, $note_num1, $note_num2, $note_num3, $note_num4, $note_num5, $note_num6, $note_num7, $note_num8, $note_num9);   
-        $arr_printer = array($printer_num10, $printer_num11, $printer_num2, $printer_num1, $printer_num2, $printer_num3, $printer_num4, $printer_num5, $printer_num6, $printer_num7, $printer_num8, $printer_num9);
-        $arr_ups = array($Ups_num10, $Ups_num11, $Ups_num12, $Ups_num1, $Ups_num2, $Ups_num3, $Ups_num4, $Ups_num5, $Ups_num6, $Ups_num7, $Ups_num8, $Ups_num9);
-        $arr_acce = array($Accessories_num10, $Accessories_num11, $Accessories_num12, $Accessories_num1, $Accessories_num2, $Accessories_num3, $Accessories_num4, $Accessories_num5, $Accessories_num6, $Accessories_num7, $Accessories_num8, $Accessories_num9);
+    $repair_all = array(
+        array('name' => 'ยอดซ่อม', 'data' => $arr_repair)
+    );
+
+    ?>
+    <div class="col-lg-12 col-md-12">
+      <div id="chart_repair"></div>
+      <script>
+      let tilte_repair ='ยอดซ่อมรายเดือน ปี <?php echo $newYear;?>';
+    var options = {
+      chart: {
+        height: 350,
+        type: 'line',
+        zoom: {
+          enabled: false
+        }
+      },
+      dataLabels: {
+        enabled: false
+      },
+      stroke: {
+        curve: 'straight',
+        width: 3,
+      },
+      markers: {
+            size: 4,
+            hover: {
+                size: 6
+            }
+        },
+      series: <?php echo json_encode($repair_all);  ?>,
+      title: {
+        text: tilte_repair,
+        align: 'left'
+      },
+      grid: {
+        row: {
+          colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
+          opacity: 0.5
+        },
+      },
+      xaxis: {
+        type: 'category',         
+        categories: ['ต.ค.', 'พ.ย.', 'ธ.ค.', 'ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.','ก.ค.','ส.ค.','ก.ย.'],
+      }
+    }
+
+    var chart = new ApexCharts(
+      document.querySelector("#chart_repair"),
+      options
+    );
+
+    chart.render();
+
+  </script>
+</div>
+
+<div class="col-lg-12 col-md-12">
+    <?php 
+        include 'report_buy_all.php';
+    
+        $arr_buy = array($buy_num10, $buy_num11, $buy_num12, $buy_num1, $buy_num2, $buy_num3, $buy_num4, $buy_num5, $buy_num6, $buy_num7, $buy_num8, $buy_num9);
 
 
         $arrdata = array(
-            array('name' => 'คอมพิวเตอร์', 'data' => $arr_com),
-            array('name' => 'โน๊ตบุ๊ค', 'data' => $arr_note),
-            array('name' => 'ปริ้นเตอร์', 'data' => $arr_printer),
-            array('name' => 'เครื่องสำรองไฟ', 'data' => $arr_ups),
-            array('name' => 'อุปกรณ์ต่อพ่วง', 'data' => $arr_acce)
+            array('name' => 'ยอดสั่งซื้อ', 'data' => $arr_buy)
         );
    //print_r($arrdata);
     ?>
@@ -401,16 +393,17 @@ if(isset($_POST['save_card'])){
             show: true,
             curve: 'straight',
             //lineCap: 'butt',
-            //colors: undefined,
+            colors: '#FF4560',
             width: 3,
             //dashArray: 0, 
         },
-        // markers: {
-        //     size: 4,
-        //     hover: {
-        //         size: 6
-        //     }
-        // },
+        markers: {
+            size: 4,
+            colors: '#FF4560',
+            hover: {
+                size: 6
+            }
+        },
         series: <?php echo json_encode($arrdata);  ?>,
         title: {
             text: title_buys,
@@ -437,6 +430,4 @@ if(isset($_POST['save_card'])){
 
   </script>
     </div>
-
-</div>
 </div>

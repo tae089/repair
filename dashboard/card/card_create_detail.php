@@ -206,10 +206,18 @@ if(isset($_POST['save_edit_item'])){
         <div class="table-responsive">
             <table width="100%" class="table table-bordered">
                 <tr>
+                    <td colspan="2"><label for="item_package_code">รหัสพัสดุ</label>
+                        <input type="text" name="item_package_code" id="item_package_code" class="form-control" autofocus>
+                    </td>
+                    <td colspan="2"><label for="item_sn_code">รหัส SN</label>
+                        <input type="text" name="item_sn_code" id="item_sn_code" class="form-control" autofocus>
+                    </td>
                     <td colspan="2"><label for="item_name">ชื่อรายการ</label>
-                        <input type="text" name="item_name" id="item_name" class="form-control" autofocus></td>
+                        <input type="text" name="item_name" id="item_name" class="form-control" autofocus>
+                    </td>
                     <td width="44%"><label for="item_note">สาเหตุที่ส่งซ่อม/เคลม</label>
-                        <input type="text" name="item_note" id="item_note" class="form-control"></td>
+                        <input type="text" name="item_note" id="item_note" class="form-control">
+                    </td>
                     <td width="10%">
                         <label for="item_category_id">ประเภท</label>
                         <select name="item_category_id" id="item_category_id" class="form-control">
@@ -231,6 +239,8 @@ if(isset($_POST['save_edit_item'])){
                 </tr>
                 <tr style="font-weight:bold; color:#FFF; text-align:center;">
                     <td width="10%" bgcolor="#888888">หมายเลข</td>
+                    <td width="10%" bgcolor="#888888">รหัสพัสดุ</td>
+                    <td width="10%" bgcolor="#888888">รหัส SN</td>
                     <td width="23%" bgcolor="#888888">ชื่อรายการ</td>
                     <td bgcolor="#888888">สาเหตุที่ส่งซ่อม/เคลม</td>
                     <td bgcolor="#888888">ประเภท</td>
@@ -244,16 +254,27 @@ if(isset($_POST['save_edit_item'])){
         $get_type = $getdata->my_sql_query($field,"category","category_id=".$showitem->item_category_type."");
 	?>
                 <tr id="<?php echo @$showitem->item_key;?>">
-                    <td align="center" bgcolor="#EFEFEF"><strong>
-                            <?php echo @$showitem->item_number;?></strong></td>
-                    <td><strong>
-                            <?php echo @$showitem->item_name;?></strong></td>
-                    <td style="color:#970002;"><strong>
-                            <?php echo @$showitem->item_note;?></strong></td>
-                    <td><strong>
-                            <?php echo @$get_type->category_name_th;?></strong></td>
-                    <td><strong>
-                            <?php echo @$showitem->item_amount;?></strong></td>  
+                    <td align="center" bgcolor="#EFEFEF">
+                        <strong><?php echo @$showitem->item_number;?></strong>
+                    </td>
+                    <td>
+                        <strong><?php echo @$showitem->item_package_code;?></strong>
+                    </td>
+                    <td>
+                        <strong><?php echo @$showitem->item_sn_code;?></strong>
+                    </td>
+                    <td>
+                        <strong><?php echo @$showitem->item_name;?></strong>
+                    </td>
+                    <td style="color:#970002;">
+                        <strong><?php echo @$showitem->item_note;?></strong>
+                    </td>
+                    <td>
+                        <strong><?php echo @$get_type->category_name_th;?></strong>
+                    </td>
+                    <td>
+                        <strong><?php echo @$showitem->item_amount;?></strong>
+                    </td>  
                     <td align="right"><strong>
                             <?php echo @($showitem->item_price_aprox == 0)?'ไม่ระบุ':convertPoint2($showitem->item_price_aprox,2);?></strong></td>
                     <td align="center"><a data-toggle="modal" data-target="#edit_item" data-whatever="<?php echo @$showitem->item_key;?>"
