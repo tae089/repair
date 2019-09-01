@@ -31,6 +31,16 @@ $getitem_detail =$getdata->my_sql_query(NULL,"card_item","item_key='".addslashes
       <input type="text" name="item_number" id="item_number" readonly class="form-control" value="<?php echo @$getitem_detail->item_number;?>">
    </div>
    <div class="form-group">
+      <label for="edit_item_package_code">รหัสพัสดุ</label>
+      <input type="text" name="edit_item_package_code" id="edit_item_package_code" class="form-control" value="<?php echo @$getitem_detail->item_package_code;?>"
+         autofocus>
+   </div>
+   <div class="form-group">
+      <label for="edit_item_sn_code">รหัส SN</label>
+      <input type="text" name="edit_item_sn_code" id="edit_item_sn_code" class="form-control" value="<?php echo @$getitem_detail->item_sn_code;?>"
+         autofocus>
+   </div>
+   <div class="form-group">
       <label for="edit_item_name">ชื่อรายการ</label>
       <input type="text" name="edit_item_name" id="edit_item_name" class="form-control" value="<?php echo @$getitem_detail->item_name;?>"
          autofocus>
@@ -41,7 +51,7 @@ $getitem_detail =$getdata->my_sql_query(NULL,"card_item","item_key='".addslashes
    </div>
    <div class="form-group">
       <label>ประเภท</label>
-      <select name="item_category_id" id="item_category_id" class="form-control">
+      <select name="edit_item_category_id" id="edit_item_category_id" class="form-control">
          <option vlaue=""> กรุณาเลือก </option>
          <?php
             $getcard_type = $getdata->my_sql_select(NULL,"category","category_status='1' ORDER BY category_id ASC");
@@ -51,6 +61,10 @@ $getitem_detail =$getdata->my_sql_query(NULL,"card_item","item_key='".addslashes
             <option value="<?php echo $show_type->category_id; ?>" <?php echo $selected; ?>><?php echo $show_type->category_name_th; ?></option>
          <?php } ?>
       </select>
+   </div>
+   <div class="form-group">
+      <label for="edit_item_amount">จำนวน</label>
+      <input type="text" name="edit_item_amount" id="edit_item_amount" class="form-control" value="<?php echo @$getitem_detail->item_amount;?>">
    </div>
    <div class="form-group">
       <label for="edit_item_price_aprox">ราคาโดยประมาณ</label>
