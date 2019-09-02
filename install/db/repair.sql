@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50717
 File Encoding         : 65001
 
-Date: 2019-09-01 16:54:31
+Date: 2019-09-02 22:41:57
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -33,7 +33,7 @@ CREATE TABLE `autonumber` (
 -- ----------------------------
 -- Records of autonumber
 -- ----------------------------
-INSERT INTO `autonumber` VALUES ('0002', '0001', '0001', '0001', '2019', '09', '01');
+INSERT INTO `autonumber` VALUES ('0002', '0001', '0001', '0001', '2019', '09', '02');
 
 -- ----------------------------
 -- Table structure for backup_logs
@@ -726,6 +726,8 @@ INSERT INTO `logs` VALUES ('64cc22e71fb97675', '2019-08-30 15:28:33', '::1', 'te
 INSERT INTO `logs` VALUES ('a0b64a51ea477c8b', '2019-08-30 15:28:43', '::1', 'admin เข้าสู่ระบบ.', '');
 INSERT INTO `logs` VALUES ('1c9472a7d311e174', '2019-08-30 16:41:27', '::1', 'admin ออกจากระบบ.', '');
 INSERT INTO `logs` VALUES ('1b82eeda2f843533', '2019-09-01 09:57:57', '::1', 'admin เข้าสู่ระบบ.', '');
+INSERT INTO `logs` VALUES ('84a1ce14fb7c2fe6', '2019-09-02 08:51:54', '::1', 'admin เข้าสู่ระบบ.', '');
+INSERT INTO `logs` VALUES ('42ab70659ec06d61', '2019-09-02 18:20:14', '::1', 'admin ออกจากระบบ.', '');
 
 -- ----------------------------
 -- Table structure for menus
@@ -1112,7 +1114,7 @@ CREATE TABLE `user_online` (
 -- ----------------------------
 -- Records of user_online
 -- ----------------------------
-INSERT INTO `user_online` VALUES ('7en4sq9n8k6lhmd5668t5cpfb0', '', '1567331586');
+INSERT INTO `user_online` VALUES ('91bhss7p6ttfamltklu3e54ng1', '', '1567395159');
 
 -- ----------------------------
 -- Table structure for work_group
