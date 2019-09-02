@@ -91,7 +91,9 @@ if(addslashes($_GET['key']) == NULL){
                     <table width="100%" class="table table-bordered">
                         <thead>
                             <tr style="font-weight:bold; color:#FFF; background:#888888; text-align:center;">
-                                <td width="11%">หมายเลข</td>
+                                <td width="5%">หมายเลข</td>
+                                <td width="13%">รหัสพัสดุ</td>
+                                <td width="5">รหัส SN</td>
                                 <td width="26%">ชื่อรายการ</td>
                                 <td width="35%">สาเหตุที่ส่งซ่อม/เคลม</td>
                                 <td width="15%">ประเภท</td>
@@ -107,6 +109,12 @@ if(addslashes($_GET['key']) == NULL){
                             <tr id="<?php echo @$showitem->item_key;?>">
                                 <td align="center" bgcolor="#EFEFEF">
                                     <?php echo @$showitem->item_number;?>
+                                </td>
+                                <td>
+                                    <?php echo @$showitem->item_package_code;?>
+                                </td>
+                                <td>
+                                    <?php echo @$showitem->item_sn_code;?>
                                 </td>
                                 <td>
                                     <?php echo @$showitem->item_name;?>
