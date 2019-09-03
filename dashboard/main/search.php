@@ -81,8 +81,8 @@ if(isset($_POST['save_new_status'])){
   <?php
   
 	   $getcard = $getdata->my_sql_select(NULL,"card_info"," (card_customer_name LIKE '%".htmlentities($_GET['q'])."%') OR (card_customer_lastname LIKE '%".htmlentities($_GET['q'])."%') OR (card_customer_phone LIKE '%".htmlentities($_GET['q'])."%') OR (card_customer_email LIKE '%".htmlentities($_GET['q'])."%') OR (card_code LIKE '%".htmlentities($_GET['q'])."%') ORDER BY card_insert");
- 
- 
+//  echo htmlentities($_GET['q']);
+//  var_dump($getcard);
   while($showcard = mysql_fetch_object($getcard)){
   ?>
   <tr style="font-weight:bold;" id="<?php echo @$showcard->card_key;?>">

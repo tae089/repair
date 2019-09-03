@@ -16,8 +16,7 @@ if(addslashes($_GET['key']) == NULL){
     <li><a href="index.php">
             <?php echo @LA_MN_HOME;?></a></li>
     <li><a href="?p=card_create">สั่งซื้อ</a></li>
-    <li class="active">เพิ่มรายการสั่งซื้อ [
-        <?php echo @$card_detail->card_code;?>]</li>
+    <li class="active">เพิ่มรายการสั่งซื้อ [<?php echo @$card_detail->card_code;?>]</li>
 </ol>
 <?php
 if(isset($_POST['save_item'])){

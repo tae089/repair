@@ -181,7 +181,7 @@ if(isset($_POST['save_card'])){
                         <tr style="font-weight:bold;" id="<?php echo @$showcard->card_key;?>">
                             <!-- <td align="center"><a href="?q=<?php echo @$showcard->card_code;?>&p=search">
                                     <?php echo @$showcard->card_code;?></a></td> -->
-                            <td align="center"><?php echo @$showcard->card_code;?></td>    
+                            <td align="center"><a href="?p=card_all_status&key=<?php echo @$showcard->card_key;?>"><?php echo @$showcard->card_code; ?></td>    
                             <td align="center">
                                 <?php echo @dateTimeConvertor($showcard->card_insert);?>
                             </td>
@@ -273,7 +273,7 @@ if(isset($_POST['save_card'])){
                         <tr style="font-weight:bold;" id="<?php echo @$showcard->card_key;?>">
                             <!-- <td align="center"><a href="?q=<?php echo @$showcard->card_code;?>&p=search">
                                     <?php echo @$showcard->card_code;?></a></td> -->
-                            <td align="center"><?php echo @$showcard->card_code;?></td>
+                            <td align="center"><a href="?p=card_all_status&key=<?php echo @$showcard->card_key;?>"><?php echo @$showcard->card_code; ?></td>  
                             <td align="center">
                                 <?php echo @dateTimeConvertor($showcard->card_insert);?>
                             </td>
@@ -312,7 +312,11 @@ if(isset($_POST['save_card'])){
 
     ?>
     <div class="col-lg-12 col-md-12">
-      <div id="chart_repair"></div>
+        <div class="panel panel-primary">
+            <div class="panel-body">
+                <div id="chart_repair"></div>
+            </div>
+        </div>
       <script>
       let tilte_repair ='ยอดซ่อมรายเดือน ปี <?php echo $newYear;?>';
     var options = {
@@ -375,7 +379,11 @@ if(isset($_POST['save_card'])){
         );
    //print_r($arrdata);
     ?>
-    <div id="chart_buy"></div>
+    <div class="panel panel-primary">
+        <div class="panel-body">
+            <div id="chart_buy"></div>
+        </div>
+    </div>
       <script>
       let title_buys   ='ยอดสั่งซื้อรายเดือน ปี <?php echo $newYear;?>';
         var options = {
