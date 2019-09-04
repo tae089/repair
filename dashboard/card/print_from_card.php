@@ -71,28 +71,28 @@ $pdf->setPageMark();
 $pdf->SetFont('angsanaupc', 'B', 14);
 // set some text to print
 $YYY= date('Y')+543;
-$pdf->Text(173, 5.2, $YYY);
+$pdf->Text(128, 5.8, 'งบปี '.$YYY);
 
 $pdf->SetFont('angsanaupc', '', 12);
-$pdf->Text(43, 18, $department->name);
+$pdf->Text(20, 24, $department->name);
 
 $dates = explode(' ',$card_detail->card_insert);
-$pdf->Text(120, 18, $dates[0]);
-$pdf->Text(160, 18, $dates[1]);
+$pdf->Text(140, 24, $dates[0]);
+$pdf->Text(178, 24, $dates[1]);
 
-$pdf->Text(43, 31, 'พัสดุครุภัณฑ์คอมพิวเตอร์');
+$pdf->Text(31, 33, 'พัสดุครุภัณฑ์คอมพิวเตอร์');
 $img_files = K_PATH_IMAGES.'Checkmark.png';
-if($card_detail->card_type==0){
-    $pdf->Image($img_files, 95.5, 45.5, 5, 5, '', '', '', false, 300, '', false, false, 0);
+if($card_detail->card_type == 0){
+    $pdf->Image($img_files, 126, 50.5, 5, 5, '', '', '', false, 300, '', false, false, 0);
 }else{
-    $pdf->Image($img_files, 80, 45.5, 5, 5, '', '', '', false, 300, '', false, false, 0);
+    $pdf->Image($img_files, 115, 50.5, 5, 5, '', '', '', false, 300, '', false, false, 0);
 }
 
-$pdf->Text(48, 52, $department->name);
+$pdf->Text(25, 50.5, $department->name);
 
 $getitem = $getdata->my_sql_select(NULL,"card_item","card_key='".$key_card."'");
 
-$tbl = '<table style="width: 638px;" cellspacing="0">';
+$tbl = '<table style="width: 680px;" cellspacing="0">';
 $i=1;
 while($showitem = mysql_fetch_object($getitem)){
     
@@ -103,33 +103,36 @@ while($showitem = mysql_fetch_object($getitem)){
     }
  
     $tbl .= '<tr>
-        <td style="border: 1px solid #000000; width: 27px; height: 20px;"> '.$i.'</td>
-        <td style="border: 1px solid #000000; width: 310px; height: 20px;"> '.$showitem->item_name.'</td>
-        <td style="border: 1px solid #000000; width: 153px; height: 20px;"> '.$department->name.'</td>
-        <td style="border: 1px solid #000000; width: 112px; height: 20px;">  '.$showitem->item_amount.' / '.$price.'</td>
+        <td style="border: 1px solid #000000; width: 34.5px; height: 20px;"> '.$i.'</td>
+        <td style="border: 1px solid #000000; width: 530px; height: 20px;"> '.$showitem->item_package_code.'&nbsp; &nbsp;'.$showitem->item_sn_code.'&nbsp;&nbsp;'.$showitem->item_name.'</td>
+        <td style="border: 1px solid #000000; width: 52.5px; height: 20px;"> '.$showitem->item_amount.'</td>
+        <td style="border: 1px solid #000000; width: 69px; height: 20px;">  '.$price.'</td>
     </tr>';
     $i++;
 
 }
 $tbl .= '</table>';
-$pdf->writeHTMLCell($w, $h, 18.7, 65.7, $tbl, $border = 0, $ln = 0, $fill = false, $reseth = true, $align = '', $autopadding = true );
+$pdf->writeHTMLCell($w, $h, 7.5, 65.7, $tbl, $border = 0, $ln = 0, $fill = false, $reseth = true, $align = '', $autopadding = true );
 
 
 $h_note ='<table style="width: 200px;" cellspacing=""><tr><td style="border: 1px solid #000000;">'.$card_detail->card_note.'</td></tr>';
-$pdf->writeHTMLCell(55, 25, 30, 100, $card_detail->card_note, $border = 0, $ln = 0, $fill = false, $reseth = true, $align = '', $autopadding = true );
+$pdf->writeHTMLCell(95, 25, 9, 122, $card_detail->card_note, $border = 0, $ln = 0, $fill = false, $reseth = true, $align = '', $autopadding = true );
 
 $pdf->SetFont('angsanaupc', '', 12);
-$pdf->Text(115, 106, $card_detail->card_customer_name.'  '.$card_detail->card_customer_lastname);
+$pdf->Text(125, 114, $card_detail->card_customer_name.'  '.$card_detail->card_customer_lastname);
 
 $pdf->SetFont('angsanaupc', '', 12);
-$pdf->Text(120, 113, $opduser->entryposition);
-
-$pdf->Image($img_files, 20, 134, 5, 5, '', '', '', false, 300, '', false, false, 0);
+$pdf->Text(125, 123, $card_detail->card_customer_name.'  '.$card_detail->card_customer_lastname);
 
 $pdf->SetFont('angsanaupc', '', 12);
-$pdf->Text(65, 180, 'ธนพันธ์  มั่งมูล');
-$pdf->Text(62, 187, 'นายธนพันธ์  มั่งมูล');
-$pdf->Text(64.1, 194.7, date('d /      m      /  Y'));
+$pdf->Text(126, 132, $opduser->entryposition);
+
+//$pdf->Image($img_files, 20, 134, 5, 5, '', '', '', false, 300, '', false, false, 0);
+
+$pdf->SetFont('angsanaupc', '', 12);
+$pdf->Text(50, 203, 'ธนพันธ์  มั่งมูล');
+$pdf->Text(52, 211, 'นายธนพันธ์  มั่งมูล');
+$pdf->Text(52.3, 220, date('d        m            Y'));
 // ---------------------------------------------------------
 
 //Close and output PDF document

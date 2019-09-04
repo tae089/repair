@@ -204,6 +204,7 @@ if(isset($_POST['save_edit_item'])){
 
     <form id="form1" name="form1" method="post">
         <div class="table-responsive" style="overflow-x:auto;white-space: nowrap;">
+
         <span class="pull-right">
             <button type="submit" name="save_item" id="save_item" class="btn btn-sm btn-success"><i class="fa fa-plus"></i> เพิ่ม</button>
         </span>
@@ -258,7 +259,7 @@ if(isset($_POST['save_edit_item'])){
         $get_type = $getdata->my_sql_query($field,"category","category_id=".$showitem->item_category_type."");
 	?>
                 <tr id="<?php echo @$showitem->item_key;?>">
-                    <td align="center" bgcolor="#EFEFEF">
+                    <td bgcolor="#EFEFEF">
                         <strong><?php echo @$showitem->item_number;?></strong>
                     </td>
                     <td>
@@ -282,7 +283,7 @@ if(isset($_POST['save_edit_item'])){
                     <td align="right"><strong>
                             <?php echo @($showitem->item_price_aprox == 0)?'ไม่ระบุ':convertPoint2($showitem->item_price_aprox,2);?></strong></td>
                     <td align="center"><a data-toggle="modal" data-target="#edit_item" data-whatever="<?php echo @$showitem->item_key;?>"
-                            class="btn btn-xs btn-info" style="color:#FFF;" title="แก้ไข"><i class="fa fa-edit"></i></a><a
+                            class="btn btn-xs btn-warning" style="color:#FFF;" title="แก้ไข"><i class="fa fa-edit"></i></a><a
                             onClick="javascript:deleteItem('<?php echo @$showitem->item_key;?>');" class="btn btn-xs btn-danger"
                             style="color:#FFF;" title="ลบ"><i class="fa fa-times"></i></a></td>
                 </tr>
