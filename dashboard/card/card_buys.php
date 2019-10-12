@@ -205,8 +205,8 @@
             //alert('Item "'+item.data('langname')+' ('+item.data('lang')+')" selected by '+(e.type == 'keydown' ? 'pressing enter' : 'mouse click')+'.');
             var names = item.data('langname');
             var sname = names.split(" ");
-            var nname = sname[1].split(",");
-            console.log(sname);
+            var nname = sname[2].split(",");
+            console.log(nname);
             $('#card_customer_name').val(sname[0]);
             $('#card_customer_lastname').val(nname[0]);
             $('#user_hosxp').val(nname[1]);

@@ -304,7 +304,7 @@ if(isset($_POST['save_card'])){
     $currentYear = date("Y");
     
     include 'report_repair_all.php';
-    $arr_repair = array($repair_num10, $repair_num11, $repair_num12, $repair_num1, $repair_num2, $repair_num3, $repair_num4, $repair_num5, $repair_num6, $repair_num7, $repair_num8, $repair_num9);
+    $arr_repair = array($repair_num1, $repair_num2, $repair_num3, $repair_num4, $repair_num5, $repair_num6, $repair_num7, $repair_num8, $repair_num9, $repair_num10, $repair_num11, $repair_num12);
 
     $repair_all = array(
         array('name' => 'ยอดซ่อม', 'data' => $arr_repair)
@@ -353,7 +353,7 @@ if(isset($_POST['save_card'])){
       },
       xaxis: {
         type: 'category',         
-        categories: ['ต.ค.', 'พ.ย.', 'ธ.ค.', 'ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.','ก.ค.','ส.ค.','ก.ย.'],
+        categories: ['ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.','ก.ค.','ส.ค.','ก.ย.', 'ต.ค.', 'พ.ย.', 'ธ.ค.'],
       }
     }
 
@@ -371,7 +371,7 @@ if(isset($_POST['save_card'])){
     <?php 
         include 'report_buy_all.php';
     
-        $arr_buy = array($buy_num10, $buy_num11, $buy_num12, $buy_num1, $buy_num2, $buy_num3, $buy_num4, $buy_num5, $buy_num6, $buy_num7, $buy_num8, $buy_num9);
+        $arr_buy = array($buy_num1, $buy_num2, $buy_num3, $buy_num4, $buy_num5, $buy_num6, $buy_num7, $buy_num8, $buy_num9, $buy_num10, $buy_num11, $buy_num12);
 
 
         $arrdata = array(
@@ -425,7 +425,7 @@ if(isset($_POST['save_card'])){
         },
         xaxis: {
             type: 'category',
-            categories: ['ต.ค.', 'พ.ย.', 'ธ.ค.', 'ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.','ก.ค.','ส.ค.','ก.ย.'],
+            categories: ['ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.','ก.ค.','ส.ค.','ก.ย.', 'ต.ค.', 'พ.ย.', 'ธ.ค.'],
         }
         }
 

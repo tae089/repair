@@ -29,7 +29,7 @@ if(addslashes($_POST['card_done_aprox']) != NULL){
          $satuts_type = ($showcard->card_type==1)? 'ที่ขอซื้อ': 'ที่ขอซ่อม';
          $code = $showcard->card_code;
      }
-     $mgs = $workgroup->name." แจ้งรายการ".$satuts_type." รหัส ".$code." สถานะ ".$satuts_name->ctype_name." คลิกดูรายละเอียด::".$link.$code;
+     $mgs = $workgroup->name." แจ้งรายการ".$satuts_type." รหัส ".$code." สถานะ ".$satuts_name->ctype_name." คลิกดูรายละเอียด:: ".$link.$code;
    
     if ($getdata) {
         $data = array(

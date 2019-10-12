@@ -29,7 +29,7 @@ if(isset($_POST)){
         $code = $showcard->card_code;
     }
     
-    $mgs ="".$workgroup->name." แจ้งรายการ".$satuts_name." รหัส ".$code." คลิกดูรายละเอียด::".$link.$code;
+    $mgs ="".$workgroup->name." แจ้งรายการ".$satuts_name." รหัส ".$code." คลิกดูรายละเอียด:: ".$link.$code;
     
     if($getdata){
         $data = array(
