@@ -136,7 +136,7 @@
 <script src='//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js'></script>
 <script src="http://malsup.github.com/jquery.form.js"></script>
 <script language="javascript">
- var socket = io('//127.0.0.1:8080');
+ var socket = io('//127.0.0.1:80');
 
   function deleteCard(cardkey) {
     if (confirm('คุณต้องการลบใบสั่งซ่อม/เคลมนี้ใช่หรือไม่ ?')) {

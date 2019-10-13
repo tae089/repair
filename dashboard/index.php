@@ -214,7 +214,7 @@ if(@addslashes($_GET['p']) == "cashier_nomember" || addslashes($_GET['p']) == "i
 
 <script src='//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js'></script>
  <script>
-  var socket = io('//127.0.0.1:8080');
+  var socket = io('//127.0.0.1:80');
   $(document).ready(function(){
 
         checkCardCount();
